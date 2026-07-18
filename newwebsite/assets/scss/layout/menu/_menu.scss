@@ -1,0 +1,223 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  4.2 Meanmenu css
+/*----------------------------------------*/
+
+.tp-main-menu{
+    &-area{
+        
+    }
+    & ul {
+        & li{
+            list-style: none;
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--tp-common-white);
+            transition: .3s ease;
+
+			&.has-dropdown{
+				& > a{
+                    position: relative;
+                    &::after{
+                        content: '\f107';
+                        @include transform(translateY(1px));
+                        font-size: 16px;
+                        color: var(--tp-common-white);
+                        font-family: var(--tp-ff-fontawesome);
+                        font-weight: 400;
+                        margin-left: 5px;
+                        display: inline-block;
+                        transition: all .2s ease-in-out;
+                    }
+                }
+			}
+
+            & a{
+                position: relative;
+                padding: 43px 39px;
+                display: inline-block;
+                transition: .3s ease;
+                text-transform: uppercase;
+                font-weight: 700;
+                font-size: 16px;
+                letter-spacing: 0.14em;
+
+                @media #{$xxxxl} {
+                    padding: 42px 32px;
+                }
+                @media #{$xxxl} {
+                    padding: 40px 26px;
+                }
+                @media #{$xxl,$xl} {
+                    padding: 40px 18px;
+                }
+
+                &::before{
+                    position: absolute;
+                    content: '';
+                    left: auto;
+                    right: 0;
+                    bottom: 0;
+                    width: 0%;
+                    height: 2px;
+                    background-image: linear-gradient(90deg, #9EFBD3 0%, #57E9F2 48%, #45D4FB 100%);
+                    z-index: 1;
+                    transition: width .3s ease-in-out;
+                }
+            }
+
+			& .submenu{
+                position: absolute;
+                top: 100%;
+                left: 0px;
+                min-width: 200px;
+                background: #fff;
+                z-index: 99;
+                visibility: hidden;
+                opacity: 0;
+                transform: scaleY(0);
+                transform-origin: top center;
+                box-shadow: 0px 30px 70px 0px rgba(11, 6, 70, 0.08);
+                @extend %tp-transition-common;
+                padding: 10px 0;
+                transform-origin: top center;
+                & li{
+                    display: block;
+                    width: 100%;
+					margin: 0;
+                    & a{
+                        padding: 5px 25px;
+                        font-size: 14px;
+                        position: relative;
+                        z-index: 1;
+						color: var(--tp-common-white);
+						width: 100%;
+                        transition: .3s;
+                        border: 0;
+                        text-transform: capitalize;
+                        color: #031753;
+                        letter-spacing: 0;
+                        &::before{
+                            display: none;
+                        }
+                    }
+
+                    &.has-dropdown{
+                        & > a{
+                            display: block;
+                           &::after{
+                            color: #031753;
+                            float: right;
+                            @include transform(translateY(1px) rotate(-90deg));
+                           }
+                        }
+                    }
+                    & .submenu{
+                        left: 120%;
+                        top:0;
+                        visibility: hidden;
+                        opacity: 0;
+                    }
+
+                    &:hover{
+                        &.has-dropdown{
+                            & > a{
+                                &::after{
+                                    color: var(--tp-theme-primary);
+                                }
+                            }
+                        }
+                        & > a{
+                            color: var(--tp-theme-primary);
+                            padding-left: 30px;
+                        }
+
+                        & > .submenu{
+                            left: 100%;
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+            &:hover{
+				& > a{
+                    background: rgba(255, 255, 255, 0.05);
+                    &::before{
+                        width: 100%;
+                        right: auto;
+                        left: 0;
+                    }
+				}
+				& .submenu{
+                    transform: scaleY(1);
+                    top: 100%;
+                    visibility: visible;
+                    opacity: 1;
+				}
+			}
+            
+        }
+    }
+    &.home-2{
+        &  ul {
+            & li{
+                & a{
+                    &::before{
+                        background-image: none;
+                        background-color: #FF3A8A;
+                    }
+                }
+                
+                & .submenu{
+                    & li{
+                        &.has-dropdown{
+                            &:hover{
+                                & > a{
+                                    color: #FF3A8A;
+                                    &::after{
+                                        color: #FF3A8A;
+                                    }
+                                }
+                            }
+                        }
+                        &:hover{
+                            & > a{
+                                color: #FF3A8A;
+                                &::after{
+                                    color: #FF3A8A;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.home-3{
+        padding-left: 40px;
+        @media #{$xxxl} {
+            padding-left: 25px;
+        }
+        @media #{$xl} {
+            padding-left: 15px;
+        }
+        & ul{
+            & li{
+                color: #161616;
+                &.has-dropdown > a::after{
+                    color: #161616;
+                }
+                & a{
+                    @media #{$xxl} {
+                        padding: 50px 24px;
+                    }
+                }
+            }
+        }
+    }
+}

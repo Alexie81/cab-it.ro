@@ -1,0 +1,118 @@
+@use '../../utils' as *;
+/*----------------------------------------*/
+/*  7.7 Faq css
+/*----------------------------------------*/
+
+.tp-faq{
+	&-area{
+		@media #{$xsx} {
+			padding-bottom: 80px;
+		}
+		& .tp-section__title{
+			margin-bottom: 45px;
+		}
+	}
+}
+
+.tp-custom-accordion {
+	& .accordion-items {
+		&:not(.collapsed) {
+			background: var(--tp-common-white);
+			border: 1px solid rgba(4, 18, 31, 0.08);
+			border-radius: 10px;
+			margin-bottom: 16px;
+			transition: all .3s ease;
+		}
+		&.tp-faq-active{
+			box-shadow: 0px 14px 50px rgba(4, 11, 17, 0.12);
+		}
+	}
+
+	& .accordion-buttons ,
+    .accordion-buttons.collapsed {
+		position: relative;
+		width: 100%;
+		font-family: 'Outfit';
+		text-align: left;
+		font-weight: 500;
+        font-size: 22px;
+        line-height: 28px;
+        color: #000D44;
+
+		@media #{$xsx} {
+			font-size: 17px;
+			padding: 22px 38px 20px 20px;
+		}
+
+		&::after {
+			position: absolute;
+			content: "\f077";
+			font-family: 'Font Awesome 5 Pro';
+			background-image: none;
+			top: 32px;
+			right: 45px;
+			width: auto;
+			height: auto;
+			font-weight: 400;
+			font-size: 20px;
+			letter-spacing: 0.05em;
+            color: #162DE4;
+
+			@media #{$xsx} {
+				top: 30px;
+				right: 18px;
+			}
+		}
+
+		&.collapsed {
+			background-color: var(--tp-common-white);
+
+			&::after {
+			color: #000D44;
+				content: '\f078';
+			}
+		}
+        
+	}
+    & .accordion-buttons {
+		width: 100%;
+		font-family: 'Outfit';
+		text-align: left;
+		font-weight: 500;
+        font-size: 22px;
+        line-height: 28px;
+        color: blue;
+		padding: 31px 45px;
+		border-radius: 10px 10px 0 0;
+		@media #{$xsx} {
+			font-size: 20px;
+			padding: 30px 45px 20px 25px;
+		}
+    }
+
+	& .collapsed {
+		border-radius: 10px 10px 10px 10px;
+	}
+
+	& .accordion-body {
+        padding: 0 70px 55px 45px;
+		position: relative;
+		z-index: 1;
+		border-radius: 0 0 10px 10px;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 24px;
+		color: #727885;
+
+		@media #{$xsx} {
+			padding: 0px 42px 45px 32px;
+		}
+	}
+}
+.faq-accordion-border {
+	& .accordion-items {
+		background-color: #FFF;
+		border: 1px solid #F5F5F5;
+		border-radius: 10px;
+	}
+}

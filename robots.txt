@@ -1,5 +1,8 @@
 # Permite accesul complet pentru toate motoarele de căutare
 User-agent: *
+Disallow: /adminpanelcabitro/
+Disallow: /cabit-cms/
+Disallow: /storage/
 Disallow: /cgi-bin/
 Disallow: /tmp/
 Disallow: /junk/

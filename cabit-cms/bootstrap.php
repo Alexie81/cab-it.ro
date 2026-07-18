@@ -147,6 +147,31 @@ function cms_seed(PDO $pdo): void
         }
     }
 
+    $additionalArticles = [
+        [
+            'Cât costă un website profesional în 2026?',
+            'Cât costă un website profesional în 2026? | Cab-IT',
+            'Află ce influențează costul unui website profesional în 2026: structură, design, funcții, SEO, mentenanță și întrebările utile înainte de ofertă.',
+            'cat-costa-website-profesional-2026',
+            'Un ghid transparent despre elementele care formează bugetul unui website și diferența dintre o pagină simplă și o platformă pregătită pentru creștere.',
+            '<h2>Prețul pornește de la obiective, nu de la numărul de pagini</h2><p>Un website de prezentare, un magazin online și o platformă cu automatizări pot avea dimensiuni apropiate, dar niveluri de complexitate foarte diferite. Înainte de estimare trebuie clarificate publicul, acțiunea principală dorită, funcțiile, integrările și modul în care rezultatele vor fi măsurate.</p><h2>Ce intră într-o estimare profesionistă</h2><ul><li><strong>Strategia și arhitectura:</strong> pagini, trasee de conversie și priorități de conținut;</li><li><strong>Designul responsive:</strong> interfață adaptată brandului și testată pe mobil;</li><li><strong>Dezvoltarea:</strong> formulare, catalog, plăți, conturi sau integrări;</li><li><strong>SEO tehnic:</strong> structură semantică, metadata, canonical, sitemap și performanță;</li><li><strong>Lansarea și suportul:</strong> testare, securitate, copii de siguranță și mentenanță.</li></ul><h2>De ce ofertele foarte ieftine nu sunt întotdeauna comparabile</h2><p>Două oferte pot folosi aceeași etichetă, dar să includă livrabile diferite. Un preț redus poate exclude redactarea, optimizarea imaginilor, măsurarea conversiilor, configurarea cookie-urilor sau suportul după lansare. Cere o listă clară de livrabile și află cine răspunde de fiecare etapă.</p><h2>Întrebări utile înainte să ceri oferta</h2><ol><li>Care este obiectivul comercial principal al website-ului?</li><li>Ce trebuie să poată face vizitatorul?</li><li>Cine furnizează textele și imaginile?</li><li>Ce sisteme trebuie conectate?</li><li>Cum vor fi măsurate cererile, apelurile sau vânzările?</li></ol><h2>Bugetul corect este cel legat de utilizare</h2><p>O estimare serioasă separă costul inițial de costurile recurente și explică ipotezele. La Cab-IT Expert evaluăm proiectul după scop, complexitate și responsabilități, apoi propunem o etapizare ușor de urmărit. Astfel poți compara soluțiile pe valoare și risc, nu doar pe suma de pornire.</p>',
+            '/assets/img/case-studies/case-6.webp',
+        ],
+        [
+            'Promovare online în București: cum alegi canalele potrivite',
+            'Promovare online București: ghid pentru firme | Cab-IT',
+            'Descoperă cum alegi între Google Ads, Meta Ads, TikTok și SEO pentru promovare online în București, cu obiective, măsurare și pași practici.',
+            'promovare-online-bucuresti-ghid-firme',
+            'Google Ads, Meta, TikTok sau SEO? Alegerea corectă pornește de la intenția clientului, ofertă, buget și modul în care măsori rezultatele.',
+            '<h2>Începe cu obiectivul comercial</h2><p>Promovarea online nu înseamnă să fii prezent peste tot. Pentru o firmă din București, obiectivul poate fi obținerea de apeluri, cereri de ofertă, programări, vizite în locație sau vânzări online. Canalul se alege după comportamentul clientului și după cât de repede trebuie validată oferta.</p><h2>Când alegi Google Ads</h2><p>Google Ads este potrivit atunci când oamenii caută deja produsul sau serviciul. Campaniile trebuie împărțite pe intenții clare, conectate la pagini relevante și măsurate prin acțiuni reale. Clickurile singure nu arată dacă promovarea este profitabilă.</p><h2>Când alegi Meta sau TikTok</h2><p>Facebook, Instagram și TikTok ajută la descoperire, educare și remarketing. Sunt utile pentru oferte vizuale, audiențe bine definite și mesaje care pot fi testate rapid. Creativul, frecvența și pagina de destinație influențează rezultatul la fel de mult ca setarea audienței.</p><h2>Rolul SEO în planul pe termen lung</h2><p>SEO construiește vizibilitate pentru căutări relevante și reduce dependența de plata fiecărui click, însă are nevoie de fundație tehnică, conținut util și timp de evaluare. Pentru căutări locale sunt importante paginile serviciilor, informațiile consecvente despre firmă și profilul Google Business.</p><h2>Un mix simplu pentru început</h2><ol><li>definește oferta și conversia principală;</li><li>configurează măsurarea înainte de lansare;</li><li>alege un canal cu intenție ridicată;</li><li>testează mesajele și pagina de destinație;</li><li>compară leadurile și vânzările, nu doar traficul;</li><li>investește constant în paginile organice importante.</li></ol><h2>Cum evaluăm performanța</h2><p>Urmărim costul per cerere, calitatea leadurilor, rata de conversie și valoarea comercială. Rezultatele nu pot fi garantate înainte de testare, dar procesul poate fi transparent: ipoteze clare, tracking verificat, rapoarte ușor de înțeles și decizii documentate.</p><h2>Promovare locală, fără mesaje generice</h2><p>În București concurența și costurile diferă mult între industrii. De aceea, strategia trebuie construită în jurul zonei deservite, programului, capacității echipei și avantajului real al firmei. Cab-IT Expert combină promovarea plătită, SEO și optimizarea website-ului într-un plan măsurabil, adaptat fiecărui proiect.</p>',
+            '/assets/img/case-studies/case-3.webp',
+        ],
+    ];
+    $insertAdditionalArticle = $pdo->prepare('INSERT OR IGNORE INTO articles (title, seo_title, meta_description, slug, excerpt, content, cover_image, date_published, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    foreach ($additionalArticles as $article) {
+        $insertAdditionalArticle->execute([$article[0], $article[1], $article[2], $article[3], $article[4], $article[5], $article[6], '2026-07-18', $now, $now]);
+    }
+
     if ((int) $pdo->query('SELECT COUNT(*) FROM works')->fetchColumn() === 0) {
         $categoryIds = [];
         foreach ($pdo->query('SELECT id, slug FROM categories') as $category) {
@@ -276,6 +301,7 @@ function cms_article_page(array $article): string
     $description = cms_e($article['meta_description']);
     $slug = cms_e($article['slug']);
     $image = cms_relative_asset($article['cover_image'], 2);
+    $publishedDate = date('d.m.Y', strtotime((string) $article['date_published']));
     $schema = cms_json([
         '@context' => 'https://schema.org', '@type' => 'BlogPosting', 'headline' => $article['title'],
         'description' => $article['meta_description'], 'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
@@ -288,11 +314,11 @@ function cms_article_page(array $article): string
     return '<!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' .
         '<title>' . $seoTitle . '</title><meta name="description" content="' . $description . '"><meta name="robots" content="index, follow, max-image-preview:large">' .
         '<link rel="canonical" href="' . CABIT_SITE_URL . '/blog/' . $slug . '/"><meta property="og:type" content="article"><meta property="og:title" content="' . $seoTitle . '"><meta property="og:description" content="' . $description . '"><meta property="og:url" content="' . CABIT_SITE_URL . '/blog/' . $slug . '/">' .
-        '<link rel="icon" href="../../img/logo.png"><link rel="stylesheet" href="../../assets/css/site.min.css"><script type="application/ld+json">' . $schema . '</script></head><body>' .
+        '<link rel="icon" href="../../img/logo.png"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260718-6"><script type="application/ld+json">' . $schema . '</script></head><body class="cabit-theme-2026 cabit-page-article">' .
         '<header class="cabit-simple-header"><div class="container"><nav class="cabit-simple-nav" aria-label="Navigare principală"><a href="/"><img src="../../img/logo_home.png" alt="Cab-IT Expert" width="560" height="195"></a><ul><li><a href="/blog/">Blog</a></li><li><a href="/servicii/">Servicii</a></li><li><a href="/glosar-seo/">Ghid SEO</a></li><li><a class="tp-btn-black" href="/contact/">Contact</a></li></ul></nav></div></header>' .
-        '<main><article><header class="cabit-page-header"><div class="container"><span class="cabit-eyebrow">Articol Cab-IT Expert</span><h1>' . $title . '</h1><p>' . cms_e($article['excerpt']) . '</p><p>Publicat la <time datetime="' . cms_e($article['date_published']) . '">' . cms_e($article['date_published']) . '</time></p></div></header>' .
+        '<main><article><header class="cabit-page-header"><div class="container"><span class="cabit-eyebrow">Articol Cab-IT Expert</span><h1>' . $title . '</h1><p>' . cms_e($article['excerpt']) . '</p><p class="cabit-article-date">Publicat la <time datetime="' . cms_e($article['date_published']) . '">' . cms_e($publishedDate) . '</time></p></div></header>' .
         '<section class="cabit-content-section"><div class="container cabit-case-layout"><div class="cabit-content-card cabit-article-content">' . $article['content'] . '</div><aside><div class="cabit-note"><strong>Ai nevoie de o strategie aplicată?</strong><br><a href="/contact/">Discută cu echipa Cab-IT Expert</a>.</div><a class="cabit-text-link" href="/blog/">← Înapoi la blog</a></aside></div></section></article></main>' .
-        '<footer class="cabit-site-footer"><div class="container cabit-site-footer__inner"><span>©Copyright <span data-current-year>2026</span> All Rights Reserved</span><span><a href="/blog/">Blog</a> · <a href="/contact/">Contact</a></span></div></footer><script src="../../assets/js/site-enhancements.js"></script></body></html>';
+        '<footer class="cabit-site-footer"><div class="container cabit-site-footer__inner"><span>©Copyright <span data-current-year>2026</span> All Rights Reserved</span><span><a href="/blog/">Blog</a> · <a href="/contact/">Contact</a></span></div></footer><script src="../../assets/js/site-enhancements.js?v=20260718-6"></script></body></html>';
 }
 
 function cms_generate_article(array $article): void
@@ -328,12 +354,12 @@ function cms_work_page(PDO $pdo, array $work): string
     $testimonial = $work['testimonial'] !== '' ? '<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-content-card"><h2>Feedback de la client</h2><blockquote>' . nl2br(cms_e($work['testimonial'])) . '</blockquote></div></div></section>' : '';
     return '<!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' .
         '<title>' . cms_e($work['seo_title']) . '</title><meta name="description" content="' . cms_e($work['meta_description']) . '"><meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="' . CABIT_SITE_URL . '/portofoliu/' . cms_e($work['slug']) . '/">' .
-        '<link rel="icon" href="../../img/logo.png"><link rel="stylesheet" href="../../assets/css/site.min.css"><script type="application/ld+json">' . $schema . '</script></head><body>' .
+        '<link rel="icon" href="../../img/logo.png"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260718-6"><script type="application/ld+json">' . $schema . '</script></head><body class="cabit-theme-2026 cabit-page-case">' .
         '<header class="cabit-simple-header"><div class="container"><nav class="cabit-simple-nav" aria-label="Navigare principală"><a href="/"><img src="../../img/logo_home.png" alt="Cab-IT Expert" width="560" height="195"></a><ul><li><a href="/portofoliu/">Portofoliu</a></li><li><a href="/servicii/">Servicii</a></li><li><a href="/blog/">Blog</a></li><li><a class="tp-btn-black" href="/contact/">Contact</a></li></ul></nav></div></header>' .
         '<main><section class="cabit-page-header"><div class="container"><span class="cabit-eyebrow">Studiu de caz · ' . cms_e($work['category_name'] ?? 'Portofoliu') . '</span><h1>' . cms_e($work['title']) . '</h1><p>' . cms_e($work['meta_description']) . '</p></div></section>' .
         '<section class="cabit-content-section"><div class="container cabit-case-layout"><article><div class="cabit-content-card"><h2>Obiectivul inițial</h2><p>' . nl2br(cms_e($work['objective'])) . '</p></div><div class="cabit-content-card"><h2>Ce am făcut</h2><p>' . nl2br(cms_e($work['work_done'])) . '</p></div><div class="cabit-content-card"><h2>Rezultate și măsurare</h2><p>' . nl2br(cms_e($work['results'])) . '</p></div></article><aside><div class="cabit-note"><strong>Data adăugării</strong><br><time datetime="' . cms_e($work['date_added']) . '">' . cms_e($work['date_added']) . '</time></div>' . $external . '</aside></div></section>' .
         ($gallery !== '' ? '<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-section-heading"><h2>Galeria proiectului</h2></div><div class="cabit-gallery">' . $gallery . '</div></div></section>' : '') . $testimonial . '</main>' .
-        '<footer class="cabit-site-footer"><div class="container cabit-site-footer__inner"><span>©Copyright <span data-current-year>2026</span> All Rights Reserved</span><span><a href="/portofoliu/">Toate proiectele</a> · <a href="/contact/">Contact</a></span></div></footer><script src="../../assets/js/site-enhancements.js"></script></body></html>';
+        '<footer class="cabit-site-footer"><div class="container cabit-site-footer__inner"><span>©Copyright <span data-current-year>2026</span> All Rights Reserved</span><span><a href="/portofoliu/">Toate proiectele</a> · <a href="/contact/">Contact</a></span></div></footer><script src="../../assets/js/site-enhancements.js?v=20260718-6"></script></body></html>';
 }
 
 function cms_generate_work(PDO $pdo, array $work): void
@@ -366,11 +392,28 @@ function cms_replace_marked_content(string $path, string $startMarker, string $e
 
 function cms_update_blog_index(PDO $pdo): void
 {
-    $articles = $pdo->query('SELECT * FROM articles ORDER BY date_published DESC, created_at DESC, id DESC')->fetchAll();
+    $articles = $pdo->query('SELECT * FROM articles ORDER BY created_at DESC, id DESC')->fetchAll();
+    $blogSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Blog',
+        'name' => 'Blog Cab-IT Expert',
+        'url' => CABIT_SITE_URL . '/blog/',
+        'description' => 'Ghiduri de marketing digital pentru IMM-uri din România.',
+        'publisher' => ['@id' => CABIT_SITE_URL . '/#organization'],
+        'inLanguage' => 'ro-RO',
+        'blogPost' => array_map(static fn(array $article): array => [
+            '@type' => 'BlogPosting',
+            'headline' => $article['title'],
+            'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
+            'datePublished' => $article['date_published'],
+        ], $articles),
+    ];
+    cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_SCHEMA_START -->', '<!-- CMS_BLOG_SCHEMA_END -->', '<script type="application/ld+json">' . cms_json($blogSchema) . '</script>');
     $cards = [];
     foreach ($articles as $article) {
         $image = cms_relative_asset($article['cover_image'], 1);
-        $cards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($article['title']) . '" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><span class="cabit-eyebrow">Articol</span><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
+        $date = date('d.m.Y', strtotime((string) $article['date_published']));
+        $cards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($article['title']) . '" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>Articol</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_CARDS_START -->', '<!-- CMS_BLOG_CARDS_END -->', implode("\n", $cards));
 
@@ -397,7 +440,7 @@ function cms_update_portfolio_index(PDO $pdo): void
     foreach ($works as $work) {
         $class = $work['category_id'] ? ' cms-cat-' . (int) $work['category_id'] : '';
         $image = cms_relative_asset($work['cover_image'], 1);
-        $cards[] = '<div class="col-lg-6 col-md-6 grid-item' . $class . '"><div class="tp-portfolio-item-2 tp-img-reveal tp-img-reveal-item mb-20" data-fx="24" data-meta-tag="' . cms_e($work['category_name'] ?: 'Proiect') . '" data-title="' . cms_e($work['title']) . '"><div class="tp-portfolio-thumb-4"><a href="/portofoliu/' . cms_e($work['slug']) . '/"><img src="' . cms_e($image) . '" alt="Studiu de caz ' . cms_e($work['title']) . '" loading="lazy" decoding="async"></a></div></div></div>';
+        $cards[] = '<div class="col-lg-6 col-md-6 grid-item' . $class . '"><article class="tp-portfolio-item-2 cabit-portfolio-card mb-20" data-meta-tag="' . cms_e($work['category_name'] ?: 'Proiect') . '" data-title="' . cms_e($work['title']) . '"><a href="/portofoliu/' . cms_e($work['slug']) . '/"><div class="tp-portfolio-thumb-4"><img src="' . cms_e($image) . '" alt="Studiu de caz ' . cms_e($work['title']) . '" loading="lazy" decoding="async"></div><div class="cabit-portfolio-card__body"><span>' . cms_e($work['category_name'] ?: 'Proiect') . '</span><h2>' . cms_e($work['title']) . '</h2><p>' . cms_e($work['meta_description']) . '</p><strong>Vezi studiul de caz <i aria-hidden="true">→</i></strong></div></a></article></div>';
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/portofoliu/index.html', '<!-- CMS_PORTFOLIO_FILTERS_START -->', '<!-- CMS_PORTFOLIO_FILTERS_END -->', implode("\n", $filters));
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/portofoliu/index.html', '<!-- CMS_PORTFOLIO_CARDS_START -->', '<!-- CMS_PORTFOLIO_CARDS_END -->', implode("\n", $cards));

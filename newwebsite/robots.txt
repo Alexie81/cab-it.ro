@@ -1,0 +1,41 @@
+# CAB-IT Expert SRL — acces public pentru motoare de căutare și servicii AI
+User-agent: *
+Allow: /
+Disallow: /adminpanelcabitro/
+Disallow: /cabit-cms/
+Disallow: /storage/
+Disallow: /PHPMailer/
+
+# Google Search
+User-agent: Googlebot
+Allow: /
+Disallow: /adminpanelcabitro/
+Disallow: /cabit-cms/
+Disallow: /storage/
+Disallow: /PHPMailer/
+
+# ChatGPT Search
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /adminpanelcabitro/
+Disallow: /cabit-cms/
+Disallow: /storage/
+Disallow: /PHPMailer/
+
+# OpenAI model crawler
+User-agent: GPTBot
+Allow: /
+Disallow: /adminpanelcabitro/
+Disallow: /cabit-cms/
+Disallow: /storage/
+Disallow: /PHPMailer/
+
+# Pagini accesate la cererea utilizatorilor ChatGPT
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /adminpanelcabitro/
+Disallow: /cabit-cms/
+Disallow: /storage/
+Disallow: /PHPMailer/
+
+Sitemap: https://cab-it.ro/sitemap.xml

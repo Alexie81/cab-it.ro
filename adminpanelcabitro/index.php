@@ -12,9 +12,19 @@ function admin_flash(string $message, string $type = 'success'): void
     $_SESSION['flash'] = ['message' => $message, 'type' => $type];
 }
 
+function admin_is_ajax(): bool
+{
+    return strtolower((string) ($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '')) === 'xmlhttprequest';
+}
+
 function admin_redirect(string $section = 'dashboard', array $params = []): never
 {
     $query = http_build_query(array_merge(['section' => $section], $params));
+    if (admin_is_ajax()) {
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode(['ok' => true, 'redirect' => 'index.php?' . $query], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        exit;
+    }
     header('Location: index.php?' . $query);
     exit;
 }
@@ -66,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && admin_post('action') === 'login') {
 }
 
 if (!cms_is_admin()) {
-    ?><!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Autentificare CMS | Cab-IT Expert</title><link rel="stylesheet" href="styles.css"></head><body class="admin-login-page"><main class="admin-login-card"><img src="<?= cms_e($base . '/img/logo_home.png') ?>" alt="Cab-IT Expert"><span class="admin-kicker">Administrare website</span><h1>Autentificare</h1><p>Acces securizat pentru administrarea conținutului Cab-IT Expert.</p><?php if (!empty($loginError)): ?><div class="admin-alert is-error"><?= cms_e($loginError) ?></div><?php endif; ?><form method="post"><input type="hidden" name="action" value="login"><input type="hidden" name="csrf" value="<?= cms_e(cms_csrf()) ?>"><label>Utilizator<input name="username" autocomplete="username" required></label><label>Parolă<input type="password" name="password" autocomplete="current-password" required></label><button type="submit">Intră în panou</button></form><a class="admin-back" href="<?= cms_e($base . '/') ?>">← Înapoi la site</a></main></body></html><?php
+    ?><!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Autentificare CMS | Cab-IT Expert</title><link rel="icon" type="image/png" href="<?= cms_e($base . '/img/logo.png?v=20260718-3') ?>"><link rel="apple-touch-icon" href="<?= cms_e($base . '/img/logo.png?v=20260718-3') ?>"><link rel="stylesheet" href="styles.css?v=20260718-2"></head><body class="admin-login-page"><main class="admin-login-card"><img src="<?= cms_e($base . '/img/logo_home.png') ?>" alt="Cab-IT Expert"><span class="admin-kicker">Administrare website</span><h1>Autentificare</h1><p>Acces securizat pentru administrarea conținutului Cab-IT Expert.</p><?php if (!empty($loginError)): ?><div class="admin-alert is-error"><?= cms_e($loginError) ?></div><?php endif; ?><form method="post"><input type="hidden" name="action" value="login"><input type="hidden" name="csrf" value="<?= cms_e(cms_csrf()) ?>"><label>Utilizator<input name="username" autocomplete="username" required></label><label>Parolă<input type="password" name="password" autocomplete="current-password" required></label><button type="submit">Intră în panou</button></form><a class="admin-back" href="<?= cms_e($base . '/') ?>">← Înapoi la site</a></main></body></html><?php
     exit;
 }
 
@@ -301,7 +311,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
         }
-        admin_flash($error instanceof PDOException && str_contains($error->getMessage(), 'UNIQUE') ? 'Slugul sau numele există deja.' : $error->getMessage(), 'error');
+        $errorMessage = $error instanceof PDOException && str_contains($error->getMessage(), 'UNIQUE') ? 'Slugul sau numele există deja.' : $error->getMessage();
+        if (admin_is_ajax()) {
+            header('Content-Type: application/json; charset=UTF-8');
+            echo json_encode(['ok' => false, 'message' => $errorMessage], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            exit;
+        }
+
+        $failedAction = admin_post('action');
+        if (in_array($failedAction, ['save_article', 'save_work', 'save_category'], true)) {
+            $_SESSION['form_recovery'] = ['action' => $failedAction, 'values' => $_POST];
+        }
+        admin_flash($errorMessage, 'error');
+        if ($failedAction === 'save_article') {
+            $articleId = (int) ($_POST['id'] ?? 0);
+            admin_redirect('articles', $articleId ? ['edit' => $articleId] : ['new' => 1]);
+        }
+        if ($failedAction === 'save_work') {
+            $workId = (int) ($_POST['id'] ?? 0);
+            admin_redirect('portfolio', $workId ? ['edit' => $workId] : ['new' => 1]);
+        }
+        if ($failedAction === 'save_category') {
+            $categoryId = (int) ($_POST['id'] ?? 0);
+            admin_redirect('categories', $categoryId ? ['edit' => $categoryId] : []);
+        }
         admin_redirect($_GET['section'] ?? admin_post('return_section', 'dashboard'));
     }
 }
@@ -313,6 +346,8 @@ if (!in_array($section, $allowedSections, true)) {
 }
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
+$formRecovery = $_SESSION['form_recovery'] ?? null;
+unset($_SESSION['form_recovery']);
 $counts = [
     'articles' => (int) $pdo->query('SELECT COUNT(*) FROM articles')->fetchColumn(),
     'works' => (int) $pdo->query('SELECT COUNT(*) FROM works')->fetchColumn(),
@@ -324,7 +359,7 @@ $csrf = cms_csrf();
 <html lang="ro-RO">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
-  <title>Admin Cab-IT Expert</title><link rel="stylesheet" href="styles.css">
+  <title>Admin Cab-IT Expert</title><link rel="icon" type="image/png" href="<?= cms_e($base . '/img/logo.png?v=20260718-3') ?>"><link rel="apple-touch-icon" href="<?= cms_e($base . '/img/logo.png?v=20260718-3') ?>"><link rel="stylesheet" href="styles.css?v=20260718-2">
 </head>
 <body class="admin-app">
   <aside class="admin-sidebar">
@@ -342,7 +377,10 @@ $csrf = cms_csrf();
   <div class="admin-shell">
     <header class="admin-topbar"><button class="admin-menu-button" type="button" aria-label="Deschide meniul">☰</button><div><strong>Cab-IT Expert CMS</strong><span>Conectat ca <?= cms_e((string) $_SESSION['admin_username']) ?></span></div><a href="<?= cms_e($base . '/') ?>" target="_blank" rel="noopener">Vezi site-ul ↗</a></header>
     <main class="admin-main">
-      <?php if ($flash): ?><div class="admin-alert <?= $flash['type'] === 'error' ? 'is-error' : '' ?>"><?= cms_e($flash['message']) ?></div><?php endif; ?>
+      <?php if ($flash && $flash['type'] !== 'error'): ?><div class="admin-alert"><?= cms_e($flash['message']) ?></div><?php endif; ?>
+      <div class="admin-popup" id="admin-error-popup" <?= $flash && $flash['type'] === 'error' ? '' : 'hidden' ?> aria-hidden="<?= $flash && $flash['type'] === 'error' ? 'false' : 'true' ?>">
+        <div class="admin-popup__backdrop" data-popup-close></div><section class="admin-popup__dialog" role="alertdialog" aria-modal="true" aria-labelledby="admin-popup-title"><span class="admin-popup__icon" aria-hidden="true">!</span><div><span class="admin-kicker">Verifică formularul</span><h2 id="admin-popup-title">Modificările tale sunt păstrate</h2><p data-popup-message><?= $flash && $flash['type'] === 'error' ? cms_e($flash['message']) : '' ?></p></div><button class="admin-popup__close" type="button" data-popup-close>Închide și continuă editarea</button></section>
+      </div>
 
       <?php if ($section === 'dashboard'): ?>
         <div class="admin-heading"><div><span class="admin-kicker">Prezentare generală</span><h1>Dashboard</h1></div></div>
@@ -352,9 +390,9 @@ $csrf = cms_csrf();
 
       <?php if ($section === 'articles'):
           $editArticle = isset($_GET['edit']) ? admin_article_by_id($pdo, (int) $_GET['edit']) : null;
-          $articles = $pdo->query('SELECT * FROM articles ORDER BY date_published DESC, id DESC')->fetchAll(); ?>
+          $articles = $pdo->query('SELECT * FROM articles ORDER BY created_at DESC, id DESC')->fetchAll(); ?>
         <div class="admin-heading"><div><span class="admin-kicker">Blog</span><h1><?= $editArticle ? 'Editează articolul' : 'Articole' ?></h1></div><a class="admin-primary-link" href="?section=articles&new=1">Articol nou</a></div>
-        <?php if ($editArticle || isset($_GET['new'])): $article = $editArticle ?: ['id'=>'','title'=>'','seo_title'=>'','meta_description'=>'','slug'=>'','excerpt'=>'','content'=>'','cover_image'=>'','date_published'=>date('Y-m-d')]; ?>
+        <?php if ($editArticle || isset($_GET['new'])): $article = $editArticle ?: ['id'=>'','title'=>'','seo_title'=>'','meta_description'=>'','slug'=>'','excerpt'=>'','content'=>'','cover_image'=>'','date_published'=>date('Y-m-d')]; if (($formRecovery['action'] ?? '') === 'save_article') { $article = array_replace($article, $formRecovery['values']); } ?>
           <form class="admin-panel admin-form" method="post" enctype="multipart/form-data"><input type="hidden" name="action" value="save_article"><input type="hidden" name="csrf" value="<?= cms_e($csrf) ?>"><input type="hidden" name="id" value="<?= (int) $article['id'] ?>">
             <div class="admin-form-grid"><label>Titlul articolului<input name="title" value="<?= cms_e($article['title']) ?>" required></label><label>Data publicării<input type="date" name="date_published" value="<?= cms_e($article['date_published']) ?>" required></label></div>
             <label>SEO Title <small>recomandat maximum 60 caractere</small><input name="seo_title" maxlength="80" value="<?= cms_e($article['seo_title']) ?>" required></label>
@@ -375,7 +413,7 @@ $csrf = cms_csrf();
           $works = $pdo->query('SELECT w.*, c.name AS category_name FROM works w LEFT JOIN categories c ON c.id=w.category_id ORDER BY w.date_added DESC, w.id DESC')->fetchAll();
           $categories = $pdo->query('SELECT * FROM categories ORDER BY name')->fetchAll(); ?>
         <div class="admin-heading"><div><span class="admin-kicker">Studii de caz</span><h1><?= $editWork ? 'Editează lucrarea' : 'Portofoliu' ?></h1></div><a class="admin-primary-link" href="?section=portfolio&new=1">Lucrare nouă</a></div>
-        <?php if ($editWork || isset($_GET['new'])): $work = $editWork ?: ['id'=>'','title'=>'','seo_title'=>'','meta_description'=>'','slug'=>'','category_id'=>'','objective'=>'','work_done'=>'','results'=>'','testimonial'=>'','external_url'=>'','cover_image'=>'','date_added'=>date('Y-m-d')]; ?>
+        <?php if ($editWork || isset($_GET['new'])): $work = $editWork ?: ['id'=>'','title'=>'','seo_title'=>'','meta_description'=>'','slug'=>'','category_id'=>'','objective'=>'','work_done'=>'','results'=>'','testimonial'=>'','external_url'=>'','cover_image'=>'','date_added'=>date('Y-m-d')]; if (($formRecovery['action'] ?? '') === 'save_work') { $work = array_replace($work, $formRecovery['values']); } ?>
           <form class="admin-panel admin-form" method="post" enctype="multipart/form-data"><input type="hidden" name="action" value="save_work"><input type="hidden" name="csrf" value="<?= cms_e($csrf) ?>"><input type="hidden" name="id" value="<?= (int) $work['id'] ?>">
             <div class="admin-form-grid"><label>Numele lucrării<input name="title" value="<?= cms_e($work['title']) ?>" required></label><label>Data adăugării<input type="date" name="date_added" value="<?= cms_e($work['date_added']) ?>" required></label></div>
             <div class="admin-form-grid"><label>Categorie<select name="category_id"><option value="">Fără categorie</option><?php foreach ($categories as $category): ?><option value="<?= (int) $category['id'] ?>" <?= (int) $work['category_id'] === (int) $category['id'] ? 'selected' : '' ?>><?= cms_e($category['name']) ?></option><?php endforeach; ?></select></label><label>Slug URL<input name="slug" pattern="[a-z0-9-]+" value="<?= cms_e($work['slug']) ?>"></label></div>
@@ -391,7 +429,7 @@ $csrf = cms_csrf();
         <section class="admin-panel"><h2>Toate lucrările</h2><div class="admin-table-wrap"><table><thead><tr><th>Lucrare</th><th>Categorie</th><th>Data</th><th>Acțiuni</th></tr></thead><tbody><?php foreach ($works as $work): ?><tr><td><strong><?= cms_e($work['title']) ?></strong><small><code>/portofoliu/<?= cms_e($work['slug']) ?>/</code></small></td><td><?= cms_e($work['category_name'] ?: '—') ?></td><td><?= cms_e($work['date_added']) ?></td><td class="admin-row-actions"><a href="?section=portfolio&edit=<?= (int) $work['id'] ?>">Editează</a><a href="<?= cms_e($base . '/portofoliu/' . $work['slug'] . '/') ?>" target="_blank">Vezi</a><form method="post" onsubmit="return confirm('Ștergi lucrarea, imaginile și pagina publică?')"><input type="hidden" name="action" value="delete_work"><input type="hidden" name="csrf" value="<?= cms_e($csrf) ?>"><input type="hidden" name="id" value="<?= (int) $work['id'] ?>"><button class="is-danger" type="submit">Șterge</button></form></td></tr><?php endforeach; ?></tbody></table></div></section>
       <?php endif; ?>
 
-      <?php if ($section === 'categories'): $categories = $pdo->query('SELECT c.*, COUNT(w.id) AS works_count FROM categories c LEFT JOIN works w ON w.category_id=c.id GROUP BY c.id ORDER BY c.name')->fetchAll(); $editCategory = null; if (isset($_GET['edit'])) { foreach ($categories as $candidate) { if ((int) $candidate['id'] === (int) $_GET['edit']) $editCategory = $candidate; } } ?>
+      <?php if ($section === 'categories'): $categories = $pdo->query('SELECT c.*, COUNT(w.id) AS works_count FROM categories c LEFT JOIN works w ON w.category_id=c.id GROUP BY c.id ORDER BY c.name')->fetchAll(); $editCategory = null; if (isset($_GET['edit'])) { foreach ($categories as $candidate) { if ((int) $candidate['id'] === (int) $_GET['edit']) $editCategory = $candidate; } } if (($formRecovery['action'] ?? '') === 'save_category') { $editCategory = array_replace($editCategory ?: ['id'=>'','name'=>'','slug'=>''], $formRecovery['values']); } ?>
         <div class="admin-heading"><div><span class="admin-kicker">Portofoliu</span><h1>Categorii lucrări</h1></div></div><div class="admin-two-columns"><form class="admin-panel admin-form" method="post"><input type="hidden" name="action" value="save_category"><input type="hidden" name="csrf" value="<?= cms_e($csrf) ?>"><input type="hidden" name="id" value="<?= (int) ($editCategory['id'] ?? 0) ?>"><h2><?= $editCategory ? 'Editează categoria' : 'Categorie nouă' ?></h2><label>Nume<input name="name" value="<?= cms_e($editCategory['name'] ?? '') ?>" required></label><label>Slug<input name="slug" pattern="[a-z0-9-]+" value="<?= cms_e($editCategory['slug'] ?? '') ?>"></label><button type="submit">Salvează categoria</button></form><section class="admin-panel"><h2>Categorii existente</h2><div class="admin-table-wrap"><table><thead><tr><th>Nume</th><th>Lucrări</th><th>Acțiuni</th></tr></thead><tbody><?php foreach ($categories as $category): ?><tr><td><?= cms_e($category['name']) ?><small><code><?= cms_e($category['slug']) ?></code></small></td><td><?= (int) $category['works_count'] ?></td><td class="admin-row-actions"><a href="?section=categories&edit=<?= (int) $category['id'] ?>">Editează</a><form method="post" onsubmit="return confirm('Ștergi categoria? Lucrările vor rămâne fără categorie.')"><input type="hidden" name="action" value="delete_category"><input type="hidden" name="csrf" value="<?= cms_e($csrf) ?>"><input type="hidden" name="id" value="<?= (int) $category['id'] ?>"><button class="is-danger" type="submit">Șterge</button></form></td></tr><?php endforeach; ?></tbody></table></div></section></div>
       <?php endif; ?>
 
@@ -404,6 +442,6 @@ $csrf = cms_csrf();
       <?php endif; ?>
     </main>
   </div>
-  <script>document.querySelector('.admin-menu-button')?.addEventListener('click',()=>document.body.classList.toggle('admin-menu-open'));</script>
+  <script src="admin.js?v=20260718-2"></script>
 </body>
 </html>

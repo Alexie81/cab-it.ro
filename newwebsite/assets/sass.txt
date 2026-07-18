@@ -1,0 +1,1 @@
+sass --watch "C:\Users\Pranta\Dropbox\pranto\Cetalog\Cetalog-prev\assets\scss\main.scss":"C:\Users\Pranta\Dropbox\pranto\Cetalog\Cetalog-prev\assets\css\main.css"

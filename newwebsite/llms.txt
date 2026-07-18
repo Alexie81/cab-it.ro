@@ -1,0 +1,29 @@
+# CAB-IT Expert SRL
+
+> CAB-IT Expert SRL este o agenție digitală din București care oferă creare website, promovare online, SEO, Google Ads, Social Media Ads și automatizări AI pentru firme din România.
+
+## Pagini principale
+
+- Acasă: https://cab-it.ro/
+- Servicii: https://cab-it.ro/servicii/
+- Creare website București: https://cab-it.ro/servicii/creare-site-web/
+- Optimizare SEO: https://cab-it.ro/servicii/seo/
+- Promovare online și Google Ads: https://cab-it.ro/servicii/reclame-platite/
+- Social Media: https://cab-it.ro/servicii/social-media/
+- Automatizări și integrări digitale: https://cab-it.ro/servicii/integrari-digitale/
+- Portofoliu: https://cab-it.ro/portofoliu/
+- Blog: https://cab-it.ro/blog/
+- Contact: https://cab-it.ro/contact/
+
+## Informații importante
+
+- Auditul website-ului este gratuit și este livrat manual prin email în maximum 30 de minute.
+- CAB-IT Expert SRL este Google Partner.
+- Telefon și WhatsApp: +40 771 532 949
+- Email: contact@cab-it.ro
+- Locație: București, România; serviciile sunt disponibile în toată țara.
+
+## Indexare
+
+- Sitemap XML: https://cab-it.ro/sitemap.xml
+- Articolele și proiectele au pagini HTML indexabile și date `dateModified` actualizate la ultima editare din CMS.

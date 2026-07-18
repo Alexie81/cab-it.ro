@@ -1,0 +1,130 @@
+@use '../../utils' as *;
+/*----------------------------------------*/
+/*  4.1 Main menu css
+/*----------------------------------------*/
+
+.mean-container{
+	& a{
+		&.meanmenu-reveal{
+			display: none !important;
+		}
+	}
+	& .mean-nav {
+		background: none;
+		margin-top: 0;
+		margin-bottom: 15px;
+		& > ul {
+			padding: 0;
+			margin: 0;
+			width: 100%;
+			list-style-type: none;
+			display: block !important;
+
+			& > li{
+				&:first-child{
+					& > a{
+						border-top: 0;
+						&:hover{
+							background: none;
+							color: #00a8ff;
+						}
+					}
+				}
+			}
+		}
+
+		& ul{
+			& li{
+				&.dropdown-opened {
+					& > a{
+						color: var(--tp-common-white);
+					}
+				}
+
+				& a{
+					width: 100%;
+					padding: 10px 0;
+					color: var(--tp-common-white);
+					font-size: 14px;
+					line-height: 1.5;
+					font-weight: 700;
+					border-bottom: 1px solid rgba($color: #fff, $alpha: .1);
+					&:hover{
+						background: none;
+						color: #00a8ff;
+					}
+					&.mean-expand {
+						margin-top: 5px;
+						padding: 0 !important;
+						border: 1px solid rgba($color: #ffff, $alpha: .1);
+						height: 30px;
+						width: 30px;
+						line-height: 28px;
+						top: 0;
+						font-weight: 400;
+						transition: .2s ease;
+						&:hover{
+							background: #00a8ff;
+							color: var(--tp-common-white);
+						}
+
+						&.mean-clicked{
+							background: #00a8ff;
+							color: var(--tp-common-white);
+
+							& i{
+								@include transform(rotate(45deg));
+								color: var(--tp-common-white);
+							}
+						}
+					}
+				}
+
+				& > a{
+					& > i{
+						display: none;
+					}
+					& .mean-expand {
+						& i{
+							display: inline-block;
+						}
+					}
+				}
+			}
+		}
+	}
+	& .mean-bar {
+		padding: 0;
+		min-height: auto;
+		background: none;
+		margin-bottom: 40px;
+	}
+}
+
+
+.mean-container .mean-nav ul li li a {
+	width: 80%;
+	padding: 10px 10%;
+	text-shadow: none !important;
+	visibility: visible;
+}
+
+.mean-container .mean-nav ul li.mean-last a {
+	border-bottom: none;
+	margin-bottom: 0;
+}
+
+.mean-container .mean-nav ul li li li a {
+	width: 70%;
+	padding: 10px 15%;
+}
+
+.mean-container .mean-nav ul li li li li a {
+	width: 60%;
+	padding: 10px 20%;
+}
+
+.mean-container .mean-nav ul li li li li li a {
+	width: 50%;
+	padding: 10px 25%;
+}
