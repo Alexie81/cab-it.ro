@@ -31,35 +31,37 @@
    <link rel="alternate" href="https://cab-it.ro/servicii/" hreflang="ro">
 
    <!-- CSS here -->
-   <link rel="stylesheet" href="../assets/css/bootstrap.css">
-   <link rel="stylesheet" href="../assets/css/meanmenu.css">
-   <link rel="stylesheet" href="../assets/css/animate.css">
-   <link rel="stylesheet" href="../assets/css/swiper-bundle.css">
-   <link rel="stylesheet" href="../assets/css/slick.css">
-   <link rel="stylesheet" href="../assets/css/nouislider.css">
-   <link rel="stylesheet" href="../assets/css/magnific-popup.css">
-   <link rel="stylesheet" href="../assets/css/font-awesome-pro.css">
-   <link rel="stylesheet" href="../assets/css/spacing.css">
-   <link rel="stylesheet" href="../assets/css/main.css">
+   <link rel="stylesheet" href="../assets/css/site.min.css">
+   <link rel="stylesheet" href="../assets/css/animate.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/swiper-bundle.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/slick.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/nouislider.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/magnific-popup.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/font-awesome-pro.css" media="print" onload="this.media='all'">
+   <style>#loading{display:none!important}</style>
 
 
 
    <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": ["Organization", "LocalBusiness"],
         "@id": "https://cab-it.ro/#organization",
         "name": "Cab-IT Expert",
+        "legalName": "CAB-IT EXPERT SRL",
+        "slogan": "Future is Online",
         "url": "https://cab-it.ro/",
         "logo": "https://cab-it.ro/img/logo.png",
         "telephone": "+40771532949",
         "email": "contact@cab-it.ro",
         "sameAs": [
-          "https://www.facebook.com/profile.php?id=61570953801167",
+          "https://www.facebook.com/profile.php?id=61592087996523",
           "https://www.instagram.com/cabitexpert/",
-          "https://www.linkedin.com/company/cab-it-expert/"
+          "https://www.linkedin.com/company/cab-it-expert/",
+          "https://x.com/cabitexpert",
+          "https://www.youtube.com/@cabitexpert"
         ],
-        "description": "Promovare Google, TikTok, Instagram și creare site web personalizat în România. Soluții eficiente pentru afaceri mici și mijlocii.",
+        "description": "Agenție digitală din București specializată în website-uri, magazine online, SEO, Google Ads, social media, automatizări și agenți AI pentru afaceri din România.",
         "areaServed": [
           "România",
           "București"
@@ -73,9 +75,12 @@
         },
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "Intrarea Humulești 6A",
           "addressLocality": "București",
+          "postalCode": "052034",
           "addressCountry": "RO"
-        }
+        },
+        "openingHours": "Mo-Su 00:00-23:59"
       }
       </script>
 
@@ -92,15 +97,6 @@
   gtag('js', new Date());
 
   gtag('config', 'G-QPKXFL2GW9');
-</script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11509007584">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
   gtag('config', 'AW-11509007584');
 </script>
 <script>
@@ -187,7 +183,7 @@ function gtag_report_conversion(url) {
             <div class="col-xl-6 d-none d-xl-block">
                <div class="tp-main-menu-area d-flex align-items-center pl-20 ">
                   <div class="tp-header-navbar tp-toogle d-none d-xxl-block">
-                     <a href="javascript:void(0)"><i class="fa-regular fa-bars"></i></a>
+                     <a href="#tp-mobile-menu" aria-label="Navigare"><i class="fa-regular fa-bars"></i></a>
                   </div>
                   <div class="tp-main-menu d-none d-xl-block">
                      <nav id="tp-mobile-menu">
@@ -196,12 +192,14 @@ function gtag_report_conversion(url) {
                               <a href="https://cab-it.ro">Acasa</a>
                            </li>
                            <li class="has-dropdown">
-                              <a href="javascript:void(0);">Meniu</a>
+                              <a href="/servicii/">Meniu</a>
                               <ul class="submenu">
                                  <li><a href="https://cab-it.ro/despre-noi/">Despre Noi</a></li>
-                                 <li><a href="javascript:void(0);">Servicii</a></li>
+                                 <li><a href="/servicii/">Servicii</a></li>
                                  <li><a href="https://cab-it.ro/preturi/">Preturi</a></li>
                                  <li><a href="https://cab-it.ro/portofoliu/">Portfoliu</a></li>
+                                 <li><a href="/blog/">Blog</a></li>
+                                 <li><a href="/glosar-seo/">Ghid SEO</a></li>
                               </ul>
                            </li>
                            <li><a href="https://cab-it.ro/contact/">Contact</a></li>
@@ -265,8 +263,10 @@ function gtag_report_conversion(url) {
                </div>
                <div class="tp-footer-social-1">
                   <a href="https://www.youtube.com/@cabitexpert"><i class="fa-brands fa-youtube"></i></a>
-                  <a href="https://www.facebook.com/profile.php?id=61570953801167"><i class="fa-brands fa-facebook-f"></i></a>
+                  <a href="https://www.facebook.com/profile.php?id=61592087996523"><i class="fa-brands fa-facebook-f"></i></a>
                   <a href="https://www.instagram.com/cabitexpert/"><i class="fa-brands fa-instagram"></i></a>
+                  <a href="https://www.linkedin.com/company/cab-it-expert/"><i class="fa-brands fa-linkedin-in"></i></a>
+                  <a href="https://x.com/cabitexpert" aria-label="X Cab-IT Expert"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="15" height="15"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
                </div>
             </div>
          </div>
@@ -284,7 +284,7 @@ function gtag_report_conversion(url) {
                <div class="search__wrapper">
                   <div class="search__top d-flex justify-content-between align-items-center">
                      <div class="search__logo">
-                        <a href="home-main.html">
+                        <a href="/">
                            <img src="../assets/img/logo/logo.png" alt="logo">
                         </a>
                      </div>
@@ -347,13 +347,13 @@ function gtag_report_conversion(url) {
                data-wow-delay=".3s">
                   <div class="tp-service-item p-relative mb-30">
                      <div class="tp-service-icon d-flex justify-content-center">
-                        <img src="../assets/img/services/services-1.jpg" alt="Marketing pentru motoarele de căutare">
+                        <img src="../assets/img/services/services-1.jpg" alt="Marketing pentru motoarele de căutare" loading="lazy" decoding="async">
                      </div>
                      <div class="tp-service-content text-center">
-                        <h3 class="service-title"><a href="https://cab-it.ro/contact/">Marketing-ul motoarelor de căutare</a></h3>
+                        <h3 class="service-title"><a href="/servicii/seo/">Marketing pentru motoarele de căutare</a></h3>
                         <p>Optimizarea site-ului pentru a fi în top în căutările online, pentru a atrage trafic și clienți relevanți.</p>
                         <div class="tp-service-btn">
-                           <a href="https://cab-it.ro/contact/"><i class="fa-regular fa-arrow-right"></i> Contact</a>
+                           <a href="/servicii/seo/"><i class="fa-regular fa-arrow-right"></i> Vezi serviciul</a>
                         </div>
                      </div>
                   </div>
@@ -362,13 +362,13 @@ function gtag_report_conversion(url) {
                data-wow-delay=".3s">
                   <div class="tp-service-item p-relative mb-30">
                      <div class="tp-service-icon d-flex justify-content-center">
-                        <img src="../assets/img/services/services-2.jpg" alt="Optimizare reclame plătite online">
+                         <img src="../assets/img/services/services-2.jpg" alt="Optimizare reclame plătite online" loading="lazy" decoding="async">
                      </div>
                      <div class="tp-service-content text-center">
-                        <h3 class="service-title"><a href="https://cab-it.ro/contact/">Optimizarea Reclamelor Plătite</a></h3>
+                         <h3 class="service-title"><a href="/servicii/reclame-platite/">Optimizarea reclamelor plătite</a></h3>
                         <p>Maximizarea eficienței și vizibilității reclamelor online pentru a atrage și converti clienți potențiali în cumpărători.</p>
                         <div class="tp-service-btn">
-                           <a href="https://cab-it.ro/contact/"><i class="fa-regular fa-arrow-right"></i> Contact</a>
+                            <a href="/servicii/reclame-platite/"><i class="fa-regular fa-arrow-right"></i> Vezi serviciul</a>
                         </div>
                      </div>
                   </div>
@@ -377,13 +377,13 @@ function gtag_report_conversion(url) {
                data-wow-delay=".3s">
                   <div class="tp-service-item p-relative mb-30">
                      <div class="tp-service-icon d-flex justify-content-center">
-                        <img src="../assets/img/services/services-4.jpg" alt="Servicii SEO locale și regionale">
+                         <img src="../assets/img/services/services-4.jpg" alt="Servicii SEO locale și regionale" loading="lazy" decoding="async">
                      </div>
                      <div class="tp-service-content text-center">
-                        <h3 class="service-title"><a href="https://cab-it.ro/contact/">Servicii SEO locale/regionale</a></h3>
+                         <h3 class="service-title"><a href="/servicii/seo-local/">Servicii SEO locale și regionale</a></h3>
                         <p>Optimizăm site-uri pentru a atrage clienți locali/regionali, crescând vizibilitatea și relevanța în căutările online.</p>
                         <div class="tp-service-btn">
-                           <a href="https://cab-it.ro/contact/"><i class="fa-regular fa-arrow-right"></i> Contact</a>
+                            <a href="/servicii/seo-local/"><i class="fa-regular fa-arrow-right"></i> Vezi serviciul</a>
                         </div>
                      </div>
                   </div>
@@ -392,13 +392,13 @@ function gtag_report_conversion(url) {
                data-wow-delay=".3s">
                   <div class="tp-service-item p-relative mb-30">
                      <div class="tp-service-icon d-flex justify-content-center">
-                        <img src="../assets/img/services/services-5.jpg" alt="Optimizare conversii pentru website">
+                         <img src="../assets/img/services/services-5.jpg" alt="Optimizare conversii pentru website" loading="lazy" decoding="async">
                      </div>
                      <div class="tp-service-content text-center">
-                        <h3 class="service-title"><a href="https://cab-it.ro/contact/">Conversia vizitatorilor evaluată</a></h3>
+                         <h3 class="service-title"><a href="/servicii/optimizare-conversii/">Optimizarea conversiilor</a></h3>
                         <p>Măsurarea transformării vizitatorilor în clienți sau acțiuni dorite pe un site web.</p>
                         <div class="tp-service-btn">
-                           <a href="https://cab-it.ro/contact/"><i class="fa-regular fa-arrow-right"></i> Contact</a>
+                            <a href="/servicii/optimizare-conversii/"><i class="fa-regular fa-arrow-right"></i> Vezi serviciul</a>
                         </div>
                      </div>
                   </div>
@@ -407,13 +407,13 @@ function gtag_report_conversion(url) {
                 data-wow-delay=".3s">
                   <div class="tp-service-item p-relative mb-30">
                      <div class="tp-service-icon d-flex justify-content-center">
-                        <img src="../assets/img/services/services-3.jpg" alt="Analiză digitală pentru afaceri">
+                         <img src="../assets/img/services/services-3.jpg" alt="Analiză digitală pentru afaceri" loading="lazy" decoding="async">
                      </div>
                      <div class="tp-service-content text-center">
-                        <h3 class="service-title"><a href="https://cab-it.ro/contact/">Analiza digitală a afacerilor</a></h3>
+                         <h3 class="service-title"><a href="/servicii/analiza-digitala/">Analiza digitală a afacerii</a></h3>
                         <p>Evaluarea performanței online a unei afaceri, folosind date și metode digitale pentru optimizare și luare de decizii eficiente.</p>
                         <div class="tp-service-btn">
-                           <a href="https://cab-it.ro/contact/"><i class="fa-regular fa-arrow-right"></i> Contact</a>
+                           <a href="/servicii/analiza-digitala/"><i class="fa-regular fa-arrow-right"></i> Vezi serviciul</a>
                         </div>
                      </div>
                   </div>
@@ -422,15 +422,27 @@ function gtag_report_conversion(url) {
                data-wow-delay=".3s">
                   <div class="tp-service-item p-relative mb-30">
                      <div class="tp-service-icon d-flex justify-content-center">
-                        <img src="../assets/img/services/services-6.jpg" alt="Integrare instrumente digitale în timp real">
+                         <img src="../assets/img/services/services-6.jpg" alt="Integrare instrumente digitale în timp real" loading="lazy" decoding="async">
                      </div>
                      <div class="tp-service-content text-center">
-                        <h3 class="service-title"><a href="https://cab-it.ro/contact/">Integrarea instrumentelor în timp real</a></h3>
+                         <h3 class="service-title"><a href="/servicii/integrari-digitale/">Integrări digitale și automatizări</a></h3>
                         <p>Implementarea instrumentelor care furnizează date și funcționalități în timp real pentru optimizarea proceselor și luarea deciziilor eficiente.</p>
                         <div class="tp-service-btn">
-                           <a href="https://cab-it.ro/contact/"><i class="fa-regular fa-arrow-right"></i> Contact</a>
+                            <a href="/servicii/integrari-digitale/"><i class="fa-regular fa-arrow-right"></i> Vezi serviciul</a>
                         </div>
                      </div>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="2s" data-wow-delay=".3s">
+                  <div class="tp-service-item p-relative mb-30">
+                     <div class="tp-service-icon d-flex justify-content-center"><img src="../assets/img/feature/social-media 1.png" alt="Administrare social media" loading="lazy" decoding="async"></div>
+                     <div class="tp-service-content text-center"><h3 class="service-title"><a href="/servicii/social-media/">Administrare Social Media</a></h3><p>Strategie, conținut și administrare pentru Facebook, Instagram și TikTok, adaptate brandului și publicului.</p><div class="tp-service-btn"><a href="/servicii/social-media/"><i class="fa-regular fa-arrow-right"></i> Vezi serviciul</a></div></div>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="2s" data-wow-delay=".3s">
+                  <div class="tp-service-item p-relative mb-30">
+                     <div class="tp-service-icon d-flex justify-content-center"><img src="../assets/img/feature/icon-2.png" alt="Creare site web și magazin online" loading="lazy" decoding="async"></div>
+                     <div class="tp-service-content text-center"><h3 class="service-title"><a href="/servicii/creare-site-web/">Creare Site Web și Magazin Online</a></h3><p>Website-uri profesionale, magazine online și dezvoltare web adaptată proceselor și obiectivelor afacerii.</p><div class="tp-service-btn"><a href="/servicii/creare-site-web/"><i class="fa-regular fa-arrow-right"></i> Vezi serviciul</a></div></div>
                   </div>
                </div>
             </div>
@@ -719,11 +731,13 @@ function gtag_report_conversion(url) {
                               <div class="tp-footer-logo">
                               <a href="https://cab-it.ro/"><img src="../img/logo_home.png" alt="Cab-IT Expert"></a>
                               </div>
-                              <p>🚀Servicii de dezvoltare web personalizate și promovare online eficientă. Numărul 1 in rezultatele livrate către clienți🚀</p>
+                              <p>Servicii de dezvoltare web și promovare online construite în jurul obiectivelor și datelor fiecărui client.</p>
                                  <div class="tp-footer-social-3">
                                     <a href="https://www.youtube.com/@cabitexpert"><i class="fa-brands fa-youtube"></i></a>
-                                    <a href="https://www.facebook.com/profile.php?id=61570953801167"><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="https://www.facebook.com/profile.php?id=61592087996523"><i class="fa-brands fa-facebook-f"></i></a>
                                     <a href="https://www.instagram.com/cabitexpert/"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="https://www.linkedin.com/company/cab-it-expert/"><i class="fa-brands fa-linkedin-in"></i></a>
+                                    <a href="https://x.com/cabitexpert" aria-label="X Cab-IT Expert"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="15" height="15"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
                                  </div>
                            </div>
                         </div>
@@ -736,6 +750,8 @@ function gtag_report_conversion(url) {
                                  <li><a href="https://cab-it.ro">Acasa</a></li>
                                  <li><a href="https://cab-it.ro/despre-noi/">Despre Noi</a></li>
                                  <li><a href="https://cab-it.ro/portofoliu/">Portfoliu</a></li>
+                                 <li><a href="/blog/">Blog</a></li>
+                                 <li><a href="/glosar-seo/">Ghid SEO</a></li>
                                  <li><a href="https://cab-it.ro/contact/">Contact</a></li>
                               </ul>
                            </div>
@@ -746,7 +762,8 @@ function gtag_report_conversion(url) {
                                  Contact info
                            </span>
                               <ul>
-                                 <li style="margin-top: 10px;"><a href="https://maps.app.goo.gl/aVNaQWE8Rdd8qsUdA">Online, Romania</a></li>
+                                 <li style="margin-top: 10px;"><a href="https://www.google.com/maps/search/?api=1&amp;query=Intrarea+Humule%C8%99ti+6A+052034+Bucure%C8%99ti+Rom%C3%A2nia">Intrarea Humulești 6A, 052034 București, România</a></li>
+                                 <li style="margin-top: 10px;">Program non-stop</li>
                                  <li style="margin-top: 10px;"><a href="mailto:contact@cab-it.ro">contact@cab-it.ro</a></li>
                                  <li style="margin-top: 10px;"><a href="mailto:office@cab-it.ro">HR: office@cab-it.ro</a></li>
                                  <li style="margin-top: 10px;"><a href="tel:+40771532949">+40 771 532 949</a></li>
@@ -760,8 +777,9 @@ function gtag_report_conversion(url) {
                            </span>
                              <p>🚀Abonează-te acum la newsletterul nostru pentru a primi cele mai recente știri, oferte exclusive și actualizări direct în inbox-ul tău. Fi informat și conectat cu noi!🚀</p>
                              <div class="tp-footer-subscribe-input-3">
-                              <form class="p-relative">
-                                 <input type="email" placeholder="Enter your mail">
+                              <form class="p-relative" action="../newsletter-subscribe.php" method="post">
+                                 <input type="email" name="email" placeholder="Adresa ta de email" autocomplete="email" required>
+                                 <input type="hidden" name="source" value="footer-servicii">
                                  <button class="tp-footer-btn" type="submit"><i class="fa-solid fa-paper-plane"></i></button>
                               </form>
                              </div>
@@ -776,7 +794,7 @@ function gtag_report_conversion(url) {
                         <div class="row">
                            <div class="col-md-12 col-lg-6">
                               <div class="tp-footer-copyright-inner-2 pb-20">
-                                 <p>©Copyright 2024 All Rights Reserved</p>
+                                 <p>©Copyright 2026 All Rights Reserved</p>
                               </div>
                            </div>
                            <div class="col-md-12 col-lg-6">
@@ -811,6 +829,7 @@ function gtag_report_conversion(url) {
    <script src="../assets/js/imagesloaded-pkgd.js"></script>
    <script src="../assets/js/ajax-form.js"></script>
    <script src="../assets/js/main.js"></script>
+   <script src="../assets/js/site-enhancements.js"></script>
 </body>
 
 </html>

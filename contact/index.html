@@ -31,16 +31,14 @@
    <link rel="alternate" href="https://cab-it.ro/contact/" hreflang="ro">
 
    <!-- CSS here -->
-   <link rel="stylesheet" href="../assets/css/bootstrap.css">
-   <link rel="stylesheet" href="../assets/css/meanmenu.css">
-   <link rel="stylesheet" href="../assets/css/animate.css">
-   <link rel="stylesheet" href="../assets/css/swiper-bundle.css">
-   <link rel="stylesheet" href="../assets/css/slick.css">
-   <link rel="stylesheet" href="../assets/css/nouislider.css">
-   <link rel="stylesheet" href="../assets/css/magnific-popup.css">
-   <link rel="stylesheet" href="../assets/css/font-awesome-pro.css">
-   <link rel="stylesheet" href="../assets/css/spacing.css">
-   <link rel="stylesheet" href="../assets/css/main.css">
+   <link rel="stylesheet" href="../assets/css/site.min.css">
+   <link rel="stylesheet" href="../assets/css/animate.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/swiper-bundle.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/slick.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/nouislider.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/magnific-popup.css" media="print" onload="this.media='all'">
+   <link rel="stylesheet" href="../assets/css/font-awesome-pro.css" media="print" onload="this.media='all'">
+   <style>#loading{display:none!important}</style>
 
 
 
@@ -49,19 +47,23 @@
    <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": ["Organization", "LocalBusiness"],
         "@id": "https://cab-it.ro/#organization",
         "name": "Cab-IT Expert",
+        "legalName": "CAB-IT EXPERT SRL",
+        "slogan": "Future is Online",
         "url": "https://cab-it.ro/",
         "logo": "https://cab-it.ro/img/logo.png",
         "telephone": "+40771532949",
         "email": "contact@cab-it.ro",
         "sameAs": [
-          "https://www.facebook.com/profile.php?id=61570953801167",
+          "https://www.facebook.com/profile.php?id=61592087996523",
           "https://www.instagram.com/cabitexpert/",
-          "https://www.linkedin.com/company/cab-it-expert/"
+          "https://www.linkedin.com/company/cab-it-expert/",
+          "https://x.com/cabitexpert",
+          "https://www.youtube.com/@cabitexpert"
         ],
-        "description": "Promovare Google, TikTok, Instagram și creare site web personalizat în România. Soluții eficiente pentru afaceri mici și mijlocii.",
+        "description": "Agenție digitală din București specializată în website-uri, magazine online, SEO, Google Ads, social media, automatizări și agenți AI pentru afaceri din România.",
         "areaServed": [
           "România",
           "București"
@@ -75,9 +77,12 @@
         },
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "Intrarea Humulești 6A",
           "addressLocality": "București",
+          "postalCode": "052034",
           "addressCountry": "RO"
-        }
+        },
+        "openingHours": "Mo-Su 00:00-23:59"
       }
       </script>
 
@@ -94,15 +99,6 @@
   gtag('js', new Date());
 
   gtag('config', 'G-QPKXFL2GW9');
-</script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11509007584">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
   gtag('config', 'AW-11509007584');
 </script>
 <script>
@@ -188,7 +184,7 @@ function gtag_report_conversion(url) {
             <div class="col-xl-6 d-none d-xl-block">
                <div class="tp-main-menu-area d-flex align-items-center pl-20 ">
                   <div class="tp-header-navbar tp-toogle d-none d-xxl-block">
-                     <a href="javascript:void(0)"><i class="fa-regular fa-bars"></i></a>
+                     <a href="#tp-mobile-menu" aria-label="Navigare"><i class="fa-regular fa-bars"></i></a>
                   </div>
                   <div class="tp-main-menu d-none d-xl-block">
                      <nav id="tp-mobile-menu">
@@ -197,15 +193,17 @@ function gtag_report_conversion(url) {
                               <a href="https://cab-it.ro/">Acasa</a>
                            </li>
                            <li class="has-dropdown">
-                              <a href="javascript:void(0);">Meniu</a>
+                              <a href="/servicii/">Meniu</a>
                               <ul class="submenu">
                                  <li><a href="https://cab-it.ro/despre-noi/">Despre Noi</a></li>
                                  <li><a href="https://cab-it.ro/servicii/">Servicii</a></li>
                                  <li><a href="https://cab-it.ro/preturi/">Preturi</a></li>
                                  <li><a href="https://cab-it.ro/portofoliu/">Portfoliu</a></li>
+                                 <li><a href="/blog/">Blog</a></li>
+                                 <li><a href="/glosar-seo/">Ghid SEO</a></li>
                               </ul>
                            </li>
-                           <li><a href="javascript:void(0);">Contact</a></li>
+                           <li><a href="/contact/">Contact</a></li>
                         </ul>
                      </nav>
                   </div>
@@ -214,7 +212,7 @@ function gtag_report_conversion(url) {
             <div class="d-none d-lg-block col-lg-6 col-xl-4">
                <div class="tp-header-right d-flex align-items-center justify-content-end">
                   <div class="tp-header-btn d-flex ml-20">
-                     <a class="tp-btn-sm" href="javascript:void(0);">Contact</a>
+                     <a class="tp-btn-sm" href="/contact/">Contact</a>
                   </div>
                   <div class="tp-header-btn d-flex ml-20">
                      <a class="tp-btn-sm" href="tel:0771532949"><i class="fa fa-phone" style="display: inline; margin-right: 5px;"></i>Apeleaza</a>
@@ -254,7 +252,7 @@ function gtag_report_conversion(url) {
                      <img src="../assets/img/hero/mobile-menu.png" alt="Meniu mobil Cab-IT Expert">
                </div>
                <div class="tp-side-btn text-xl-center mb-80">
-                  <a class="tp-btn" href="javascript:void(0);">Hai sa ne cunoastem!</a>
+                  <a class="tp-btn" href="/contact/">Hai să ne cunoaștem!</a>
                </div>
                <div class="tp-side-contact mb-40">
                   <p class="call">
@@ -266,8 +264,10 @@ function gtag_report_conversion(url) {
                </div>
                <div class="tp-footer-social-1">
                   <a href="https://www.youtube.com/@cabitexpert"><i class="fa-brands fa-youtube"></i></a>
-                  <a href="https://www.facebook.com/profile.php?id=61570953801167"><i class="fa-brands fa-facebook-f"></i></a>
+                  <a href="https://www.facebook.com/profile.php?id=61592087996523"><i class="fa-brands fa-facebook-f"></i></a>
                   <a href="https://www.instagram.com/cabitexpert/"><i class="fa-brands fa-instagram"></i></a>
+                  <a href="https://www.linkedin.com/company/cab-it-expert/"><i class="fa-brands fa-linkedin-in"></i></a>
+                  <a href="https://x.com/cabitexpert" aria-label="X Cab-IT Expert"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="15" height="15"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
                </div>
             </div>
          </div>
@@ -284,7 +284,7 @@ function gtag_report_conversion(url) {
                <div class="search__wrapper">
                   <div class="search__top d-flex justify-content-between align-items-center">
                      <div class="search__logo">
-                        <a href="home-main.html">
+                        <a href="/">
                            <img src="../assets/img/logo/logo.png" alt="logo">
                         </a>
                      </div>
@@ -348,12 +348,14 @@ function gtag_report_conversion(url) {
                      <div class="tp-contact-section-wrapper-breadcrumb mb-55">
                         <span class="tp-section__title-pre has-before has-after">Contact</span>
                         <h3 class="tp-section__title">Contacteaza-ne... <br> <h4>Hai sa vorbim despre nevoile afacerii tale!</h3>
-                        <p>🚀Servicii de dezvoltare web personalizate și promovare online eficientă. Numărul 1 in rezultatele livrate către clienți🚀</p>
+                        <p>Servicii de dezvoltare web și promovare online construite în jurul obiectivelor și datelor fiecărui client.</p>
                      </div>
                      <div class="tp-contact-icons">
-                        <a href="https://www.facebook.com/profile.php?id=61570953801167"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61592087996523"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="https://www.instagram.com/cabitexpert/"><i class="fa-brands fa-instagram"></i></a>
                         <a href="https://www.youtube.com/@cabitexpert"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.linkedin.com/company/cab-it-expert/"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://x.com/cabitexpert" aria-label="X Cab-IT Expert"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="15" height="15"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
                      </div>
                   </div>
                </div>
@@ -403,7 +405,7 @@ function gtag_report_conversion(url) {
                <div class="col-lg-6 col-md-12 wow fadeInLeft" data-wow-duration="1s"
                data-wow-delay=".3s">
                   <div class="tp-contact-map">
-                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2842386.379582633!2d22.38104440179889!3d45.91594912473355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff26958976c3%3A0x84ef4f92a804b194!2zUm9tw6JuaWE!5e0!3m2!1sro!2sro!4v1780477760617!5m2!1sro!2sro" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                     <iframe src="https://www.google.com/maps?q=Intrarea%20Humule%C8%99ti%206A%2C%20052034%20Bucure%C8%99ti%2C%20Rom%C3%A2nia&amp;output=embed" title="Harta Cab-IT Expert — Intrarea Humulești 6A" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                   </div>
                </div>
                <div class="col-lg-6 col-md-12">
@@ -414,7 +416,7 @@ function gtag_report_conversion(url) {
                            <a href="tel:+40771532949"><i class="fa-light fa-headset"></i> +40 771 532 949</a>
                         </li>
                         <li>
-                           <a href="https://maps.app.goo.gl/aVNaQWE8Rdd8qsUdA" target="_blank"><i class="fa-regular fa-location-dot"></i> Online, Romania</a> 
+                           <a href="https://www.google.com/maps/search/?api=1&amp;query=Intrarea+Humule%C8%99ti+6A+052034+Bucure%C8%99ti+Rom%C3%A2nia" target="_blank" rel="noopener"><i class="fa-regular fa-location-dot"></i> Intrarea Humulești 6A, 052034 București, România · Non-stop</a>
                         </li>
                         <li>
                            <a href="mailto:contact@cab-it.ro" ><i class="fa-light fa-envelope"></i>contact@cab-it.ro</a>
@@ -440,11 +442,13 @@ function gtag_report_conversion(url) {
                            <div class="tp-footer-logo">
                               <a href="https://cab-it.ro/"><img src="../img/logo_home.png" alt="Cab-IT Expert"></a>
                            </div>
-                           <p>🚀Servicii de dezvoltare web personalizate și promovare online eficientă. Numărul 1 in rezultatele livrate către clienți🚀</p>
+                           <p>Servicii de dezvoltare web și promovare online construite în jurul obiectivelor și datelor fiecărui client.</p>
                               <div class="tp-footer-social-3">
                                  <a href="https://www.youtube.com/@cabitexpert"><i class="fa-brands fa-youtube"></i></a>
-                                 <a href="https://www.facebook.com/profile.php?id=61570953801167"><i class="fa-brands fa-facebook-f"></i></a>
+                                 <a href="https://www.facebook.com/profile.php?id=61592087996523"><i class="fa-brands fa-facebook-f"></i></a>
                                  <a href="https://www.instagram.com/cabitexpert/"><i class="fa-brands fa-instagram"></i></a>
+                                 <a href="https://www.linkedin.com/company/cab-it-expert/"><i class="fa-brands fa-linkedin-in"></i></a>
+                                 <a href="https://x.com/cabitexpert" aria-label="X Cab-IT Expert"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="15" height="15"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg></a>
                               </div>
                         </div>
                      </div>
@@ -457,7 +461,9 @@ function gtag_report_conversion(url) {
                               <li><a href="https://cab-it.ro/">Acasa</a></li>
                               <li><a href="https://cab-it.ro/despre-noi/">Despre Noi</a></li>
                               <li><a href="https://cab-it.ro/portofoliu/">Portfoliu</a></li>
-                              <li><a href="javascript:void(0);">Contact</a></li>
+                              <li><a href="/blog/">Blog</a></li>
+                              <li><a href="/glosar-seo/">Ghid SEO</a></li>
+                              <li><a href="/contact/">Contact</a></li>
                            </ul>
                         </div>
                      </div>
@@ -467,7 +473,8 @@ function gtag_report_conversion(url) {
                               Contact info
                         </span>
                            <ul>
-                              <li style="margin-top: 10px;"><a href="https://maps.app.goo.gl/aVNaQWE8Rdd8qsUdA">Online, Romania</a></li>
+                              <li style="margin-top: 10px;"><a href="https://www.google.com/maps/search/?api=1&amp;query=Intrarea+Humule%C8%99ti+6A+052034+Bucure%C8%99ti+Rom%C3%A2nia">Intrarea Humulești 6A, 052034 București, România</a></li>
+                              <li style="margin-top: 10px;">Program non-stop</li>
                               <li style="margin-top: 10px;"><a href="mailto:contact@cab-it.ro">contact@cab-it.ro</a></li>
                               <li style="margin-top: 10px;"><a href="mailto:office@cab-it.ro">HR: office@cab-it.ro</a></li>
                               <li style="margin-top: 10px;"><a href="tel:+40771532949">+40 771 532 949</a></li>
@@ -481,8 +488,9 @@ function gtag_report_conversion(url) {
                         </span>
                           <p>🚀Abonează-te acum la newsletterul nostru pentru a primi cele mai recente știri, oferte exclusive și actualizări direct în inbox-ul tău. Fi informat și conectat cu noi!🚀</p>
                           <div class="tp-footer-subscribe-input-3">
-                           <form class="p-relative">
-                              <input type="email" placeholder="Enter your mail">
+                           <form class="p-relative" action="../newsletter-subscribe.php" method="post">
+                              <input type="email" name="email" placeholder="Adresa ta de email" autocomplete="email" required>
+                              <input type="hidden" name="source" value="footer-contact">
                               <button class="tp-footer-btn" type="submit"><i class="fa-solid fa-paper-plane"></i></button>
                            </form>
                           </div>
@@ -497,7 +505,7 @@ function gtag_report_conversion(url) {
                      <div class="row">
                         <div class="col-md-12 col-lg-6">
                            <div class="tp-footer-copyright-inner-2 pb-20">
-                              <p>©Copyright 2024 All Rights Reserved</p>
+                              <p>©Copyright 2026 All Rights Reserved</p>
                            </div>
                         </div>
                         <div class="col-md-12 col-lg-6">
@@ -532,6 +540,7 @@ function gtag_report_conversion(url) {
    <script src="../assets/js/imagesloaded-pkgd.js"></script>
    <script src="../assets/js/ajax-form.js"></script>
    <script src="../assets/js/main.js"></script>
+   <script src="../assets/js/site-enhancements.js"></script>
 </body>
 
 </html>

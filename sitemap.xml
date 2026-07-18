@@ -1,56 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- Pagina principală, prioritate mare -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cab-it.ro/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <priority>1.00</priority>
+    <lastmod>2026-07-18</lastmod>
   </url>
-
-  <!-- Pagina Despre Noi -->
   <url>
-    <loc>https://cab-it.ro/despre-noi/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <priority>0.80</priority>
+    <loc>https://cab-it.ro/blog/</loc>
+    <lastmod>2026-07-18</lastmod>
   </url>
-
-  <!-- Pagina Servicii -->
   <url>
-    <loc>https://cab-it.ro/servicii/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <priority>0.80</priority>
+    <loc>https://cab-it.ro/blog/core-web-vitals-lcp-cls-inp/</loc>
+    <lastmod>2026-07-18</lastmod>
   </url>
-
-  <!-- Pagina Prețuri -->
   <url>
-    <loc>https://cab-it.ro/preturi/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <priority>0.80</priority>
+    <loc>https://cab-it.ro/blog/indicatori-campanie-promovare-online/</loc>
+    <lastmod>2026-07-18</lastmod>
   </url>
-
-  <!-- Pagina Portofoliu -->
   <url>
-    <loc>https://cab-it.ro/portofoliu/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <priority>0.80</priority>
+    <loc>https://cab-it.ro/blog/prioritati-seo-pentru-imm/</loc>
+    <lastmod>2026-07-18</lastmod>
   </url>
-
-  <!-- Pagina Contact -->
   <url>
     <loc>https://cab-it.ro/contact/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <priority>0.80</priority>
+    <lastmod>2026-07-18</lastmod>
   </url>
-
-  <!-- Pagina Termeni și Condiții -->
+  <url>
+    <loc>https://cab-it.ro/despre-noi/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/glosar-seo/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/portofoliu/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/portofoliu/auto-la-domiciliu/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/portofoliu/nanu-events/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/portofoliu/traffic-restaurant/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/portofoliu/best-tkd/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/portofoliu/spalatoria-ozana/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/portofoliu/lael-fashion/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/portofoliu/bilka-sistem/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/preturi/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/servicii/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/servicii/analiza-digitala/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/servicii/creare-site-web/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/servicii/integrari-digitale/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/servicii/optimizare-conversii/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/servicii/reclame-platite/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/servicii/seo-local/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/servicii/seo/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/servicii/social-media/</loc>
+    <lastmod>2026-07-18</lastmod>
+  </url>
   <url>
     <loc>https://cab-it.ro/termeni-si-conditii/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <priority>0.60</priority>
+    <lastmod>2026-07-18</lastmod>
   </url>
-
 </urlset>

@@ -1,0 +1,612 @@
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/config.php';
+
+function cms_ensure_directories(): void
+{
+    foreach ([CABIT_STORAGE_DIR, CABIT_UPLOADS_DIR, CABIT_UPLOADS_DIR . '/blog', CABIT_UPLOADS_DIR . '/portfolio'] as $directory) {
+        if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
+            throw new RuntimeException('Nu pot crea directorul: ' . $directory);
+        }
+    }
+}
+
+function cms_db(): PDO
+{
+    static $pdo = null;
+    if ($pdo instanceof PDO) {
+        return $pdo;
+    }
+
+    cms_ensure_directories();
+    $pdo = new PDO('sqlite:' . CABIT_DATABASE_PATH, null, null, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ]);
+    $pdo->exec('PRAGMA foreign_keys = ON');
+    $pdo->exec('PRAGMA journal_mode = WAL');
+    $pdo->exec('PRAGMA busy_timeout = 5000');
+
+    $pdo->exec('CREATE TABLE IF NOT EXISTS admins (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL UNIQUE,
+        password_hash TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+    )');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS articles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        seo_title TEXT NOT NULL,
+        meta_description TEXT NOT NULL,
+        slug TEXT NOT NULL UNIQUE,
+        excerpt TEXT NOT NULL,
+        content TEXT NOT NULL,
+        cover_image TEXT,
+        date_published TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+    )');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS categories (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE,
+        slug TEXT NOT NULL UNIQUE,
+        created_at TEXT NOT NULL
+    )');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS works (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        seo_title TEXT NOT NULL,
+        meta_description TEXT NOT NULL,
+        slug TEXT NOT NULL UNIQUE,
+        category_id INTEGER,
+        objective TEXT NOT NULL,
+        work_done TEXT NOT NULL,
+        results TEXT NOT NULL,
+        testimonial TEXT NOT NULL DEFAULT "",
+        external_url TEXT NOT NULL DEFAULT "",
+        cover_image TEXT,
+        date_added TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
+    )');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS work_images (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        work_id INTEGER NOT NULL,
+        path TEXT NOT NULL,
+        alt_text TEXT NOT NULL DEFAULT "",
+        sort_order INTEGER NOT NULL DEFAULT 0,
+        FOREIGN KEY(work_id) REFERENCES works(id) ON DELETE CASCADE
+    )');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS subscribers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL UNIQUE,
+        source TEXT NOT NULL DEFAULT "footer",
+        ip_hash TEXT NOT NULL DEFAULT "",
+        created_at TEXT NOT NULL
+    )');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS login_attempts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ip_hash TEXT NOT NULL,
+        succeeded INTEGER NOT NULL DEFAULT 0,
+        created_at TEXT NOT NULL
+    )');
+
+    cms_seed($pdo);
+    return $pdo;
+}
+
+function cms_seed(PDO $pdo): void
+{
+    $now = date('c');
+    $admin = $pdo->prepare('INSERT OR IGNORE INTO admins (username, password_hash, updated_at) VALUES (?, ?, ?)');
+    $admin->execute([CABIT_ADMIN_USERNAME, CABIT_INITIAL_PASSWORD_HASH, $now]);
+
+    if ((int) $pdo->query('SELECT COUNT(*) FROM categories')->fetchColumn() === 0) {
+        $insert = $pdo->prepare('INSERT INTO categories (name, slug, created_at) VALUES (?, ?, ?)');
+        foreach ([['Web design', 'web-design'], ['SEO și reclame plătite', 'seo-reclame'], ['Social media', 'social-media'], ['E-commerce', 'e-commerce']] as $category) {
+            $insert->execute([$category[0], $category[1], $now]);
+        }
+    }
+
+    if ((int) $pdo->query('SELECT COUNT(*) FROM articles')->fetchColumn() === 0) {
+        $articles = [
+            [
+                'Cum stabilești prioritățile SEO pentru un IMM',
+                'Priorități SEO pentru IMM-uri | Ghid Cab-IT',
+                'Ghid practic pentru prioritizarea SEO într-un IMM: indexare, intenție de căutare, conținut, linkuri interne și măsurare.',
+                'prioritati-seo-pentru-imm',
+                'Tehnic, conținut, intenție de căutare și măsurare într-un plan SEO care poate fi executat.',
+                '<h2>Pornește de la paginile importante pentru afacere</h2><p>Stabilește ce produse sau servicii trebuie găsite și ce acțiune vrei să facă vizitatorul. Verifică indexarea, canonical-ul, intenția de căutare și claritatea informației.</p><h2>Ordinea recomandată</h2><ol><li>verifică indexarea și erorile tehnice;</li><li>mapează intenția principală pe fiecare pagină;</li><li>îmbunătățește informația și heading-urile;</li><li>creează legături interne relevante;</li><li>urmărește impresii, clickuri și conversii.</li></ol><h2>Măsoară progresul, nu un singur cuvânt</h2><p>Compară grupuri de interogări, pagini și acțiuni comerciale în perioade similare.</p>',
+                '/assets/img/case-studies/case-1.webp',
+            ],
+            [
+                'Ce indicatori măsori într-o campanie de promovare online',
+                'Promovare Online: Ce Indicatori Măsori | Cab-IT',
+                'Află ce indicatori contează într-o campanie de promovare online: CTR, clickuri, leaduri, cost per conversie, venit și profitabilitate.',
+                'indicatori-campanie-promovare-online',
+                'Diferența dintre click, lead și vânzare și de ce ROAS nu spune singur toată povestea.',
+                '<h2>Definește conversia înainte de lansare</h2><p>Stabilește ce acțiune are valoare: formular, apel, rezervare sau comandă. Testează măsurarea înainte de a porni bugetul.</p><h2>Indicatori pe niveluri</h2><ul><li><strong>Vizibilitate:</strong> afișări, acoperire și frecvență;</li><li><strong>Interes:</strong> clickuri, CTR și cost per click;</li><li><strong>Acțiune:</strong> leaduri și cost per conversie;</li><li><strong>Business:</strong> venit, marjă și profitabilitate.</li></ul><h2>ROAS în context</h2><p>Analizează și costurile, marja, calitatea leadurilor și durata ciclului de vânzare.</p>',
+                '/assets/img/case-studies/case-5.webp',
+            ],
+            [
+                'Core Web Vitals: LCP, CLS și INP, explicate simplu',
+                'Core Web Vitals: LCP, CLS și INP | Cab-IT',
+                'Ghid Core Web Vitals despre LCP, CLS și INP: ce măsoară, praguri recomandate și optimizări cu impact pe mobil.',
+                'core-web-vitals-lcp-cls-inp',
+                'Cum influențează LCP, CLS și INP experiența vizitatorilor și ce merită optimizat întâi.',
+                '<h2>Ce măsoară fiecare indicator</h2><p><strong>LCP</strong> descrie afișarea elementului principal, <strong>CLS</strong> stabilitatea vizuală, iar <strong>INP</strong> răspunsul la interacțiuni.</p><h2>Praguri și optimizări</h2><p>Țintele uzuale sunt LCP sub 2,5 secunde, CLS sub 0,1 și INP sub 200 ms. Comprimă imaginile, setează dimensiuni explicite, redu CSS-ul critic și elimină JavaScript-ul nefolosit.</p><h2>Verifică datele reale</h2><p>Testele de laborator ajută diagnosticul, dar hostingul, conexiunea și dispozitivele vizitatorilor influențează experiența reală.</p>',
+                '/assets/img/hero/hero-3.webp',
+            ],
+        ];
+        $insert = $pdo->prepare('INSERT INTO articles (title, seo_title, meta_description, slug, excerpt, content, cover_image, date_published, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        foreach ($articles as $article) {
+            $insert->execute([$article[0], $article[1], $article[2], $article[3], $article[4], $article[5], $article[6], '2026-07-18', $now, $now]);
+        }
+    }
+
+    if ((int) $pdo->query('SELECT COUNT(*) FROM works')->fetchColumn() === 0) {
+        $categoryIds = [];
+        foreach ($pdo->query('SELECT id, slug FROM categories') as $category) {
+            $categoryIds[$category['slug']] = (int) $category['id'];
+        }
+        $works = [
+            ['Bilka Sistem', 'Studiu de caz Bilka Sistem | SEO și Google Ads', 'Proiect Bilka Sistem: audit, optimizare SEO și structurarea campaniilor Google Ads.', 'bilka-sistem', 'seo-reclame', 'Creșterea vizibilității organice și organizarea mai clară a campaniilor plătite.', 'Audit SEO, recomandări tehnice, structură de cuvinte cheie, campanii și măsurare.', 'Rezultatele cantitative trebuie completate cu datele validate de client.', '', 'https://bilka-sistem.ro', '/assets/img/case-studies/case-1.webp'],
+            ['Lael Fashion', 'Studiu de caz Lael Fashion | Website și promovare', 'Website și promovare digitală pentru Lael Fashion.', 'lael-fashion', 'e-commerce', 'Construirea unei prezențe online coerente pentru un brand de fashion.', 'Website, structură de produse, SEO și recomandări pentru campanii.', 'Pagina documentează livrabilele; cifrele se publică numai după validare.', '', 'https://laelfashion.ro', '/assets/img/case-studies/case-2.webp'],
+            ['Spălătoria Ozana', 'Studiu de caz Spălătoria Ozana | Website și SEO', 'Website și optimizare SEO locală pentru Spălătoria Ozana.', 'spalatoria-ozana', 'web-design', 'O prezentare clară a serviciilor și o bază tehnică pentru vizibilitate locală.', 'Website responsive, structură servicii și optimizări SEO de bază.', 'Performanța este urmărită prin datele de trafic și solicitări validate.', '', '', '/assets/img/case-studies/case-3.webp'],
+            ['Best TKD', 'Studiu de caz Best TKD | Web Design', 'Website și administrare personalizată pentru Best TKD.', 'best-tkd', 'web-design', 'Un website ușor de administrat pentru prezentarea activității și programelor.', 'Design responsive, dezvoltare și panou de administrare personalizat.', 'Livrabilele și funcțiile sunt prezentate transparent în pagina proiectului.', '', 'https://best-tkd.ro', '/assets/img/case-studies/case-4.webp'],
+            ['Traffic Restaurant & Lounge', 'Studiu de caz Traffic Restaurant | Website și Ads', 'Website, SEO și promovare online pentru Traffic Restaurant & Lounge.', 'traffic-restaurant', 'seo-reclame', 'Conectarea prezenței digitale cu rezervările și promovarea locală.', 'Website, SEO, Google Ads și campanii Meta, cu tracking pentru acțiuni relevante.', 'Cifrele comerciale se publică doar după aprobarea și validarea clientului.', '', 'https://trafficpub.ro', '/assets/img/case-studies/case-5.webp'],
+            ['Nanu Events', 'Studiu de caz Nanu Events | Web Design', 'Website de prezentare pentru Nanu Events.', 'nanu-events', 'web-design', 'Prezentarea clară a serviciilor și proiectelor într-o interfață responsive.', 'Arhitectură de conținut, design și dezvoltare web.', 'Pagina proiectului descrie procesul și livrabilele realizate.', '', 'https://nanuevents.ro', '/assets/img/case-studies/case-6.webp'],
+            ['Auto La Domiciliu', 'Studiu de caz Auto La Domiciliu | Website și SEO', 'Website, SEO și promovare plătită pentru Auto La Domiciliu.', 'auto-la-domiciliu', 'seo-reclame', 'Crearea unui traseu clar de la căutare la solicitarea serviciului.', 'Website, structură servicii, SEO și configurarea campaniilor plătite.', 'Datele cantitative trebuie completate din surse validate înainte de publicare.', '', 'https://autoladomiciliu.ro', '/img/case_study_1.webp'],
+        ];
+        $insert = $pdo->prepare('INSERT INTO works (title, seo_title, meta_description, slug, category_id, objective, work_done, results, testimonial, external_url, cover_image, date_added, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        foreach ($works as $work) {
+            $insert->execute([$work[0], $work[1], $work[2], $work[3], $categoryIds[$work[4]] ?? null, $work[5], $work[6], $work[7], $work[8], $work[9], $work[10], '2026-07-18', $now, $now]);
+        }
+    }
+}
+
+function cms_e(string $value): string
+{
+    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+function cms_slug(string $value): string
+{
+    $value = mb_strtolower(trim($value), 'UTF-8');
+    $value = strtr($value, ['ă' => 'a', 'â' => 'a', 'î' => 'i', 'ș' => 's', 'ş' => 's', 'ț' => 't', 'ţ' => 't']);
+    $value = preg_replace('/[^a-z0-9]+/u', '-', $value) ?? '';
+    return trim($value, '-');
+}
+
+function cms_valid_slug(string $slug): bool
+{
+    return (bool) preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug);
+}
+
+function cms_sanitize_html(string $html): string
+{
+    $html = trim($html);
+    if ($html === '') {
+        return '';
+    }
+    if ($html === strip_tags($html)) {
+        return '<p>' . nl2br(cms_e($html)) . '</p>';
+    }
+    $allowed = '<p><h2><h3><h4><ul><ol><li><strong><em><blockquote><a><br>';
+    $clean = strip_tags($html, $allowed);
+    $document = new DOMDocument('1.0', 'UTF-8');
+    libxml_use_internal_errors(true);
+    $document->loadHTML('<?xml encoding="utf-8" ?><div id="cms-root">' . $clean . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    libxml_clear_errors();
+    $xpath = new DOMXPath($document);
+    foreach ($xpath->query('//*[@*]') ?: [] as $node) {
+        $remove = [];
+        foreach ($node->attributes as $attribute) {
+            $name = strtolower($attribute->name);
+            if ($name !== 'href' || strtolower($node->nodeName) !== 'a') {
+                $remove[] = $attribute->name;
+                continue;
+            }
+            $href = trim($attribute->value);
+            if (!preg_match('~^(?:https?://|/|#)~i', $href)) {
+                $remove[] = $attribute->name;
+            }
+        }
+        foreach ($remove as $attributeName) {
+            $node->removeAttribute($attributeName);
+        }
+    }
+    $root = $document->getElementById('cms-root');
+    if (!$root) {
+        return '';
+    }
+    $result = '';
+    foreach ($root->childNodes as $child) {
+        $result .= $document->saveHTML($child);
+    }
+    return trim($result);
+}
+
+function cms_write_file(string $path, string $content): void
+{
+    $directory = dirname($path);
+    if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
+        throw new RuntimeException('Nu pot crea directorul pentru fișier.');
+    }
+    if (file_put_contents($path, $content, LOCK_EX) === false) {
+        throw new RuntimeException('Nu pot scrie fișierul: ' . $path);
+    }
+    cms_gzip_file($path);
+}
+
+function cms_gzip_file(string $path): void
+{
+    if (!is_file($path) || !str_ends_with($path, '.html')) {
+        return;
+    }
+    $content = file_get_contents($path);
+    if ($content !== false) {
+        file_put_contents($path . '.gz', gzencode($content, 9), LOCK_EX);
+    }
+}
+
+function cms_relative_asset(?string $path, int $depth = 2): string
+{
+    if (!$path) {
+        return str_repeat('../', $depth) . 'assets/img/hero/hero-3.webp';
+    }
+    if (preg_match('~^https?://~i', $path)) {
+        return $path;
+    }
+    return str_repeat('../', $depth) . ltrim($path, '/');
+}
+
+function cms_json(array $data): string
+{
+    return (string) json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+}
+
+function cms_article_page(array $article): string
+{
+    $title = cms_e($article['title']);
+    $seoTitle = cms_e($article['seo_title']);
+    $description = cms_e($article['meta_description']);
+    $slug = cms_e($article['slug']);
+    $image = cms_relative_asset($article['cover_image'], 2);
+    $schema = cms_json([
+        '@context' => 'https://schema.org', '@type' => 'BlogPosting', 'headline' => $article['title'],
+        'description' => $article['meta_description'], 'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
+        'mainEntityOfPage' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
+        'image' => str_starts_with((string) $article['cover_image'], 'http') ? $article['cover_image'] : CABIT_SITE_URL . '/' . ltrim((string) $article['cover_image'], '/'),
+        'datePublished' => $article['date_published'], 'dateModified' => substr($article['updated_at'], 0, 10),
+        'author' => ['@id' => CABIT_SITE_URL . '/#organization'], 'publisher' => ['@id' => CABIT_SITE_URL . '/#organization'],
+        'isPartOf' => ['@type' => 'Blog', '@id' => CABIT_SITE_URL . '/blog/'], 'inLanguage' => 'ro-RO',
+    ]);
+    return '<!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' .
+        '<title>' . $seoTitle . '</title><meta name="description" content="' . $description . '"><meta name="robots" content="index, follow, max-image-preview:large">' .
+        '<link rel="canonical" href="' . CABIT_SITE_URL . '/blog/' . $slug . '/"><meta property="og:type" content="article"><meta property="og:title" content="' . $seoTitle . '"><meta property="og:description" content="' . $description . '"><meta property="og:url" content="' . CABIT_SITE_URL . '/blog/' . $slug . '/">' .
+        '<link rel="icon" href="../../img/logo.png"><link rel="stylesheet" href="../../assets/css/site.min.css"><script type="application/ld+json">' . $schema . '</script></head><body>' .
+        '<header class="cabit-simple-header"><div class="container"><nav class="cabit-simple-nav" aria-label="Navigare principală"><a href="/"><img src="../../img/logo_home.png" alt="Cab-IT Expert" width="560" height="195"></a><ul><li><a href="/blog/">Blog</a></li><li><a href="/servicii/">Servicii</a></li><li><a href="/glosar-seo/">Ghid SEO</a></li><li><a class="tp-btn-black" href="/contact/">Contact</a></li></ul></nav></div></header>' .
+        '<main><article><header class="cabit-page-header"><div class="container"><span class="cabit-eyebrow">Articol Cab-IT Expert</span><h1>' . $title . '</h1><p>' . cms_e($article['excerpt']) . '</p><p>Publicat la <time datetime="' . cms_e($article['date_published']) . '">' . cms_e($article['date_published']) . '</time></p></div></header>' .
+        '<section class="cabit-content-section"><div class="container cabit-case-layout"><div class="cabit-content-card cabit-article-content">' . $article['content'] . '</div><aside><div class="cabit-note"><strong>Ai nevoie de o strategie aplicată?</strong><br><a href="/contact/">Discută cu echipa Cab-IT Expert</a>.</div><a class="cabit-text-link" href="/blog/">← Înapoi la blog</a></aside></div></section></article></main>' .
+        '<footer class="cabit-site-footer"><div class="container cabit-site-footer__inner"><span>©Copyright <span data-current-year>2026</span> All Rights Reserved</span><span><a href="/blog/">Blog</a> · <a href="/contact/">Contact</a></span></div></footer><script src="../../assets/js/site-enhancements.js"></script></body></html>';
+}
+
+function cms_generate_article(array $article): void
+{
+    $path = CABIT_PUBLIC_ROOT . '/blog/' . $article['slug'] . '/index.html';
+    cms_write_file($path, cms_article_page($article));
+}
+
+function cms_work_page(PDO $pdo, array $work): string
+{
+    $images = cms_work_images($pdo, (int) $work['id']);
+    $allImages = [];
+    if (!empty($work['cover_image'])) {
+        $allImages[] = ['path' => $work['cover_image'], 'alt_text' => $work['title']];
+    }
+    foreach ($images as $image) {
+        if (!in_array($image['path'], array_column($allImages, 'path'), true)) {
+            $allImages[] = $image;
+        }
+    }
+    $gallery = '';
+    foreach ($allImages as $image) {
+        $gallery .= '<figure><img src="' . cms_e(cms_relative_asset($image['path'], 2)) . '" alt="' . cms_e($image['alt_text'] ?: $work['title']) . '" loading="lazy" decoding="async"></figure>';
+    }
+    $schema = cms_json([
+        '@context' => 'https://schema.org', '@type' => 'CreativeWork', 'name' => $work['title'],
+        'description' => $work['meta_description'], 'url' => CABIT_SITE_URL . '/portofoliu/' . $work['slug'] . '/',
+        'dateCreated' => $work['date_added'], 'creator' => ['@id' => CABIT_SITE_URL . '/#organization'],
+        'image' => array_map(fn($image) => str_starts_with($image['path'], 'http') ? $image['path'] : CABIT_SITE_URL . '/' . ltrim($image['path'], '/'), $allImages),
+        'inLanguage' => 'ro-RO',
+    ]);
+    $external = $work['external_url'] !== '' ? '<a class="cabit-text-link" href="' . cms_e($work['external_url']) . '" rel="noopener" target="_blank">Vezi website-ul proiectului →</a>' : '';
+    $testimonial = $work['testimonial'] !== '' ? '<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-content-card"><h2>Feedback de la client</h2><blockquote>' . nl2br(cms_e($work['testimonial'])) . '</blockquote></div></div></section>' : '';
+    return '<!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' .
+        '<title>' . cms_e($work['seo_title']) . '</title><meta name="description" content="' . cms_e($work['meta_description']) . '"><meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="' . CABIT_SITE_URL . '/portofoliu/' . cms_e($work['slug']) . '/">' .
+        '<link rel="icon" href="../../img/logo.png"><link rel="stylesheet" href="../../assets/css/site.min.css"><script type="application/ld+json">' . $schema . '</script></head><body>' .
+        '<header class="cabit-simple-header"><div class="container"><nav class="cabit-simple-nav" aria-label="Navigare principală"><a href="/"><img src="../../img/logo_home.png" alt="Cab-IT Expert" width="560" height="195"></a><ul><li><a href="/portofoliu/">Portofoliu</a></li><li><a href="/servicii/">Servicii</a></li><li><a href="/blog/">Blog</a></li><li><a class="tp-btn-black" href="/contact/">Contact</a></li></ul></nav></div></header>' .
+        '<main><section class="cabit-page-header"><div class="container"><span class="cabit-eyebrow">Studiu de caz · ' . cms_e($work['category_name'] ?? 'Portofoliu') . '</span><h1>' . cms_e($work['title']) . '</h1><p>' . cms_e($work['meta_description']) . '</p></div></section>' .
+        '<section class="cabit-content-section"><div class="container cabit-case-layout"><article><div class="cabit-content-card"><h2>Obiectivul inițial</h2><p>' . nl2br(cms_e($work['objective'])) . '</p></div><div class="cabit-content-card"><h2>Ce am făcut</h2><p>' . nl2br(cms_e($work['work_done'])) . '</p></div><div class="cabit-content-card"><h2>Rezultate și măsurare</h2><p>' . nl2br(cms_e($work['results'])) . '</p></div></article><aside><div class="cabit-note"><strong>Data adăugării</strong><br><time datetime="' . cms_e($work['date_added']) . '">' . cms_e($work['date_added']) . '</time></div>' . $external . '</aside></div></section>' .
+        ($gallery !== '' ? '<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-section-heading"><h2>Galeria proiectului</h2></div><div class="cabit-gallery">' . $gallery . '</div></div></section>' : '') . $testimonial . '</main>' .
+        '<footer class="cabit-site-footer"><div class="container cabit-site-footer__inner"><span>©Copyright <span data-current-year>2026</span> All Rights Reserved</span><span><a href="/portofoliu/">Toate proiectele</a> · <a href="/contact/">Contact</a></span></div></footer><script src="../../assets/js/site-enhancements.js"></script></body></html>';
+}
+
+function cms_generate_work(PDO $pdo, array $work): void
+{
+    $path = CABIT_PUBLIC_ROOT . '/portofoliu/' . $work['slug'] . '/index.html';
+    cms_write_file($path, cms_work_page($pdo, $work));
+}
+
+function cms_work_images(PDO $pdo, int $workId): array
+{
+    $statement = $pdo->prepare('SELECT * FROM work_images WHERE work_id = ? ORDER BY sort_order, id');
+    $statement->execute([$workId]);
+    return $statement->fetchAll();
+}
+
+function cms_replace_marked_content(string $path, string $startMarker, string $endMarker, string $content): void
+{
+    $html = file_get_contents($path);
+    if ($html === false) {
+        throw new RuntimeException('Nu pot citi pagina index.');
+    }
+    $pattern = '~' . preg_quote($startMarker, '~') . '.*?' . preg_quote($endMarker, '~') . '~s';
+    $replacement = $startMarker . "\n" . $content . "\n" . $endMarker;
+    $updated = preg_replace($pattern, $replacement, $html, 1, $count);
+    if ($updated === null || $count !== 1) {
+        throw new RuntimeException('Marcajele CMS lipsesc din ' . basename(dirname($path)) . '.');
+    }
+    cms_write_file($path, $updated);
+}
+
+function cms_update_blog_index(PDO $pdo): void
+{
+    $articles = $pdo->query('SELECT * FROM articles ORDER BY date_published DESC, created_at DESC, id DESC')->fetchAll();
+    $cards = [];
+    foreach ($articles as $article) {
+        $image = cms_relative_asset($article['cover_image'], 1);
+        $cards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($article['title']) . '" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><span class="cabit-eyebrow">Articol</span><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
+    }
+    cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_CARDS_START -->', '<!-- CMS_BLOG_CARDS_END -->', implode("\n", $cards));
+
+    $homeCards = [];
+    foreach (array_slice($articles, 0, 5) as $article) {
+        $image = cms_relative_asset($article['cover_image'], 0);
+        $date = date('d.m.Y', strtotime((string) $article['date_published']));
+        $homeCards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($article['title']) . '" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>Articol</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
+    }
+    cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/index.html', '<!-- CMS_HOME_ARTICLES_START -->', '<!-- CMS_HOME_ARTICLES_END -->', implode("\n", $homeCards));
+}
+
+function cms_update_portfolio_index(PDO $pdo): void
+{
+    $categories = $pdo->query('SELECT c.*, COUNT(w.id) AS works_count FROM categories c LEFT JOIN works w ON w.category_id = c.id GROUP BY c.id ORDER BY c.name')->fetchAll();
+    $filters = ['<button class="active" data-filter="*"><span>Toate</span></button>'];
+    foreach ($categories as $category) {
+        if ((int) $category['works_count'] > 0) {
+            $filters[] = '<button data-filter=".cms-cat-' . (int) $category['id'] . '"><span>' . cms_e($category['name']) . '</span></button>';
+        }
+    }
+    $works = $pdo->query('SELECT w.*, c.name AS category_name FROM works w LEFT JOIN categories c ON c.id = w.category_id ORDER BY w.date_added DESC, w.id DESC')->fetchAll();
+    $cards = [];
+    foreach ($works as $work) {
+        $class = $work['category_id'] ? ' cms-cat-' . (int) $work['category_id'] : '';
+        $image = cms_relative_asset($work['cover_image'], 1);
+        $cards[] = '<div class="col-lg-6 col-md-6 grid-item' . $class . '"><div class="tp-portfolio-item-2 tp-img-reveal tp-img-reveal-item mb-20" data-fx="24" data-meta-tag="' . cms_e($work['category_name'] ?: 'Proiect') . '" data-title="' . cms_e($work['title']) . '"><div class="tp-portfolio-thumb-4"><a href="/portofoliu/' . cms_e($work['slug']) . '/"><img src="' . cms_e($image) . '" alt="Studiu de caz ' . cms_e($work['title']) . '" loading="lazy" decoding="async"></a></div></div></div>';
+    }
+    cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/portofoliu/index.html', '<!-- CMS_PORTFOLIO_FILTERS_START -->', '<!-- CMS_PORTFOLIO_FILTERS_END -->', implode("\n", $filters));
+    cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/portofoliu/index.html', '<!-- CMS_PORTFOLIO_CARDS_START -->', '<!-- CMS_PORTFOLIO_CARDS_END -->', implode("\n", $cards));
+}
+
+function cms_update_sitemap(PDO $pdo): void
+{
+    $path = CABIT_PUBLIC_ROOT . '/sitemap.xml';
+    $xml = file_get_contents($path) ?: '';
+    preg_match_all('~<loc>(.*?)</loc>~', $xml, $matches);
+    $staticUrls = [];
+    foreach ($matches[1] ?? [] as $url) {
+        if (!preg_match('~^https://cab-it\.ro/(?:blog|portofoliu)/[^/]+/$~', $url)) {
+            $staticUrls[$url] = true;
+        }
+    }
+    ksort($staticUrls);
+
+    $articles = $pdo->query('SELECT slug, created_at, updated_at FROM articles ORDER BY created_at DESC, id DESC')->fetchAll();
+    $works = $pdo->query('SELECT slug, date_added, updated_at FROM works ORDER BY date_added DESC, id DESC')->fetchAll();
+    $today = date('Y-m-d');
+    $orderedUrls = [];
+    foreach (array_keys($staticUrls) as $url) {
+        $orderedUrls[] = ['url' => $url, 'lastmod' => $today];
+        if ($url === CABIT_SITE_URL . '/blog/') {
+            foreach ($articles as $article) {
+                $orderedUrls[] = [
+                    'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
+                    'lastmod' => substr((string) $article['updated_at'], 0, 10) ?: $today,
+                ];
+            }
+        }
+        if ($url === CABIT_SITE_URL . '/portofoliu/') {
+            foreach ($works as $work) {
+                $orderedUrls[] = [
+                    'url' => CABIT_SITE_URL . '/portofoliu/' . $work['slug'] . '/',
+                    'lastmod' => substr((string) $work['updated_at'], 0, 10) ?: $today,
+                ];
+            }
+        }
+    }
+
+    $items = '';
+    foreach ($orderedUrls as $item) {
+        $items .= "  <url>\n    <loc>" . htmlspecialchars($item['url'], ENT_XML1, 'UTF-8') . "</loc>\n    <lastmod>" . htmlspecialchars($item['lastmod'], ENT_XML1, 'UTF-8') . "</lastmod>\n  </url>\n";
+    }
+    $output = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n{$items}</urlset>\n";
+    file_put_contents($path, $output, LOCK_EX);
+}
+
+function cms_remove_generated_page(string $section, string $slug): void
+{
+    if (!in_array($section, ['blog', 'portofoliu'], true) || !cms_valid_slug($slug)) {
+        return;
+    }
+    $base = realpath(CABIT_PUBLIC_ROOT . '/' . $section);
+    $target = CABIT_PUBLIC_ROOT . '/' . $section . '/' . $slug;
+    $resolvedParent = realpath(dirname($target));
+    if (!$base || !$resolvedParent || $resolvedParent !== $base || !is_dir($target)) {
+        return;
+    }
+    foreach (['index.html.gz', 'index.html'] as $file) {
+        $filePath = $target . '/' . $file;
+        if (is_file($filePath)) {
+            unlink($filePath);
+        }
+    }
+    @rmdir($target);
+}
+
+function cms_upload(array $file, string $folder): ?string
+{
+    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+    if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) {
+        throw new RuntimeException('Încărcarea imaginii a eșuat.');
+    }
+    if ((int) $file['size'] > CABIT_MAX_UPLOAD_BYTES) {
+        throw new RuntimeException('Imaginea depășește limita de 8 MB.');
+    }
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime = $finfo->file($file['tmp_name']);
+    $extensions = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+    if (!isset($extensions[$mime]) || @getimagesize($file['tmp_name']) === false) {
+        throw new RuntimeException('Sunt acceptate doar imagini JPG, PNG sau WebP valide.');
+    }
+    $folder = trim(cms_slug($folder), '-');
+    $directory = CABIT_UPLOADS_DIR . '/' . $folder;
+    if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
+        throw new RuntimeException('Nu pot crea directorul pentru imagini.');
+    }
+    $name = bin2hex(random_bytes(12)) . '.' . $extensions[$mime];
+    if (!move_uploaded_file($file['tmp_name'], $directory . '/' . $name)) {
+        throw new RuntimeException('Nu pot salva imaginea.');
+    }
+    return '/uploads/' . $folder . '/' . $name;
+}
+
+function cms_multiple_uploads(array $files, string $folder): array
+{
+    $paths = [];
+    $count = count($files['name'] ?? []);
+    for ($i = 0; $i < $count; $i++) {
+        $file = ['name' => $files['name'][$i], 'type' => $files['type'][$i], 'tmp_name' => $files['tmp_name'][$i], 'error' => $files['error'][$i], 'size' => $files['size'][$i]];
+        $path = cms_upload($file, $folder);
+        if ($path) {
+            $paths[] = $path;
+        }
+    }
+    return $paths;
+}
+
+function cms_add_subscriber(string $email, string $source, string $ip): bool
+{
+    $email = mb_strtolower(trim($email), 'UTF-8');
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 190) {
+        throw new InvalidArgumentException('Adresa de email nu este validă.');
+    }
+    $pdo = cms_db();
+    $statement = $pdo->prepare('INSERT OR IGNORE INTO subscribers (email, source, ip_hash, created_at) VALUES (?, ?, ?, ?)');
+    $statement->execute([$email, mb_substr($source, 0, 60), hash('sha256', $ip), date('c')]);
+    return $statement->rowCount() > 0;
+}
+
+function cms_web_base(): string
+{
+    $script = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+    $marker = '/adminpanelcabitro/';
+    if (($position = strpos($script, $marker)) !== false) {
+        return substr($script, 0, $position);
+    }
+    if (str_ends_with($script, '/newsletter-subscribe.php')) {
+        return rtrim(dirname($script), '/');
+    }
+    return '';
+}
+
+function cms_start_session(): void
+{
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        return;
+    }
+    session_name('CABIT_ADMIN_SESSION');
+    session_set_cookie_params(['httponly' => true, 'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', 'samesite' => 'Strict', 'path' => cms_web_base() . '/adminpanelcabitro/']);
+    session_start();
+}
+
+function cms_csrf(): string
+{
+    cms_start_session();
+    if (empty($_SESSION['csrf'])) {
+        $_SESSION['csrf'] = bin2hex(random_bytes(24));
+    }
+    return $_SESSION['csrf'];
+}
+
+function cms_check_csrf(string $token): void
+{
+    if (!hash_equals(cms_csrf(), $token)) {
+        throw new RuntimeException('Sesiunea formularului a expirat. Reîncarcă pagina.');
+    }
+}
+
+function cms_is_admin(): bool
+{
+    cms_start_session();
+    return !empty($_SESSION['admin_id']);
+}
+
+function cms_login(string $username, string $password, string $ip): bool
+{
+    $pdo = cms_db();
+    $ipHash = hash('sha256', $ip);
+    $limit = $pdo->prepare("SELECT COUNT(*) FROM login_attempts WHERE ip_hash = ? AND succeeded = 0 AND created_at >= datetime('now', '-15 minutes')");
+    $limit->execute([$ipHash]);
+    if ((int) $limit->fetchColumn() >= 8) {
+        throw new RuntimeException('Prea multe încercări. Reîncearcă peste 15 minute.');
+    }
+    $statement = $pdo->prepare('SELECT * FROM admins WHERE username = ?');
+    $statement->execute([$username]);
+    $admin = $statement->fetch();
+    $success = $admin && password_verify($password, $admin['password_hash']);
+    $log = $pdo->prepare('INSERT INTO login_attempts (ip_hash, succeeded, created_at) VALUES (?, ?, ?)');
+    $log->execute([$ipHash, $success ? 1 : 0, date('Y-m-d H:i:s')]);
+    if (!$success) {
+        return false;
+    }
+    cms_start_session();
+    session_regenerate_id(true);
+    $_SESSION['admin_id'] = (int) $admin['id'];
+    $_SESSION['admin_username'] = $admin['username'];
+    return true;
+}
+
+function cms_logout(): void
+{
+    cms_start_session();
+    $_SESSION = [];
+    if (ini_get('session.use_cookies')) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'] ?? '', (bool) $params['secure'], (bool) $params['httponly']);
+    }
+    session_destroy();
+}
+
+function cms_refresh_indexes(PDO $pdo): void
+{
+    cms_update_blog_index($pdo);
+    cms_update_portfolio_index($pdo);
+    cms_update_sitemap($pdo);
+}

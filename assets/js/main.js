@@ -10,11 +10,19 @@
 	"use strict";
 
 	var windowOn = $(window);
+	if (!document.getElementById("cabit-google-fonts")) {
+		var fonts = document.createElement("link");
+		fonts.id = "cabit-google-fonts";
+		fonts.rel = "stylesheet";
+		fonts.href = "https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap";
+		document.head.appendChild(fonts);
+	}
 	////////////////////////////////////////////////////
 	// 01. PreLoader Js
-	windowOn.on('load', function () {
-		$("#loading").fadeOut(500);
-	});
+	// The page content is already parsed when this footer script runs. Keeping the
+	// full-screen loader visible until window.load made LCP depend on analytics and
+	// every below-the-fold image, so remove it immediately.
+	$("#loading").hide();
 
 
 	//mobile menu/////
