@@ -1,0 +1,11 @@
+# Permite accesul complet pentru toate motoarele de căutare
+User-agent: *
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /junk/
+
+# Permite accesul complet pentru toate paginile
+Allow: /
+
+# Locația Sitemap-ului pentru indexare rapidă
+Sitemap: https://cab-it.ro/sitemap.xml

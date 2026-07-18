@@ -1,0 +1,139 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.5 Cta css
+/*----------------------------------------*/
+
+.box-space{
+    padding-left: 275px;
+    padding-right: 275px;
+    @media #{$xxl} {
+      padding-left: 110px;
+      padding-right: 110px;
+    }
+    @media #{$xl} {
+      padding-left: 45px;
+      padding-right: 45px;
+    }
+    @media #{$lg} {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    @media #{$md,$sm,$xs} {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+}
+
+.tp-cta{
+  &-area{
+    @media #{$xsx} {
+      padding-bottom: 50px;
+    }
+  }
+    &-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: -1;
+      }
+      &-wrapper{
+        padding: 75px 105px 66px;
+        border-radius: 30px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        @media #{$xxxl} {
+          padding: 60px 85px 62px;
+        }
+        @media #{$lg} {
+          padding: 60px 35px 45px;
+        }
+        @media #{$md} {
+          padding: 35px 40px 50px;
+        }
+        @media #{$sm} {
+          padding: 40px 58px 42px;
+        }
+        @media #{$xs3} {
+          padding: 30px 35px 40px;
+        }
+        @media #{$xsx} {
+          padding: 40px 20px 25px;
+        }
+        & p{
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 29px;
+            color: var(--tp-common-white);
+        }
+      }
+      &-title {
+        font-weight: 600;
+        font-size: 55px;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        color: var(--tp-common-white);
+        @media #{$lg,$sm} {
+          font-size: 50px;
+        }
+        @media #{$xsx} {
+          font-size: 44px;
+        }
+      }
+      &-shape {
+        position: absolute;
+        bottom: 0;
+        left: 0px;
+        @media #{$xl} {
+          bottom: 45px;
+        }
+        @media #{$lg} {
+          bottom: 50px;
+        }
+        @media #{$md,$sm,$xs} {
+          bottom: 70px;
+        }
+        & img{
+          width: 100%;
+          @media #{$xs} {
+            display: none;
+          }
+        }
+      }
+    &-btn{
+      @media #{$md,$sm,$xs} {
+        margin-top: 20px;
+      }
+    }
+    &-team-wrapper{
+      padding: 70px 72px 75px;
+      border-radius: 30px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      @media #{$lg} {
+        padding: 65px 60px 65px;
+      }
+      @media #{$xsx} {
+        padding: 55px 20px 55px;
+      }
+    }
+    &-team-btn{
+      & .tp-btn-sm-blue{
+        padding: 22px 35px;
+        @media #{$lg} {
+          padding: 22px 30px;
+        }
+        @media #{$md,$sm} {
+          margin-top: 20px;
+        }
+        @media #{$xsx} {
+          padding: 20px;
+          margin-top: 20px;
+        }
+      }
+    }
+}

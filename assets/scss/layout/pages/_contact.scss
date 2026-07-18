@@ -1,0 +1,257 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.4 Contact css
+/*----------------------------------------*/
+
+.tp-contact{
+    &-area{
+        @media #{$md} {
+            padding-bottom: 60px;
+        }
+        @media #{$xsx} {
+            padding-top: 70px;
+            padding-bottom: 50px;
+        }
+    }
+    &-wrapper{
+        @media #{$xl} {
+            padding-right: 60px;
+        }
+        @media #{$lg,$md,$sm,$xsx} {
+            padding-right: 0;
+        }
+    }
+    &-section{
+        &-wrapper{
+            & .tp-section__title-pre{}
+            & .tp-section__title{
+                margin-bottom: 15px;
+            }
+            & p{
+                font-size: 20px;
+                line-height: 25px;
+                color: #000D44;
+            }
+        }
+    }
+    &-list-icon{
+        background: var(--tp-common-white);
+        box-shadow: 0px 7px 13px rgba(44, 65, 97, 0.13);
+        border-radius: 10px;
+        height: 70px;
+        width: 70px;
+        text-align: center;
+        line-height: 4;
+        margin-right: 20px;
+        
+    }
+    &-list-content{
+        & span{
+            font-size: 16px;
+            line-height: 22px;
+            letter-spacing: -0.04em;
+            color: var(--tp-heading-secondary); 
+        }
+        & p{
+            font-size: 18px;
+            line-height: 22px;
+            letter-spacing: -0.01em;
+            color: #03041C;
+        }
+    }
+    &__form{
+        background: #F1F6FB;
+        border-radius: 10px;
+        padding: 65px 50px 52px;
+        @media #{$xsx} {
+            padding: 60px 30px 50px
+        }
+        @media #{$xl,$lg,$md,$sm,$xs,$xsx} {
+            margin-left: 0;
+        }
+    }
+    &__from-breadcrumb.contact-from {
+            @media #{$lg,$md,$sm,$xsx} {
+                margin-left: 0;
+            }
+        }
+    &__form-breadcrumb{
+        background: #F8F8F8;
+        border-radius: 10px;
+        padding: 65px 50px 52px;
+        @media #{$xl,$lg,$sm,$xsx} {
+            margin-left: 0;
+        }
+        @media #{$xsx} {
+            padding: 60px 20px 20px;
+        }
+        &.team-details{
+            @media #{$lg,$md,$sm,$xsx} {
+                margin-left: 0;
+            }
+        }
+        &.about-us{
+            @media #{$md,$sm,$xsx} {
+                margin-left: 0;
+            }
+        }
+    }
+    &__input{
+        margin-bottom: 20px;
+        & input,
+        & textarea{
+            background: #FFFFFF;
+            box-shadow: 0px 4px 4px rgba(115, 135, 164, 0.13);
+            border-radius: 10px;
+            width: 100%;
+            height: 60px;
+            border: 1px solid #FFFFFF;
+            outline: 0;
+            resize: none;
+            padding: 0 25px;
+            @include tp-placeholder{
+                font-size: 14px;
+                color: var(--tp-heading-primary);
+                opacity: 0.5;
+            }
+            &:focus {
+                border-color: #000D44;
+                &::placeholder{
+                    opacity: 0;
+                }
+            }
+        }
+        & textarea{
+            width: 100%;
+            height: 160px;
+        }
+    }
+    &__btn{
+        & .tp-btn{
+            padding: 20px 45px;
+            @media #{$xsx} {
+                padding: 17px 30px;
+            }
+        }
+        &.contact-3 {
+            & .tp-btn {
+                background: linear-gradient(180deg, #00EEFF 0%, #003CFF 100%);
+            }
+        }
+    }
+    &-section-wrapper-breadcrumb{
+        @media #{$md} {
+            margin-bottom: 30px;
+        }
+        & p{
+            font-size: 16px;
+        }
+    }
+    &-icons {
+        & a {
+            position: relative;
+            display: inline-block;
+            background: #FFFFFF;
+            border: 1px solid #EAEAEF;
+            border-radius: 5px;
+            height: 58px;
+            width: 58px;
+            line-height: 3.2;
+            text-align: center;
+            color: #000D44;
+            margin-right: 2px;
+            transition: .3s ease;
+            font-size: 18px;
+            z-index: 1;
+            margin-bottom: 10px;
+            &:hover{
+                color: var(--tp-common-white);
+                &::before{
+                    opacity: 1;
+                }
+            }
+            &::before {
+                position: absolute;
+                content: "";
+                width: 100%;
+                background: linear-gradient(180deg, #00EEFF 0%, #003CFF 100%);
+                top: 0;
+                left: 0;
+                height: 100%;
+                border-radius: 5px;
+                opacity: 0;
+                color: var(--tp-common-white);
+                transition: 0.3s ease;
+                z-index: -1;
+              }
+        }
+    }
+    &-details{
+        background: #F8F8F8;
+        border-radius: 20px;
+        padding: 58px 100px 50px 60px;
+        @media #{$xsx} {
+            padding: 50px 15px 50px 10px;
+        }
+        & li{
+            list-style: none;
+            position: relative;
+            padding-left: 50px;
+            border-bottom: 1px dashed #50413C;
+            margin-bottom: 30px;
+            padding-bottom: 26px;
+            @media #{$xsx} {
+                padding-left: 28px;
+            }
+            &:last-child{
+                border: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+            & a {
+                font-weight: 500;
+                font-size: 22px;
+                line-height: 29px;
+                color: #000D44;
+                @media #{$xsx} {
+                    font-size: 20px;
+                }
+                & br{
+                    @media #{$xl,$lg,$md,$sm,$xsx} {
+                    display: none;
+                    }
+                }
+                & i {
+                    position: absolute;
+                    font-weight: 400;
+                    font-size: 22px;
+                    left: 0;
+                    top: 5px;
+                    background: linear-gradient(180deg, #00EEFF 0%, #003CFF 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+            }
+        }
+    }
+    &-map {
+        @media #{$lg,$md,$sm,$xsx} {
+            margin-bottom: 40px
+        }
+        & iframe {
+            width: 536px;
+            height: 424px;
+            border-radius: 20px;
+            @media #{$lg,$xsx} {
+                width: 100%;
+            }
+          }
+    }
+    &-about-us-area{
+        @media #{$md,$sm,$xsx} {
+            padding-top: 30px;
+        }
+    }
+}

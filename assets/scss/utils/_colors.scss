@@ -1,0 +1,43 @@
+$colors: (
+    'common': (
+        'white': #ffffff,
+        'black': #000,  
+    ),
+    'heading': (
+        'primary': #000D44,
+        'secondary': #52525C,
+    ),
+    'grey': (
+        '1':#F1F1F1,
+        '2':#F5F6F8,
+    ),
+    'text': (
+        'body':#727885,
+        '1':#000,
+        '2': #7A8085,
+    ),
+    'theme': (
+        'primary': #162DE4,
+        'secondary': #030A39,
+    ),
+    'gradient': (
+        'primary': linear-gradient(180deg, #00EEFF 0%, #003CFF 100%),
+        'secondary': linear-gradient(90deg, #9EFBD3 0%, #57E9F2 48%, #45D4FB 100%),
+    ),
+    'border': (
+        'primary': #000,
+        'secondary': #000,
+    )
+);
+
+$white : #fff;
+$theme-primary : #3D6CE7;
+$border-primary : #000;
+
+.home-2-bg{
+    background-color: #351E8A;
+}
+
+.gray-bg{
+    background-color: #F8F8F8;
+}
