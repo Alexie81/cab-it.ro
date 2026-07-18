@@ -2,7 +2,9 @@
   "use strict";
 
   var isLocalHost = /^(localhost|127\.0\.0\.1|::1)$/i.test(window.location.hostname);
-  var localSiteRoot = isLocalHost && /^\/cab-it\.ro(?:\/|$)/i.test(window.location.pathname) ? "/cab-it.ro" : "";
+  var runtimeScript = document.currentScript || document.querySelector('script[src*="site-enhancements.js"]');
+  var runtimeRoot = runtimeScript ? new URL("../../", runtimeScript.src).pathname.replace(/\/$/, "") : "";
+  var localSiteRoot = isLocalHost ? runtimeRoot : "";
 
   function siteUrl(path) {
     return localSiteRoot + path;
@@ -180,44 +182,44 @@
       '</aside>' +
     '</div>';
 
+  var useNextShell = document.body.classList.contains("cabit-theme-2026");
+  var isNextHome = document.body.classList.contains("cabit-home");
   var existingHeader = document.querySelector("header");
-  if (existingHeader) {
-    existingHeader.insertAdjacentHTML("beforebegin", globalHeaderMarkup);
-    existingHeader.remove();
-  } else {
-    document.body.insertAdjacentHTML("afterbegin", globalHeaderMarkup);
-  }
+  if (existingHeader && !isNextHome) existingHeader.remove();
+  if (!useNextShell) document.body.insertAdjacentHTML("afterbegin", globalHeaderMarkup);
   document.querySelectorAll(".tp-offcanvas-area, [data-cabit-shared-offcanvas]").forEach(function (offcanvas) {
     offcanvas.remove();
   });
   var globalHeader = document.querySelector("[data-cabit-global-header]");
-  globalHeader.insertAdjacentHTML("afterend", globalDrawerMarkup);
+  if (globalHeader) globalHeader.insertAdjacentHTML("afterend", globalDrawerMarkup);
 
   var servicePage = document.body.classList.contains("cabit-service-page");
   if (servicePage) {
-    var serviceIcons = {
-      analysis: '<path d="M5 24V8m0 16h22M9 20l5-6 5 3 8-10"/><path d="M22 7h5v5"/>',
-      website: '<rect x="4" y="6" width="24" height="20" rx="3"/><path d="M4 12h24M9 9h.01M13 9h.01M10 18h12M10 22h7"/>',
-      automation: '<circle cx="7" cy="16" r="3"/><circle cx="25" cy="8" r="3"/><circle cx="25" cy="24" r="3"/><path d="M10 16h5a4 4 0 0 0 4-4v0a4 4 0 0 1 3-4M10 16h5a4 4 0 0 1 4 4v0a4 4 0 0 0 3 4"/>',
-      conversion: '<circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="5"/><path d="m19 13 8-8M22 5h5v5"/>',
-      ads: '<path d="M6 18h4l11 5V8l-11 5H6a3 3 0 0 0 0 5Z"/><path d="m10 18 2 7h4l-2-6M25 12l3-2M25 17l3 2"/>',
-      seo: '<circle cx="14" cy="14" r="8"/><path d="m20 20 7 7M10 15l3 3 5-7"/>',
-      local: '<path d="M25 13c0 7-9 15-9 15S7 20 7 13a9 9 0 1 1 18 0Z"/><circle cx="16" cy="13" r="3"/>',
-      social: '<path d="M7 7h13a5 5 0 0 1 5 5v4a5 5 0 0 1-5 5h-7l-6 5v-5a5 5 0 0 1-5-5v-4a5 5 0 0 1 5-5Z"/><path d="M9 14h.01M14 14h.01M19 14h.01"/>'
+    var serviceVisuals = {
+      website: '<div class="service-visual device-visual" aria-label="Website afișat pe desktop și telefon"><div class="device-desktop"><div class="device-browser-bar"><i></i><i></i><i></i></div><div class="device-site"><span class="device-site-logo"></span><div><b></b><b></b><em></em></div></div><span class="device-stand"></span></div><div class="device-phone"><div class="device-phone-speaker"></div><div class="device-site"><span class="device-site-logo"></span><div><b></b><em></em></div></div></div><span class="device-sync" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 7h10l-2.5-2.5M17 17H7l2.5 2.5"/></svg></span></div>',
+      seo: '<div class="service-visual seo-rank-visual" aria-label="Website CAB-IT urcă în rezultatele Google"><div class="seo-search-bar"><strong>G</strong><span>creare website București</span><i></i></div><div class="seo-result-ladder"><div class="seo-competitor"><b>#1</b><span></span><p><strong>website-concurent.ro</strong><small>Servicii web București</small></p></div><div class="seo-competitor"><b>#2</b><span></span><p><strong>agenție-digitală.ro</strong><small>Creare site profesional</small></p></div><div class="seo-cabit-result"><b>#3</b><span class="seo-cabit-logo"><i></i></span><p><strong>CAB-IT Expert</strong><small>cab-it.ro · Website optimizat</small></p><em>↑14</em></div><span class="seo-old-rank">#17</span><svg class="seo-climb-arrow" viewBox="0 0 95 60"><path d="M4 53C28 52 35 42 50 40S69 22 90 8"/><path d="m82 7 8 1-2 8"/></svg></div></div>',
+      ads: '<div class="service-visual google-ad-visual" aria-label="Website afișat ca anunț sponsorizat în Google"><div class="google-ad-search"><strong><i>G</i><i>o</i><i>o</i><i>g</i><i>l</i><i>e</i></strong><span>creare website București</span><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></div><div class="google-ad-result"><div><span>Sponsorizat</span><small>cab-it.ro</small></div><strong>CAB-IT Expert · Creare website profesional</strong><p>Website rapid, modern și optimizat pentru Google.</p></div><b class="google-ad-badge">Anunț în top</b></div>',
+      social: '<div class="service-visual platform-visual" aria-label="Promovare pe Facebook, Instagram și TikTok"><div class="platform-card is-facebook"><span>f</span><strong>Facebook</strong><small>Ads</small></div><div class="platform-card is-instagram"><span>◎</span><strong>Instagram</strong><small>Ads</small></div><div class="platform-card is-tiktok"><span>♪</span><strong>TikTok</strong><small>Ads</small></div><div class="platform-pulse"></div></div>',
+      automation: '<div class="service-visual chat-visual" aria-label="Conversație cu asistentul AI"><div class="chat-agent"><span>AI</span><div><strong>Asistent CAB-IT</strong><small>online acum</small></div></div><p class="chat-message is-user">Vreau o ofertă pentru un website.</p><p class="chat-message is-bot"><span>AI</span>Sigur! Îți preiau cererea automat.</p><i class="chat-typing"><b></b><b></b><b></b></i></div>',
+      conversion: '<div class="service-visual sales-visual" aria-label="Grafic animat cu vânzări în creștere"><div class="sales-visual__top"><span>Conversii</span><strong>+38%</strong></div><svg viewBox="0 0 300 82"><path class="sales-area" d="M5 72 5 61 38 64 72 52 106 57 142 39 176 44 210 25 244 30 294 8 294 72Z"/><path class="sales-line" d="M5 61 38 64 72 52 106 57 142 39 176 44 210 25 244 30 294 8"/><g class="sales-points"><circle cx="72" cy="52" r="3"/><circle cx="142" cy="39" r="3"/><circle cx="210" cy="25" r="3"/><circle cx="294" cy="8" r="4"/></g></svg><div class="sales-visual__bottom"><span>Ultimele 30 de zile</span><b>Tendință în creștere ↗</b></div></div>',
+      analysis: '<div class="service-visual audit-visual" aria-label="Dashboard de audit digital"><div class="audit-score"><span>Scor digital</span><strong>86<small>/100</small></strong></div><ul><li><i></i><span>Viteză</span><b>92%</b></li><li><i></i><span>SEO tehnic</span><b>88%</b></li><li><i></i><span>Conversii</span><b>78%</b></li></ul><svg viewBox="0 0 180 70"><path d="M5 60 36 51 65 53 95 34 124 39 173 8"/><path d="m160 8 13 0-2 13"/></svg></div>',
+      local: '<div class="service-visual local-visual" aria-label="Rezultat local vizibil în Google Maps"><div class="local-search"><b>G</b><span>agenție marketing București</span></div><div class="local-map"><i class="local-road one"></i><i class="local-road two"></i><span class="local-pin">⌖</span><div><strong>CAB-IT Expert</strong><small>★★★★★ · București</small><b>Poziție locală în creștere</b></div></div></div>'
     };
     var serviceKey = document.body.getAttribute("data-service") || "analysis";
     var serviceHero = document.querySelector(".cabit-page-header .container");
     if (serviceHero) {
-      var serviceIcon = document.createElement("span");
-      serviceIcon.className = "cabit-service-hero-icon";
-      serviceIcon.setAttribute("aria-hidden", "true");
-      serviceIcon.innerHTML = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + (serviceIcons[serviceKey] || serviceIcons.analysis) + '</svg>';
-      serviceHero.insertBefore(serviceIcon, serviceHero.firstChild);
-
       var serviceActions = document.createElement("div");
       serviceActions.className = "cabit-service-hero-actions";
       serviceActions.innerHTML = '<a class="cabit-service-primary" href="' + siteUrl("/contact/") + '">Solicită o discuție</a><a class="cabit-service-secondary" href="' + siteUrl("/portofoliu/") + '">Vezi proiectele</a>';
       serviceHero.appendChild(serviceActions);
+      var serviceCopy = document.createElement("div");
+      serviceCopy.className = "cabit-service-hero-copy";
+      while (serviceHero.firstChild) serviceCopy.appendChild(serviceHero.firstChild);
+      var serviceStage = document.createElement("div");
+      serviceStage.className = "cabit-service-hero-stage";
+      serviceStage.innerHTML = serviceVisuals[serviceKey] || serviceVisuals.analysis;
+      serviceHero.appendChild(serviceCopy);
+      serviceHero.appendChild(serviceStage);
     }
   }
 
@@ -257,12 +259,8 @@
     '</footer>';
 
   var existingFooter = document.querySelector("footer");
-  if (existingFooter) {
-    existingFooter.insertAdjacentHTML("beforebegin", globalFooterMarkup);
-    existingFooter.remove();
-  } else {
-    document.body.insertAdjacentHTML("beforeend", globalFooterMarkup);
-  }
+  if (existingFooter && !isNextHome) existingFooter.remove();
+  if (!useNextShell) document.body.insertAdjacentHTML("beforeend", globalFooterMarkup);
 
   var sharedLegacyHeader = document.querySelector("[data-cabit-shared-header]");
   var sharedOffcanvas = document.querySelector("[data-cabit-shared-offcanvas]");

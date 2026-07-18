@@ -38,7 +38,7 @@
         '<div class="next-nav-actions"><a class="button button-ghost" href="/portofoliu/">Vezi proiectele</a><a class="button button-primary" href="/#audit">Cere un audit gratuit <span aria-hidden="true">→</span></a></div>' +
         '<button class="next-menu-toggle" type="button" aria-label="Deschide meniul" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>' +
       '</div>' +
-      '<div class="next-mobile-menu" id="mobile-menu" hidden><a href="/">Acasă</a><a href="/servicii/">Servicii</a><a href="/portofoliu/">Proiecte</a><a href="/despre-noi/">Despre noi</a><a href="/blog/">Blog</a><a href="/preturi/">Prețuri</a><a href="/contact/">Contact</a><a class="button button-primary" href="/#audit">Cere un audit gratuit <span aria-hidden="true">→</span></a></div>' +
+      '<div class="next-mobile-menu" id="mobile-menu" hidden><a href="/">Acasă</a><a href="/servicii/">Servicii</a><a href="/portofoliu/">Proiecte</a><a href="/despre-noi/">Despre noi</a><a href="/blog/">Blog</a><a href="/glosar-seo/">Glosar SEO</a><a href="/preturi/">Prețuri</a><a href="/contact/">Contact</a><a class="button button-primary" href="/#audit">Cere un audit gratuit <span aria-hidden="true">→</span></a></div>' +
     '</header>';
   }
 
@@ -133,15 +133,91 @@
     }, { passive: true });
   }
 
-  var currentPath = window.location.pathname.replace(/index\.(html|php)$/i, "");
-  doc.querySelectorAll(".next-nav > a").forEach(function (link) {
-    var path = new URL(link.href, window.location.href).pathname;
-    var isHome = path === "/" && currentPath === "/";
-    var isSection = path !== "/" && currentPath.indexOf(path) === 0;
-    link.classList.toggle("is-active", isHome || isSection);
+  function normalizedPath(value) {
+    var pathname = new URL(value, window.location.href).pathname.replace(/index\.(html|php)$/i, "");
+    if (siteRootPath !== "/" && pathname.indexOf(siteRootPath) === 0) {
+      pathname = "/" + pathname.slice(siteRootPath.length).replace(/^\/+/, "");
+    }
+    pathname = pathname.replace(/\/{2,}/g, "/");
+    if (pathname.length > 1 && pathname.slice(-1) !== "/") pathname += "/";
+    return pathname;
+  }
+
+  var currentPath = normalizedPath(window.location.href);
+  var serviceSection = currentPath.indexOf("/servicii/") === 0;
+  var resourceSection = currentPath.indexOf("/blog/") === 0 || currentPath.indexOf("/glosar-seo/") === 0 || currentPath.indexOf("/preturi/") === 0 || currentPath.indexOf("/termeni-si-conditii/") === 0;
+
+  function markActiveLink(link, active) {
+    link.classList.toggle("is-active", active);
+    if (active) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  }
+
+  doc.querySelectorAll(".next-nav a, .next-mobile-menu > a:not(.button)").forEach(function (link) {
+    var linkPath = normalizedPath(link.href);
+    var exact = currentPath === linkPath;
+    var section = linkPath !== "/" && currentPath.indexOf(linkPath) === 0;
+    markActiveLink(link, exact || section);
   });
 
+  doc.querySelectorAll(".next-nav-dropdown").forEach(function (dropdown) {
+    var button = dropdown.querySelector(":scope > button");
+    var hasActiveChild = !!dropdown.querySelector(".next-nav-menu a.is-active");
+    var label = button ? button.textContent.trim().toLowerCase() : "";
+    var active = hasActiveChild || (label.indexOf("servicii") === 0 && serviceSection) || (label.indexOf("resurse") === 0 && resourceSection);
+    if (button) {
+      button.classList.toggle("is-active", active);
+      if (active) button.setAttribute("aria-current", "page");
+      else button.removeAttribute("aria-current");
+    }
+  });
+
+  var portfolioFilters = doc.querySelector("[data-portfolio-filters]");
+  var portfolioGrid = doc.querySelector("[data-portfolio-grid]");
+  if (portfolioFilters && portfolioGrid) {
+    portfolioFilters.addEventListener("click", function (event) {
+      var button = event.target.closest("button[data-filter]");
+      if (!button) return;
+      var filter = button.getAttribute("data-filter") || "*";
+      portfolioFilters.querySelectorAll("button").forEach(function (item) {
+        item.classList.toggle("active", item === button);
+      });
+      portfolioGrid.querySelectorAll(".grid-item").forEach(function (card) {
+        var visible = filter === "*" || card.matches(filter);
+        card.hidden = !visible;
+        card.setAttribute("aria-hidden", visible ? "false" : "true");
+      });
+    });
+  }
+
   var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reducedMotion && "animate" in Element.prototype) {
+    doc.querySelectorAll(".faq-list details, .cabit-service-faq details").forEach(function (details) {
+      var summary = details.querySelector("summary");
+      if (!summary) return;
+      summary.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (details.dataset.animating === "true") return;
+        details.dataset.animating = "true";
+        var startHeight = details.offsetHeight;
+        var opening = !details.open;
+        if (opening) details.open = true;
+        var endHeight = opening ? details.scrollHeight : summary.offsetHeight;
+        var animation = details.animate(
+          [{ height: startHeight + "px" }, { height: endHeight + "px" }],
+          { duration: 360, easing: "cubic-bezier(.2,.75,.2,1)" }
+        );
+        details.style.overflow = "hidden";
+        animation.onfinish = function () {
+          if (!opening) details.open = false;
+          details.style.height = "";
+          details.style.overflow = "";
+          delete details.dataset.animating;
+        };
+        animation.oncancel = animation.onfinish;
+      });
+    });
+  }
   var revealItems = doc.querySelectorAll(".reveal");
   if (reducedMotion || !("IntersectionObserver" in window)) {
     revealItems.forEach(function (item) { item.classList.add("is-visible"); });

@@ -14,6 +14,14 @@ Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
 
+# Microsoft Bing și servicii care folosesc indexul Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /adminpanelcabitro/
+Disallow: /cabit-cms/
+Disallow: /storage/
+Disallow: /PHPMailer/
+
 # ChatGPT Search
 User-agent: OAI-SearchBot
 Allow: /

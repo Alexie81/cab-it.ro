@@ -431,7 +431,7 @@ $csrf = cms_csrf();
       <?php if ($section === 'dashboard'): ?>
         <div class="admin-heading"><div><span class="admin-kicker">Prezentare generală</span><h1>Dashboard</h1></div></div>
         <div class="admin-stats"><a href="?section=audits"><strong><?= $counts['new_audits'] ?></strong><span>Audituri noi</span></a><a href="?section=articles"><strong><?= $counts['articles'] ?></strong><span>Articole indexabile</span></a><a href="?section=portfolio"><strong><?= $counts['works'] ?></strong><span>Lucrări în portofoliu</span></a><a href="?section=subscribers"><strong><?= $counts['subscribers'] ?></strong><span>Abonați newsletter</span></a></div>
-        <section class="admin-panel"><h2>Ce actualizează automat CMS-ul</h2><div class="admin-help-grid"><p><strong>Blog:</strong> creează URL separat, canonical, schema BlogPosting și afișează pe homepage ultimele 5 articole după dată.</p><p><strong>Portofoliu:</strong> creează studiul de caz, galeria, filtrul de categorie și cardul public.</p><p><strong>SEO:</strong> actualizează sitemap.xml după fiecare adăugare, editare sau ștergere.</p></div></section>
+        <section class="admin-panel"><h2>Ce actualizează automat CMS-ul</h2><div class="admin-help-grid"><p><strong>Blog:</strong> creează URL separat, canonical, schema BlogPosting și afișează pe homepage ultimele 6 articole după data publicării.</p><p><strong>Portofoliu:</strong> creează studiul de caz, galeria, filtrul de categorie și cardul public.</p><p><strong>SEO:</strong> actualizează sitemap.xml după fiecare adăugare, editare sau ștergere.</p></div></section>
       <?php endif; ?>
 
       <?php if ($section === 'articles'):
