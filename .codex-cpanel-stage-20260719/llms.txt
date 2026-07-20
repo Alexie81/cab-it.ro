@@ -1,0 +1,46 @@
+# CAB-IT Expert SRL
+
+> Agenție de marketing online din București pentru creare site web, SEO, promovare online, Google Ads, Social Media Ads și automatizări AI.
+
+## Servicii principale
+
+- [Creare website București](https://cab-it.ro/servicii/creare-site-web/): site-uri de prezentare și magazine online rapide, responsive și ușor de administrat.
+- [Optimizare SEO](https://cab-it.ro/servicii/seo/): SEO tehnic, conținut și vizibilitate organică pentru București, Ilfov și România.
+- [Promovare online](https://cab-it.ro/servicii/reclame-platite/): Google Ads, Meta Ads și TikTok Ads orientate spre cereri și vânzări măsurabile.
+- [SEO local](https://cab-it.ro/servicii/seo-local/): optimizare locală pentru firme din București și Ilfov.
+- [Automatizări digitale](https://cab-it.ro/servicii/integrari-digitale/): integrări și fluxuri AI pentru procese comerciale.
+
+## Articole actualizate din CMS
+
+- [Creare site web în București: ce trebuie să conțină un website care aduce](https://cab-it.ro/blog/creare-site-web-bucuresti-ghid/): Ce trebuie să conțină un website pentru o afacere din București: mesaj clar, pagini de servicii, SEO local, viteză și măsurarea solicitărilor.
+- [Promovare online în București: cum alegi canalele potrivite](https://cab-it.ro/blog/promovare-online-bucuresti-ghid-firme/): Google Ads, Meta, TikTok sau SEO? Alegerea corectă pornește de la intenția clientului, ofertă, buget și modul în care măsori rezultatele.
+- [Cât costă un website profesional în 2026?](https://cab-it.ro/blog/cat-costa-website-profesional-2026/): Un ghid transparent despre elementele care formează bugetul unui website și diferența dintre o pagină simplă și o platformă pregătită pentru creștere.
+- [Core Web Vitals: LCP, CLS și INP, explicate simplu](https://cab-it.ro/blog/core-web-vitals-lcp-cls-inp/): Cum influențează LCP, CLS și INP experiența vizitatorilor și ce merită optimizat întâi.
+- [Ce indicatori măsori într-o campanie de promovare online](https://cab-it.ro/blog/indicatori-campanie-promovare-online/): Diferența dintre click, lead și vânzare și de ce ROAS nu spune singur toată povestea.
+- [Cum stabilești prioritățile SEO pentru un IMM](https://cab-it.ro/blog/prioritati-seo-pentru-imm/): Tehnic, conținut, intenție de căutare și măsurare într-un plan SEO care poate fi executat.
+
+## Studii de caz
+
+- [Maison Bébé](https://cab-it.ro/portofoliu/maison-bebe/): Studiu de caz Maison Bébé: website e-commerce modern și elegant pentru un boutique premium dedicat bebelușilor, realizat de CAB-IT Expert.
+- [Auto La Domiciliu](https://cab-it.ro/portofoliu/auto-la-domiciliu/): Studiu de caz Auto La Domiciliu: website de servicii, structură SEO și campanii plătite pentru solicitări de service și diagnoză auto la domiciliu.
+- [Nanu Events](https://cab-it.ro/portofoliu/nanu-events/): Studiu de caz Nanu Events: website de prezentare responsive, structură de conținut și design modern pentru servicii și proiecte din domeniul evenimentelor.
+- [Traffic Restaurant & Lounge](https://cab-it.ro/portofoliu/traffic-restaurant/): Studiu de caz Traffic Restaurant & Lounge: website, SEO local, Google Ads și campanii Meta conectate la rezervări și promovarea restaurantului.
+- [Best TKD](https://cab-it.ro/portofoliu/best-tkd/): Studiu de caz Best TKD: website responsive și panou de administrare personalizat pentru prezentarea programelor, activităților și informațiilor utile.
+- [Spălătoria Ozana](https://cab-it.ro/portofoliu/spalatoria-ozana/): Studiu de caz Spălătoria Ozana: website responsive și optimizare SEO locală pentru prezentarea serviciilor și vizibilitate în căutările din București.
+- [Lael Fashion](https://cab-it.ro/portofoliu/lael-fashion/): Studiu de caz Lael Fashion: website e-commerce responsive, structură de produse, optimizare SEO și direcție de promovare pentru un brand de fashion.
+- [Bilka Sistem](https://cab-it.ro/portofoliu/bilka-sistem/): Studiu de caz Bilka Sistem: audit SEO, optimizare tehnică și structurarea campaniilor Google Ads pentru vizibilitate și cereri măsurabile.
+
+## Informații verificate
+
+- Audit website 100% gratuit, livrat manual prin email în maximum 30 de minute.
+- Site-urile de prezentare pot fi finalizate chiar în 24 de ore; magazinele online în 3–7 zile, în funcție de complexitate și materiale.
+- CAB-IT Expert SRL este Google Partner.
+- Telefon și WhatsApp: +40 771 532 949
+- Email: contact@cab-it.ro
+- Adresă: Intrarea Humulești 6A, 052034 București, România.
+
+## Descoperire și indexare
+
+- [Sitemap index](https://cab-it.ro/sitemap-index.xml)
+- [Sitemap complet](https://cab-it.ro/sitemap.xml)
+- [Robots](https://cab-it.ro/robots.txt)
