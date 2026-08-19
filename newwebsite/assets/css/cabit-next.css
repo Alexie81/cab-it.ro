@@ -1536,6 +1536,10 @@ body.cabit-page-service .cabit-content-section.is-soft { background: linear-grad
 .cabit-article-breadcrumb a { color: var(--teal-dark); font-weight: 750; }
 .cabit-article-breadcrumb > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cabit-case-layout > div { min-width: 0; }
+.cabit-page-article .cabit-case-layout { grid-template-columns: minmax(0,1fr); }
+.cabit-page-article .cabit-case-layout > div,
+.cabit-page-article .cabit-article-content { width: 100%; }
+.cabit-page-article .cabit-sticky-aside { display: none; }
 .cabit-article-content h2,.cabit-article-content h3 { scroll-margin-top: 110px; }
 .cabit-answer-box { margin: 26px 0 30px; padding: 24px 26px; border: 1px solid rgba(0,169,157,.24); border-left: 5px solid var(--teal); border-radius: 18px; background: linear-gradient(135deg,#effaf8,#f6fbff); box-shadow: 0 12px 28px rgba(16,24,40,.055); }
 .cabit-answer-box > span { display: block; margin-bottom: 8px; color: var(--teal-dark); font-size: 11px; font-weight: 850; text-transform: uppercase; letter-spacing: .09em; }
@@ -1598,6 +1602,20 @@ body.cabit-page-service .cabit-content-section.is-soft { background: linear-grad
   .cabit-contact-hero .conversation-form { padding: 20px 14px; border-radius: 21px; }
   .cabit-contact-hero .choice-grid,.cabit-contact-hero .conversation-fields { grid-template-columns: 1fr; }
   .cabit-inner-cta { width: calc(100% - 22px); padding: 40px 24px; border-radius: 24px; }
+  body.cabit-page-article .cabit-content-section:first-of-type { padding-top: 28px; }
+  body.cabit-page-article .cabit-content-section:first-of-type > .container.cabit-case-layout {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  body.cabit-page-article .cabit-content-card.cabit-article-content {
+    padding: 24px 18px;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+  }
+  body.cabit-page-article .cabit-author-card { margin-right: 14px; margin-left: 14px; }
 }
 
 /* Dedicated 404 page */
