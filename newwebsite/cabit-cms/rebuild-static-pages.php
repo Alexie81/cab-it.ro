@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 const PUBLIC_ROOT = __DIR__ . '/..';
 const SITE_ASSET_VERSION = '20260819-4';
-const THEME_CSS_VERSION = '20260819-9';
+const THEME_CSS_VERSION = '20260819-16';
 const THEME_JS_VERSION = '20260819-8';
 const BLOG_EXPLORER_VERSION = '20260819-18';
 
@@ -142,10 +142,10 @@ writePage('servicii', shell(
 
 $aboutMain = breadcrumbNav('Despre noi') . '
 <section class="cabit-page-header cabit-split-hero"><div class="container"><div><span class="cabit-eyebrow">CAB-IT Expert SRL · București</span><h1>Partener digital, nu doar furnizor.</h1><p>Construim soluții digitale pe care oamenii le înțeleg și afacerile le pot măsura. Combinăm dezvoltarea web, SEO, promovarea online și automatizarea într-un proces simplu și transparent.</p><div class="cabit-service-hero-actions"><a class="cabit-service-primary" href="/contact/">Hai să discutăm</a><a class="cabit-service-secondary" href="/portofoliu/">Vezi proiectele</a></div></div><figure class="cabit-brand-figure"><img src="../img/logo_home.png" alt="CAB-IT Expert SRL — Future is Online" width="560" height="195"><span>Google Partner</span></figure></div></section>
-<section class="cabit-content-section is-soft" aria-labelledby="entity-facts-title"><div class="container"><div class="cabit-section-heading"><span class="cabit-eyebrow">Identitate verificabilă</span><h2 id="entity-facts-title">CAB-IT Expert, pe scurt</h2><p>Informațiile esențiale despre brand, operator și modul de colaborare, prezentate consecvent pentru clienți și motoare de căutare.</p></div><dl class="cabit-entity-facts"><div><dt>Nume comercial</dt><dd>CAB-IT Expert</dd></div><div><dt>Operator</dt><dd>CAB IT EXPERT SRL · CUI 49972605</dd></div><div><dt>Servicii</dt><dd>Creare website, SEO, promovare online și automatizări digitale</dd></div><div><dt>Arie deservită</dt><dd>București, Ilfov și România · întâlniri online</dd></div></dl></div></section>
+<section class="cabit-content-section is-soft" aria-labelledby="entity-facts-title"><div class="container"><div class="cabit-section-heading"><span class="cabit-eyebrow">Identitate verificabilă</span><h2 id="entity-facts-title">Cine este CAB-IT Expert?</h2><p class="cabit-entity-answer"><strong>CAB-IT Expert este o agenție digitală din București</strong> care oferă servicii de creare website, web design, SEO, promovare online, Google Ads și automatizări digitale. Proiectul CAB-IT Expert este fondat și coordonat de Alexie Popescu, iar serviciile sunt operate legal de CAB IT EXPERT SRL, companie înființată de Florin Popescu Daniel.</p></div><dl class="cabit-entity-facts"><div><dt>Nume comercial</dt><dd>CAB-IT Expert</dd></div><div><dt>Operator</dt><dd>CAB IT EXPERT SRL · CUI 49972605</dd></div><div><dt>Servicii</dt><dd>Creare website, SEO, promovare online și automatizări digitale</dd></div><div><dt>Arie deservită</dt><dd>București, Ilfov și România · întâlniri online</dd></div><div><dt>Sediu social:</dt><dd>Str. Humulești 131-135, cod poștal 052262, București</dd></div><div><dt>Adresa:</dt><dd>Intrarea Humulești 6A, 052034 București</dd></div></dl></div></section>
 <section class="cabit-content-section"><div class="container cabit-rich-columns"><div><span class="cabit-eyebrow">Cum lucrăm</span><h2>Claritate înainte de execuție.</h2><p>Începem cu întrebările care contează: cine este clientul, ce problemă rezolvă oferta, ce acțiune trebuie să facă vizitatorul și cum verificăm rezultatul.</p><p>Nu livrăm doar pagini sau campanii. Documentăm deciziile, păstrăm administrarea simplă și construim un sistem care poate fi îmbunătățit pe baza datelor.</p></div><div class="cabit-values-grid"><article>' . icon('audit') . '<h3>Transparență</h3><p>Livrabile, termene și indicatori clar definiți.</p></article><article>' . icon('web') . '<h3>Execuție modernă</h3><p>Design responsive, performanță și administrare simplă.</p></article><article>' . icon('seo') . '<h3>Vizibilitate relevantă</h3><p>SEO și promovare conectate la cererea reală.</p></article><article>' . icon('cro') . '<h3>Rezultate măsurabile</h3><p>Urmărim solicitări, vânzări și acțiuni utile.</p></article></div></div></section>
 <section class="cabit-content-section is-soft"><div class="container"><div class="cabit-proof-grid"><article><strong>120+</strong><span>clienți mulțumiți</span></article><article><strong>200+</strong><span>proiecte finalizate</span></article><article><strong>8+</strong><span>ani de experiență profesională</span></article><article><strong>5.0</strong><span>rating pe Google</span></article></div></div></section>
-<section class="cabit-content-section" id="alexie-popescu"><div class="container cabit-rich-columns"><div><span class="cabit-eyebrow">Autor și coordonare editorială</span><h2>Alexie Popescu</h2><p><strong>Fondator și coordonator editorial CAB-IT Expert.</strong> Documentează și revizuiește ghidurile despre creare website, SEO, promovare online, măsurarea conversiilor și automatizări digitale.</p><p>Recomandările sunt organizate pe baza experienței profesionale și a proiectelor gestionate de CAB-IT Expert. CAB IT EXPERT SRL funcționează în actuala formă juridică din 2024, iar indicatorul de peste 8 ani se referă la experiența profesională acumulată înainte și după înființarea companiei.</p></div><div class="cabit-content-card"><h3>Principii editoriale</h3><ul><li>Nu garantăm poziții fixe în Google.</li><li>Publicăm rezultate cantitative numai după validare.</li><li>Separăm exemplele demonstrative de rezultatele clienților.</li><li>Indicăm sursele oficiale pentru informațiile despre platforme.</li><li>Actualizăm ghidurile când se schimbă procedurile sau instrumentele.</li></ul><a class="cabit-text-link" href="/blog/">Vezi ghidurile CAB-IT →</a></div></div></section>
+<section class="cabit-content-section" id="alexie-popescu"><div class="container cabit-rich-columns"><div><span class="cabit-eyebrow">Autor și coordonare editorială</span><h2>Alexie Popescu</h2><p><strong>Fondator al proiectului CAB-IT Expert și coordonator editorial.</strong> Documentează și revizuiește ghidurile despre creare website, SEO, promovare online, măsurarea conversiilor și automatizări digitale.</p><p>CAB IT EXPERT SRL a fost înființată legal de Florin Popescu Daniel și funcționează în actuala formă juridică din 2024. Recomandările și proiectele CAB-IT Expert sunt coordonate de Alexie Popescu, iar indicatorul de peste 8 ani se referă la experiența profesională acumulată înainte și după înființarea companiei.</p></div><div class="cabit-content-card"><h3>Principii editoriale</h3><ul><li>Nu garantăm poziții fixe în Google.</li><li>Publicăm rezultate cantitative numai după validare.</li><li>Separăm exemplele demonstrative de rezultatele clienților.</li><li>Indicăm sursele oficiale pentru informațiile despre platforme.</li><li>Actualizăm ghidurile când se schimbă procedurile sau instrumentele.</li></ul><a class="cabit-text-link" href="/blog/">Vezi ghidurile CAB-IT →</a></div></div></section>
 <section class="cabit-content-section"><div class="container"><div class="cabit-section-heading centered"><span class="cabit-eyebrow">Proces simplu</span><h2>De la idee la un sistem care produce rezultate</h2></div><ol class="cabit-timeline"><li><b>01</b><div><h3>Înțelegem afacerea</h3><p>Analizăm obiectivele, clienții și concurența.</p></div></li><li><b>02</b><div><h3>Construim strategia</h3><p>Stabilim ce merită implementat și în ce ordine.</p></div></li><li><b>03</b><div><h3>Implementăm</h3><p>Dezvoltăm, testăm și optimizăm fiecare componentă.</p></div></li><li><b>04</b><div><h3>Măsurăm</h3><p>Urmărim datele și îmbunătățim soluția.</p></div></li></ol></div></section>
 <section class="cabit-inner-cta section-shell"><span>Future is Online</span><h2>Ai un proiect în plan?</h2><p>Spune-ne ce vrei să obții, iar noi îți propunem pașii potriviți.</p><a class="button button-primary" href="/contact/">Hai să discutăm →</a></section>';
 $aboutSchema = (string) json_encode([
@@ -169,6 +169,20 @@ $aboutSchema = (string) json_encode([
             'alternateName' => ['CAB-IT', 'Cab-IT Expert'],
             'url' => 'https://cab-it.ro/',
             'identifier' => ['@type' => 'PropertyValue', 'propertyID' => 'CUI', 'value' => '49972605'],
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'Intrarea Humulești 6A',
+                'postalCode' => '052034',
+                'addressLocality' => 'București',
+                'addressCountry' => 'RO',
+            ],
+            'legalAddress' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'Str. Humulești 131-135',
+                'postalCode' => '052262',
+                'addressLocality' => 'București',
+                'addressCountry' => 'RO',
+            ],
             'contactPoint' => [[
                 '@type' => 'ContactPoint',
                 'contactType' => 'customer service',
@@ -176,16 +190,23 @@ $aboutSchema = (string) json_encode([
                 'email' => 'contact@cab-it.ro',
                 'availableLanguage' => ['ro', 'en'],
             ]],
-            'founder' => ['@id' => 'https://cab-it.ro/despre-noi/#alexie-popescu'],
+            'founder' => ['@id' => 'https://cab-it.ro/despre-noi/#florin-popescu-daniel'],
+            'employee' => ['@id' => 'https://cab-it.ro/despre-noi/#alexie-popescu'],
             'knowsAbout' => ['Creare website', 'Web design', 'SEO', 'Promovare online', 'Google Ads', 'Social media', 'Automatizări digitale'],
             'areaServed' => [['@type' => 'City', 'name' => 'București'], ['@type' => 'Country', 'name' => 'România']],
+        ],
+        [
+            '@type' => 'Person',
+            '@id' => 'https://cab-it.ro/despre-noi/#florin-popescu-daniel',
+            'name' => 'Florin Popescu Daniel',
+            'description' => 'Fondator legal al CAB IT EXPERT SRL',
         ],
         [
             '@type' => 'Person',
             '@id' => 'https://cab-it.ro/despre-noi/#alexie-popescu',
             'name' => 'Alexie Popescu',
             'url' => 'https://cab-it.ro/despre-noi/#alexie-popescu',
-            'jobTitle' => 'Fondator și coordonator editorial CAB-IT Expert',
+            'jobTitle' => 'Fondator al proiectului CAB-IT Expert și coordonator editorial',
             'worksFor' => ['@id' => 'https://cab-it.ro/#organization'],
             'knowsAbout' => ['Creare website', 'SEO', 'Promovare online', 'Google Ads', 'Analytics', 'Automatizări digitale'],
         ],
@@ -201,10 +222,48 @@ $aboutSchema = (string) json_encode([
 ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 writePage('despre-noi', shell('Despre CAB-IT Expert | Agenție Digitală București', 'CAB-IT Expert este o agenție digitală din București pentru creare website, SEO, Google Ads și automatizări, cu proces transparent și rezultate măsurabile.', 'despre-noi/', 'cabit-page-about', $aboutMain, $aboutSchema));
 
-$contactForm = '<form class="conversation-form reveal" action="../whatsapp-contact.php" method="post" data-conversation-form aria-label="Solicitare servicii prin WhatsApp"><fieldset><legend>1. Selectează obiectivul</legend><div class="choice-grid"><label><input type="radio" name="objective" value="website" required><span>' . icon('web') . '<b>Am nevoie de un website</b></span></label><label><input type="radio" name="objective" value="seo"><span>' . icon('seo') . '<b>Vreau să apar mai bine în Google</b></span></label><label><input type="radio" name="objective" value="reclame"><span>' . icon('ads') . '<b>Vreau reclame</b></span></label><label><input type="radio" name="objective" value="automatizare"><span>' . icon('ai') . '<b>Vreau o automatizare AI</b></span></label><label><input type="radio" name="objective" value="nesigur"><span>' . icon('audit') . '<b>Nu știu încă</b></span></label></div></fieldset><div class="conversation-fields"><label>Nume și prenume<input type="text" name="name" autocomplete="name" placeholder="Cum te numești?" required></label><label>Email<input type="email" name="email" autocomplete="email" placeholder="nume@companie.ro" required></label><label>Telefon<input type="tel" name="phone" autocomplete="tel" placeholder="+40 7xx xxx xxx"></label><label>Companie <small>(opțional)</small><input type="text" name="company" autocomplete="organization" placeholder="Numele companiei"></label><label class="full">Pe scurt, ce vrei să obții?<textarea name="message" rows="5" placeholder="Obiectiv, problemă sau idee..." required></textarea></label></div><button class="button button-primary" type="submit">Trimite pe WhatsApp <span>→</span></button><p class="form-note">Se deschide conversația WhatsApp cu mesajul pregătit; îl poți verifica înainte de trimitere.</p></form>';
-$contactMain = breadcrumbNav('Contact') . '
-<section class="cabit-page-header cabit-contact-hero"><div class="container"><div><span class="cabit-eyebrow">Contact CAB-IT Expert</span><h1>Spune-ne ce vrei să construim.</h1><p>Răspundem cu pași clari și o recomandare potrivită obiectivului tău. Poți trimite formularul direct în WhatsApp.</p><div class="cabit-contact-cards"><a href="tel:+40771532949"><b>Telefon</b><span>+40 771 532 949</span></a><a href="mailto:contact@cab-it.ro"><b>Email</b><span>contact@cab-it.ro</span></a><a href="#locatie"><b>Întâlniri</b><span>Online, cu programare</span></a></div></div>' . $contactForm . '</div></section>
-<section class="cabit-content-section" id="locatie"><div class="container cabit-location-layout"><div><span class="cabit-eyebrow">Punct de întâlnire</span><h2>Online, cu programare</h2><p>Lucrăm cu afaceri din București, Ilfov și din întreaga Românie. Întâlnirile au loc online, pe platforma stabilită împreună, astfel încât putem discuta rapid indiferent de localitate.</p><p class="cabit-legal-location"><strong>Sediu social:</strong> Intrarea Humulești 6A, 052034 București, România.</p><a class="button button-ghost" href="https://wa.me/40771532949?text=Bun%C4%83%2C%20doresc%20s%C4%83%20programez%20o%20%C3%AEnt%C3%A2lnire%20online." target="_blank" rel="noopener">Programează pe WhatsApp</a></div><div class="cabit-online-card" aria-label="Întâlnirile CAB-IT Expert au loc online"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 10 5-3v10l-5-3z"/><path d="M7 9h5M7 13h3"/></svg><span>Punct de întâlnire</span><strong>Online</strong><p>Google Meet, Microsoft Teams sau platforma stabilită împreună.</p></div></div></section>';
+$contactForm = <<<'HTML'
+<form class="conversation-form reveal" action="../whatsapp-contact.php" method="post" data-conversation-form aria-label="Solicitare servicii prin WhatsApp">
+  <div class="cabit-contact-form-head"><span>Solicitare rapidă</span><strong>Începem cu obiectivul tău</strong><small>Completezi în aproximativ două minute.</small></div>
+  <fieldset><legend>1. Selectează obiectivul</legend><div class="choice-grid"><label><input type="radio" name="objective" value="website" required><span><span class="cabit-feature-icon is-web"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><b>Am nevoie de un website</b></span></label><label><input type="radio" name="objective" value="seo"><span><span class="cabit-feature-icon is-seo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></span><b>Vreau să apar mai bine în Google</b></span></label><label><input type="radio" name="objective" value="reclame"><span><span class="cabit-feature-icon is-ads"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13V9l12-5v14L4 13Z"/><path d="m7 14 1.5 6h3L10 15M19 8v6"/></svg></span><b>Vreau reclame</b></span></label><label><input type="radio" name="objective" value="automatizare"><span><span class="cabit-feature-icon is-ai"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="6" width="14" height="12" rx="3"/><path d="M9 2v4m6-4v4M2 10h3m14 0h3M9 12h.01M15 12h.01M9 15h6"/></svg></span><b>Vreau o automatizare AI</b></span></label><label><input type="radio" name="objective" value="nesigur"><span><span class="cabit-feature-icon is-audit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 17l4-5 4 3 6-9"/><path d="M17 6h3v3"/></svg></span><b>Nu știu încă</b></span></label></div></fieldset>
+  <div class="conversation-fields"><label>Nume și prenume<input type="text" name="name" autocomplete="name" placeholder="Cum te numești?" required></label><label>Email<input type="email" name="email" autocomplete="email" placeholder="nume@companie.ro" required></label><label>Telefon<input type="tel" name="phone" autocomplete="tel" placeholder="+40 7xx xxx xxx"></label><label>Companie <small>(opțional)</small><input type="text" name="company" autocomplete="organization" placeholder="Numele companiei"></label><label class="full">Pe scurt, ce vrei să obții?<textarea name="message" rows="5" placeholder="Obiectiv, problemă sau idee..." required></textarea></label></div>
+  <button class="button button-primary" type="submit">Trimite pe WhatsApp <span>→</span></button><p class="form-note">Se deschide conversația WhatsApp cu mesajul pregătit; îl poți verifica înainte de trimitere.</p>
+</form>
+HTML;
+$contactMain = breadcrumbNav('Contact') . "\n" . <<<'HTML'
+<section class="cabit-page-header cabit-contact-hero">
+  <div class="container">
+    <div class="cabit-contact-intro">
+      <span class="cabit-eyebrow">Contact CAB-IT Expert</span>
+      <h1>Spune-ne unde vrei să ajungi.</h1>
+      <p>Descrie-ne pe scurt obiectivul. Revenim cu pași clari, o recomandare potrivită și fără jargon inutil.</p>
+      <div class="cabit-contact-promises" aria-label="Cum începem colaborarea"><span>Discuție online</span><span>Recomandare clară</span><span>Plan adaptat</span></div>
+      <div class="cabit-contact-cards">
+        <a href="tel:+40771532949"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4 4.8 6.2c-.8.8-.5 3.2 1.7 6.6 2.2 3.3 5.5 6.2 8.5 7.1 1.4.4 2.5.2 3.1-.5l1.9-2.1-4.3-3.2-1.8 1.8c-1.6-.7-4.4-3.2-5.3-4.8l1.7-2L7 4Z"/></svg></i><span><b>Telefon</b><strong>+40 771 532 949</strong></span></a>
+        <a href="mailto:contact@cab-it.ro"><i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></i><span><b>Email</b><strong>contact@cab-it.ro</strong></span></a>
+        <a href="#locatie"><i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 10 5-3v10l-5-3z"/></svg></i><span><b>Întâlniri</b><strong>Online, cu programare</strong></span></a>
+      </div>
+    </div>
+HTML
+. $contactForm . <<<'HTML'
+  </div>
+</section>
+<section class="cabit-content-section cabit-contact-details" id="locatie">
+  <div class="container cabit-location-layout">
+    <div class="cabit-contact-location-copy">
+      <span class="cabit-eyebrow">Contact și locații</span>
+      <h2>Ne întâlnim online. Rămânem aproape.</h2>
+      <p>Lucrăm cu afaceri din București, Ilfov și din întreaga Românie. Întâlnirile au loc online, pe platforma stabilită împreună.</p>
+      <div class="cabit-address-grid">
+        <article class="cabit-address-card"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21h16M6 21V7l6-4 6 4v14M9 10h1m4 0h1m-6 4h1m4 0h1m-5 7v-4h4v4"/></svg></i><div><strong>Sediu social:</strong><address>Str. Humulești 131–135, cod poștal 052262, București, România.</address></div></article>
+        <article class="cabit-address-card"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s7-5.4 7-12a7 7 0 1 0-14 0c0 6.6 7 12 7 12Z"/><circle cx="12" cy="9" r="2.2"/></svg></i><div><strong>Adresa:</strong><address>Intrarea Humulești 6A, 052034 București, România.</address></div></article>
+      </div>
+      <a class="button button-ghost" href="https://wa.me/40771532949?text=Bun%C4%83%2C%20doresc%20s%C4%83%20programez%20o%20%C3%AEnt%C3%A2lnire%20online." target="_blank" rel="noopener">Programează pe WhatsApp <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="cabit-online-card" aria-label="Întâlnirile CAB-IT Expert au loc online"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 10 5-3v10l-5-3z"/><path d="M7 9h5M7 13h3"/></svg><span>Punct de întâlnire</span><strong>Online</strong><p>Google Meet, Microsoft Teams sau platforma stabilită împreună.</p><div class="cabit-online-platforms" aria-hidden="true"><i>Meet</i><i>Teams</i><i>WhatsApp</i></div></div>
+  </div>
+</section>
+HTML;
 $contactDescription = 'Contactează CAB-IT Expert pentru website, SEO și promovare online. Întâlnirile au loc online, cu programare.';
 writePage('contact', shell('Contact Agenție Marketing București | CAB-IT Expert', $contactDescription, 'contact/', 'cabit-page-contact', $contactMain, hubSchema('ContactPage', 'contact', 'Contact CAB-IT Expert', $contactDescription)));
 
@@ -243,7 +302,7 @@ writePage('blog', $blogHtml);
 
 $termsMain = breadcrumbNav('Termeni și condiții') . '
 <section class="cabit-page-header"><div class="container"><span class="cabit-eyebrow">Informații legale</span><h1>Termeni și condiții</h1><p>Condițiile generale pentru utilizarea website-ului cab-it.ro și pentru transmiterea solicitărilor către CAB IT EXPERT SRL.</p></div></section>
-<section class="cabit-content-section"><div class="container cabit-legal-layout"><nav><strong>Cuprins</strong><a href="#operator">Operator</a><a href="#utilizare">Utilizarea site-ului</a><a href="#formulare">Formulare și date</a><a href="#continut">Conținut și proprietate</a><a href="#raspundere">Limitarea răspunderii</a><a href="#contact-legal">Contact</a></nav><article class="cabit-content-card cabit-article-content"><h2 id="operator">1. Operatorul website-ului</h2><p>Website-ul cab-it.ro este operat de CAB IT EXPERT SRL, cu sediul în Intrarea Humulești 6A, București. Ne poți contacta la contact@cab-it.ro sau +40 771 532 949.</p><h2 id="utilizare">2. Utilizarea website-ului</h2><p>Informațiile sunt oferite pentru prezentarea serviciilor de dezvoltare web, SEO, promovare online și automatizare. Utilizatorii trebuie să folosească site-ul legal și să nu încerce afectarea funcționării sau securității lui.</p><h2 id="formulare">3. Formulare și date</h2><p>Datele transmise prin formulare sunt folosite pentru a răspunde solicitării, a pregăti auditul cerut sau a furniza resursele la care utilizatorul s-a abonat. Câmpurile opționale sunt marcate corespunzător.</p><h2 id="continut">4. Conținut și proprietate intelectuală</h2><p>Textele, elementele vizuale, identitatea și structura website-ului nu pot fi copiate sau redistribuite în scop comercial fără acord scris.</p><h2 id="raspundere">5. Limitarea răspunderii</h2><p>Rezultatele SEO, media sau comerciale depind de piață, concurență, buget, ofertă și implementare. Nu garantăm poziții fixe sau rezultate care depind de platforme terțe.</p><h2 id="contact-legal">6. Contact</h2><p>Pentru întrebări legate de acești termeni: <a href="mailto:contact@cab-it.ro">contact@cab-it.ro</a>.</p><p><small>Ultima actualizare: 19 iulie 2026.</small></p></article></div></section>';
+<section class="cabit-content-section"><div class="container cabit-legal-layout"><nav><strong>Cuprins</strong><a href="#operator">Operator</a><a href="#utilizare">Utilizarea site-ului</a><a href="#formulare">Formulare și date</a><a href="#continut">Conținut și proprietate</a><a href="#raspundere">Limitarea răspunderii</a><a href="#contact-legal">Contact</a></nav><article class="cabit-content-card cabit-article-content"><h2 id="operator">1. Operatorul website-ului</h2><p>Website-ul cab-it.ro este operat de CAB IT EXPERT SRL. <strong>Sediu social:</strong> Str. Humulești 131-135, cod poștal 052262, București, România. <strong>Adresa:</strong> Intrarea Humulești 6A, 052034 București, România. Ne poți contacta la contact@cab-it.ro sau +40 771 532 949.</p><h2 id="utilizare">2. Utilizarea website-ului</h2><p>Informațiile sunt oferite pentru prezentarea serviciilor de dezvoltare web, SEO, promovare online și automatizare. Utilizatorii trebuie să folosească site-ul legal și să nu încerce afectarea funcționării sau securității lui.</p><h2 id="formulare">3. Formulare și date</h2><p>Datele transmise prin formulare sunt folosite pentru a răspunde solicitării, a pregăti auditul cerut sau a furniza resursele la care utilizatorul s-a abonat. Câmpurile opționale sunt marcate corespunzător.</p><h2 id="continut">4. Conținut și proprietate intelectuală</h2><p>Textele, elementele vizuale, identitatea și structura website-ului nu pot fi copiate sau redistribuite în scop comercial fără acord scris.</p><h2 id="raspundere">5. Limitarea răspunderii</h2><p>Rezultatele SEO, media sau comerciale depind de piață, concurență, buget, ofertă și implementare. Nu garantăm poziții fixe sau rezultate care depind de platforme terțe.</p><h2 id="contact-legal">6. Contact</h2><p>Pentru întrebări legate de acești termeni: <a href="mailto:contact@cab-it.ro">contact@cab-it.ro</a>.</p><p><small>Ultima actualizare: 19 august 2026.</small></p></article></div></section>';
 $termsDescription = 'Termenii și condițiile pentru utilizarea website-ului CAB-IT Expert și transmiterea solicitărilor pentru servicii digitale.';
 writePage('termeni-si-conditii', shell('Termeni și Condiții | CAB-IT Expert', $termsDescription, 'termeni-si-conditii/', 'cabit-page-legal', $termsMain, hubSchema('WebPage', 'termeni-si-conditii', 'Termeni și condiții CAB-IT Expert', $termsDescription)));
 

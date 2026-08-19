@@ -1325,6 +1325,192 @@ body.cabit-theme-2026 .cabit-service-explainer::after {
   .reveal { opacity: 1; transform: none; }
 }
 
+/* Contact page 2026: clearer entry point and explicit business locations */
+body.cabit-page-contact .cabit-contact-promises {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+body.cabit-page-contact .cabit-contact-promises span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 11px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 999px;
+  color: rgba(255,255,255,.85);
+  background: rgba(255,255,255,.07);
+  font-size: 11px;
+  font-weight: 750;
+}
+body.cabit-page-contact .cabit-contact-promises span::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #85e3dc;
+  box-shadow: 0 0 0 4px rgba(133,227,220,.12);
+}
+body.cabit-page-contact .cabit-contact-form-head {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+body.cabit-page-contact .cabit-contact-form-head span {
+  color: var(--teal-dark);
+  font-size: 10px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+body.cabit-page-contact .cabit-contact-form-head strong {
+  color: var(--ink);
+  font-family: Manrope,sans-serif;
+  font-size: clamp(24px,2.1vw,34px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+}
+body.cabit-page-contact .cabit-contact-form-head small {
+  color: var(--muted);
+  font-size: 12px;
+}
+body.cabit-page-contact .cabit-contact-details {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 15%,rgba(0,169,157,.09),transparent 27%),
+    linear-gradient(145deg,#f8fbfc,#eef8f7);
+}
+body.cabit-page-contact .cabit-contact-details::after {
+  content: "";
+  position: absolute;
+  right: -95px;
+  bottom: -120px;
+  width: 310px;
+  height: 310px;
+  border: 48px solid rgba(0,169,157,.055);
+  border-radius: 50%;
+  pointer-events: none;
+}
+body.cabit-page-contact .cabit-contact-details .cabit-location-layout {
+  position: relative;
+  z-index: 1;
+  grid-template-columns: minmax(0,1.08fr) minmax(380px,.92fr);
+  align-items: stretch;
+  gap: clamp(28px,5vw,72px);
+}
+body.cabit-page-contact .cabit-contact-location-copy {
+  align-self: center;
+  padding: clamp(8px,2vw,30px) 0;
+}
+body.cabit-page-contact .cabit-contact-location-copy > p { max-width: 680px; }
+body.cabit-page-contact .cabit-address-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 13px;
+  margin: 28px 0;
+}
+body.cabit-page-contact .cabit-address-card {
+  min-height: 160px;
+  display: grid;
+  grid-template-columns: 48px minmax(0,1fr);
+  align-content: start;
+  gap: 14px;
+  padding: 21px;
+  border: 1px solid rgba(0,169,157,.18);
+  border-radius: 21px;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 14px 35px rgba(16,24,40,.055);
+  transition: transform .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+body.cabit-page-contact .cabit-address-card:hover {
+  border-color: rgba(0,169,157,.42);
+  box-shadow: 0 20px 44px rgba(16,24,40,.09);
+  transform: translateY(-5px);
+}
+body.cabit-page-contact .cabit-address-card > i {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  color: #007d75;
+  background: #e5f9f6;
+}
+body.cabit-page-contact .cabit-address-card > i svg {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body.cabit-page-contact .cabit-address-card strong {
+  display: block;
+  margin: 2px 0 8px;
+  color: var(--ink);
+  font: 800 13px/1.2 Manrope,sans-serif;
+}
+body.cabit-page-contact .cabit-address-card address {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-style: normal;
+  line-height: 1.6;
+}
+body.cabit-page-contact .cabit-contact-details .cabit-online-card {
+  min-height: 430px;
+  border-width: 6px;
+}
+body.cabit-page-contact .cabit-online-platforms {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+body.cabit-page-contact .cabit-online-platforms i {
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 999px;
+  color: rgba(255,255,255,.85);
+  background: rgba(255,255,255,.08);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 800;
+}
+@media (min-width: 961px) and (max-width: 1120px) {
+  body.cabit-page-contact .cabit-contact-hero > .container {
+    grid-template-columns: minmax(300px,.7fr) minmax(0,1.3fr);
+    gap: 30px;
+  }
+  body.cabit-page-contact .cabit-contact-intro { padding: 50px 0; }
+  body.cabit-page-contact .cabit-contact-hero .conversation-form { min-height: 0; }
+}
+@media (max-width: 960px) {
+  body.cabit-page-contact .cabit-contact-hero > .container {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+  body.cabit-page-contact .cabit-contact-intro { padding: 54px 10px 8px; }
+  body.cabit-page-contact .cabit-contact-hero .conversation-form { min-height: 0; }
+  body.cabit-page-contact .cabit-contact-details .cabit-location-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  body.cabit-page-contact .cabit-contact-promises { gap: 6px; margin-top: 19px; }
+  body.cabit-page-contact .cabit-contact-promises span { padding: 7px 9px; font-size: 10px; }
+  body.cabit-page-contact .cabit-contact-form-head { margin-bottom: 20px; }
+  body.cabit-page-contact .cabit-address-grid { grid-template-columns: 1fr; }
+  body.cabit-page-contact .cabit-address-card { min-height: 0; padding: 18px; }
+  body.cabit-page-contact .cabit-contact-details .cabit-online-card { min-height: 370px; }
+}
+
 @media print {
   .next-header, .mobile-contact, .footer-cta { display: none !important; }
   body { background: #fff !important; }
@@ -1486,6 +1672,8 @@ body.cabit-page-service .cabit-content-section.is-soft { background: linear-grad
 .cabit-entity-facts > div { min-width: 0; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: var(--shadow-sm); }
 .cabit-entity-facts dt { color: var(--teal-dark); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .cabit-entity-facts dd { margin: 8px 0 0; color: var(--ink); font-weight: 700; line-height: 1.45; }
+.cabit-entity-answer { max-width: 980px !important; color: var(--ink-soft) !important; font-size: clamp(17px,1.6vw,21px) !important; line-height: 1.72 !important; }
+.cabit-entity-answer strong { color: var(--ink); }
 @media (max-width: 900px) { .cabit-entity-facts { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .cabit-entity-facts { grid-template-columns: 1fr; } }
 .cabit-values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -3494,4 +3682,11 @@ body.cabit-page-article .cabit-article-content p a {
 }
 @media (prefers-reduced-motion: reduce) {
   .cabit-article-final-cta__visual i,.cabit-article-final-cta__visual strong,.cabit-article-final-cta__visual b,.cabit-smart-related-card img { animation: none; transition: none; }
+}
+
+@media (min-width: 961px) and (max-width: 1120px) {
+  body.cabit-page-contact .cabit-contact-hero > .container {
+    grid-template-columns: minmax(300px,.7fr) minmax(0,1.3fr);
+    gap: 30px;
+  }
 }
