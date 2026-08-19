@@ -21,7 +21,7 @@
   function headerMarkup() {
     return '<header class="next-header" data-site-header>' +
       '<div class="next-nav-wrap">' +
-        '<a class="next-logo" href="/" aria-label="CAB-IT Expert — Acasă"><img src="/img/logo.png" alt="Simbol CAB-IT Expert SRL" width="278" height="256"></a>' +
+        '<a class="next-logo" href="/" aria-label="CAB-IT Expert — Acasă"><img src="/assets/img/brand/cab-it-header-symbol-clean.webp" alt="Simbol CAB-IT Expert" width="96" height="89"></a>' +
         '<nav class="next-nav" aria-label="Navigare principală">' +
           '<a href="/">Acasă</a>' +
           '<div class="next-nav-dropdown"><button type="button" aria-expanded="false">Servicii <span class="nav-chevron" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m4 6 4 4 4-4"/></svg></span></button><div class="next-nav-menu">' +
@@ -60,11 +60,20 @@
     body.classList.add("cabit-next-shell");
     if (!doc.querySelector(".next-header")) body.insertAdjacentHTML("afterbegin", headerMarkup());
     if (!doc.querySelector(".next-footer")) body.insertAdjacentHTML("beforeend", footerMarkup());
-    if (!doc.querySelector(".mobile-contact")) body.insertAdjacentHTML("beforeend", '<a class="mobile-contact" href="https://wa.me/40771532949?text=Bun%C4%83%2C%20a%C8%99%20dori%20mai%20multe%20detalii" target="_blank" rel="noopener" aria-label="Scrie-ne pe WhatsApp: Bună, aș dori mai multe detalii"><span class="mobile-contact__icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path fill="currentColor" d="M16.1 4.2A11.5 11.5 0 0 0 6.2 21.6L4.7 27l5.5-1.4a11.5 11.5 0 1 0 5.9-21.4Zm0 20.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.2.8.9-3.1-.2-.4a9.2 9.2 0 1 1 7.9 4.3Zm5.1-6.8c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.2l-.9 1.1c-.2.2-.4.2-.7.1a7.5 7.5 0 0 1-2.2-1.4 8.4 8.4 0 0 1-1.5-1.9c-.2-.3 0-.5.1-.6l.5-.6.3-.5c.1-.2 0-.4 0-.6l-.9-2.1c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.1.8.3 1.5.5 2 .6.8.3 1.6.2 2.2.1.7-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3Z"/></svg></span><span class="mobile-contact__tooltip" role="tooltip"><span class="mobile-contact__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hai să discutăm</span></span></a>');
+    if (!doc.querySelector(".mobile-contact")) body.insertAdjacentHTML("beforeend", '<a class="mobile-contact" href="https://wa.me/40771532949?text=Bun%C4%83%2C%20a%C8%99%20dori%20mai%20multe%20detalii" target="_blank" rel="noopener" aria-label="Hai să discutăm pe WhatsApp"><span class="mobile-contact__icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path fill="currentColor" d="M16.1 4.2A11.5 11.5 0 0 0 6.2 21.6L4.7 27l5.5-1.4a11.5 11.5 0 1 0 5.9-21.4Zm0 20.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.2.8.9-3.1-.2-.4a9.2 9.2 0 1 1 7.9 4.3Zm5.1-6.8c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.2l-.9 1.1c-.2.2-.4.2-.7.1a7.5 7.5 0 0 1-2.2-1.4 8.4 8.4 0 0 1-1.5-1.9c-.2-.3 0-.5.1-.6l.5-.6.3-.5c.1-.2 0-.4 0-.6l-.9-2.1c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.1.8.3 1.5.5 2 .6.8.3 1.6.2 2.2.1.7-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3Z"/></svg></span><span class="mobile-contact__tooltip" role="tooltip"><span class="mobile-contact__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hai să discutăm</span></span></a>');
   }
 
   ensureShell();
   localizeRootPaths(doc);
+
+  if ("serviceWorker" in navigator && /^https?:$/.test(window.location.protocol)) {
+    window.addEventListener("load", function () {
+      var workerUrl = new URL("service-worker.js", siteRootUrl).pathname;
+      navigator.serviceWorker.register(workerUrl, { scope: siteRootPath }).catch(function () {
+        // Site-ul rămâne complet funcțional dacă browserul nu acceptă modul offline.
+      });
+    }, { once: true });
+  }
 
   var header = doc.querySelector("[data-site-header]");
   var menuToggle = header && header.querySelector(".next-menu-toggle");
@@ -78,7 +87,7 @@
   window.addEventListener("scroll", updateHeader, { passive: true });
 
   if (menuToggle && mobileMenu) {
-    mobileMenu.insertAdjacentHTML("afterbegin", '<div class="next-mobile-menu__head"><a class="next-mobile-menu__brand" href="/" aria-label="CAB-IT Expert — Acasă"><img src="/assets/img/brand/cab-it-c-symbol-app-v7.png" alt="" width="192" height="192"><span><strong>Meniu</strong><small>CAB-IT Expert</small></span></a><button class="next-mobile-menu__close" type="button" aria-label="Închide meniul"><span></span><span></span></button></div>');
+    mobileMenu.insertAdjacentHTML("afterbegin", '<div class="next-mobile-menu__head"><a class="next-mobile-menu__brand" href="/" aria-label="CAB-IT Expert — Acasă"><img src="/assets/img/brand/cab-it-header-symbol-clean.webp" alt="" width="192" height="192"><span><strong>Meniu</strong><small>CAB-IT Expert</small></span></a><button class="next-mobile-menu__close" type="button" aria-label="Închide meniul"><span></span><span></span></button></div>');
     localizeRootPaths(mobileMenu);
     mobileMenu.setAttribute("role", "dialog");
     mobileMenu.setAttribute("aria-modal", "true");
@@ -192,7 +201,7 @@
 
   var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!reducedMotion && "animate" in Element.prototype) {
-    doc.querySelectorAll(".faq-list details, .cabit-service-faq details").forEach(function (details) {
+    doc.querySelectorAll(".cabit-service-faq details").forEach(function (details) {
       var summary = details.querySelector("summary");
       if (!summary) return;
       summary.addEventListener("click", function (event) {
@@ -663,51 +672,6 @@
     });
 
     setConversationState(!choices.length || choices.some(function (choice) { return choice.checked; }));
-  });
-
-  var faqItems = doc.querySelectorAll(".faq-list details");
-  function finishFaqMotion(item, shouldOpen) {
-    item.open = shouldOpen;
-    item.style.height = "";
-    item.style.overflow = "";
-    item.removeAttribute("data-faq-animating");
-  }
-
-  function animateFaq(item, shouldOpen) {
-    if (item.hasAttribute("data-faq-animating") || item.open === shouldOpen) return;
-    var summary = item.querySelector("summary");
-    if (!summary || reducedMotion || typeof item.animate !== "function") {
-      finishFaqMotion(item, shouldOpen);
-      return;
-    }
-
-    item.setAttribute("data-faq-animating", "true");
-    var startHeight = item.offsetHeight;
-    if (shouldOpen) item.open = true;
-    var endHeight = shouldOpen ? item.offsetHeight : summary.offsetHeight;
-    item.style.height = startHeight + "px";
-    item.style.overflow = "hidden";
-    var animation = item.animate(
-      [{ height: startHeight + "px" }, { height: endHeight + "px" }],
-      { duration: shouldOpen ? 390 : 330, easing: "cubic-bezier(.2,.8,.2,1)" }
-    );
-    animation.onfinish = function () { finishFaqMotion(item, shouldOpen); };
-    animation.oncancel = function () { finishFaqMotion(item, shouldOpen); };
-  }
-
-  faqItems.forEach(function (item) {
-    var summary = item.querySelector("summary");
-    if (!summary) return;
-    summary.addEventListener("click", function (event) {
-      event.preventDefault();
-      var shouldOpen = !item.open;
-      if (shouldOpen) {
-        faqItems.forEach(function (other) {
-          if (other !== item && other.open) animateFaq(other, false);
-        });
-      }
-      animateFaq(item, shouldOpen);
-    });
   });
 
   doc.querySelectorAll("[data-current-year]").forEach(function (year) { year.textContent = new Date().getFullYear(); });

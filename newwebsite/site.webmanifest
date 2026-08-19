@@ -1,13 +1,24 @@
 {
-  "name": "CAB-IT Expert SRL",
+  "id": "./",
+  "name": "CAB-IT Expert",
   "short_name": "CAB-IT",
-  "description": "Promovare online și creare website în București.",
+  "description": "Creare website, SEO și promovare online pentru afaceri din București și România.",
+  "lang": "ro-RO",
+  "dir": "ltr",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#f7f9fc",
   "theme_color": "#00a99d",
+  "categories": ["business", "marketing", "productivity"],
   "icons": [
-    { "src": "assets/img/brand/cab-it-c-symbol-app-v7.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "assets/img/brand/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "assets/img/brand/cab-it-c-symbol-app-v7.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/img/brand/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Servicii", "short_name": "Servicii", "url": "servicii/" },
+    { "name": "Portofoliu", "short_name": "Proiecte", "url": "portofoliu/" },
+    { "name": "Contact", "short_name": "Contact", "url": "contact/" }
   ]
 }
