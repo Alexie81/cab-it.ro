@@ -1,4 +1,5 @@
-# CAB-IT Expert SRL — acces public pentru motoare de căutare și servicii AI
+# CAB-IT Expert SRL — conținut public accesibil motoarelor de căutare și serviciilor AI
+# Regula globală permite inclusiv crawlere noi, care nu sunt încă enumerate explicit.
 User-agent: *
 Allow: /
 Disallow: /adminpanelcabitro/
@@ -6,8 +7,13 @@ Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
 
-# Google Search
+# Google Search, imagini, video și servicii AI Google
 User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Googlebot-News
+User-agent: Googlebot-Video
+User-agent: GoogleOther
+User-agent: Google-Extended
 Allow: /
 Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
@@ -16,38 +22,50 @@ Disallow: /PHPMailer/
 
 # Microsoft Bing și servicii care folosesc indexul Bing
 User-agent: Bingbot
+User-agent: BingPreview
 Allow: /
 Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
 
-# ChatGPT Search
+# DuckDuckGo, Apple, Brave și alte motoare de căutare
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: Bravebot
+User-agent: YandexBot
+User-agent: Baiduspider
+Allow: /
+Disallow: /adminpanelcabitro/
+Disallow: /cabit-cms/
+Disallow: /storage/
+Disallow: /PHPMailer/
+
+# OpenAI: ChatGPT Search, citare la cererea utilizatorului și modele
 User-agent: OAI-SearchBot
-Allow: /
-Disallow: /adminpanelcabitro/
-Disallow: /cabit-cms/
-Disallow: /storage/
-Disallow: /PHPMailer/
-
-# OpenAI model crawler
 User-agent: GPTBot
-Allow: /
-Disallow: /adminpanelcabitro/
-Disallow: /cabit-cms/
-Disallow: /storage/
-Disallow: /PHPMailer/
-
-# OpenAI Ads și validarea paginilor publice
 User-agent: OAI-AdsBot
+User-agent: ChatGPT-User
 Allow: /
 Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
 
-# Pagini accesate la cererea utilizatorilor ChatGPT
-User-agent: ChatGPT-User
+# Anthropic, Perplexity și alte servicii de căutare/răspuns AI
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: CCBot
+User-agent: Amazonbot
+User-agent: YouBot
+User-agent: cohere-ai
+User-agent: Meta-ExternalAgent
+User-agent: meta-externalfetcher
+User-agent: Bytespider
 Allow: /
 Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
