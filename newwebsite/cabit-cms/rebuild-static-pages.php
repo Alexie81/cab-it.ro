@@ -4,7 +4,7 @@ declare(strict_types=1);
 const PUBLIC_ROOT = __DIR__ . '/..';
 const SITE_ASSET_VERSION = '20260819-4';
 const THEME_CSS_VERSION = '20260819-16';
-const THEME_JS_VERSION = '20260819-19';
+const THEME_JS_VERSION = '20260819-20';
 const BLOG_EXPLORER_VERSION = '20260819-18';
 
 function marker(string $path, string $start, string $end, string $fallback = ''): string
@@ -193,6 +193,7 @@ $aboutSchema = (string) json_encode([
             'founder' => ['@id' => 'https://cab-it.ro/despre-noi/#florin-popescu-daniel'],
             'employee' => ['@id' => 'https://cab-it.ro/despre-noi/#alexie-popescu'],
             'knowsAbout' => ['Creare website', 'Web design', 'SEO', 'Promovare online', 'Google Ads', 'Social media', 'Automatizări digitale'],
+            'sameAs' => ['https://www.facebook.com/profile.php?id=61592087996523', 'https://www.instagram.com/cabitexpert/', 'https://www.linkedin.com/company/cab-it-expert/', 'https://www.youtube.com/@cabitexpert', 'https://www.tiktok.com/@cab.it.expert', 'https://x.com/cabitexpert'],
             'areaServed' => [['@type' => 'City', 'name' => 'București'], ['@type' => 'Country', 'name' => 'România']],
         ],
         [
