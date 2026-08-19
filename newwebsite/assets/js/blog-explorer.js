@@ -279,6 +279,12 @@
     }, 180);
   });
 
+  input.addEventListener("focus", function () {
+    if (articles.length && normalize(input.value).length >= 2) {
+      renderSuggestions();
+    }
+  });
+
   input.addEventListener("keydown", function (event) {
     if (suggestions.hidden) return;
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
