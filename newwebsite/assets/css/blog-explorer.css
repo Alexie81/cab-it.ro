@@ -320,7 +320,11 @@
     position: fixed;
     z-index: 10020;
     inset: 0;
-    overflow-y: auto;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
     padding: max(14px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
     background:
       radial-gradient(circle at 92% 4%, rgba(20, 184, 166, .17), transparent 28%),
@@ -372,9 +376,21 @@
 
   body.cabit-blog-search-open .cabit-blog-suggestions {
     position: static;
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow-y: auto;
     margin-top: 14px;
     border-radius: 22px;
     box-shadow: 0 18px 48px rgba(15, 23, 42, .1);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior: contain;
+  }
+
+  body.cabit-blog-search-open .cabit-blog-suggestions::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
 
   body.cabit-blog-search-open .cabit-blog-suggestion {

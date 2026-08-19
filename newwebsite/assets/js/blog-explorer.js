@@ -364,12 +364,17 @@
   });
 
   clearButton.addEventListener("click", function () {
+    var mobileWasOpen = document.body.classList.contains("cabit-blog-search-open");
     input.value = "";
     closeSuggestions();
     setUrl("", 1, pageSize.value, false);
     render();
-    input.focus();
-    if (isMobileSearch()) renderRecentSearches();
+    if (mobileWasOpen) {
+      input.focus();
+      renderRecentSearches();
+    } else {
+      input.blur();
+    }
   });
 
   suggestions.addEventListener("click", function (event) {
