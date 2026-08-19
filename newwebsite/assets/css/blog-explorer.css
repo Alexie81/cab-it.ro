@@ -303,7 +303,9 @@
 }
 
 @media (max-width: 680px) {
+  html.cabit-blog-search-open,
   body.cabit-blog-search-open {
+    height: 100%;
     overflow: hidden;
   }
 

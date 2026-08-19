@@ -66,10 +66,13 @@
   }
 
   function openMobileSearch() {
-    if (isMobileSearch()) document.body.classList.add("cabit-blog-search-open");
+    if (!isMobileSearch()) return;
+    document.documentElement.classList.add("cabit-blog-search-open");
+    document.body.classList.add("cabit-blog-search-open");
   }
 
   function closeMobileSearch() {
+    document.documentElement.classList.remove("cabit-blog-search-open");
     document.body.classList.remove("cabit-blog-search-open");
     closeSuggestions();
     input.blur();
@@ -427,7 +430,10 @@
   });
   window.addEventListener("popstate", function () { render(); });
   window.addEventListener("resize", function () {
-    if (!isMobileSearch()) document.body.classList.remove("cabit-blog-search-open");
+    if (!isMobileSearch()) {
+      document.documentElement.classList.remove("cabit-blog-search-open");
+      document.body.classList.remove("cabit-blog-search-open");
+    }
   }, { passive: true });
 
   loadRecentSearches();
