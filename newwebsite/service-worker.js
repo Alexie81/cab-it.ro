@@ -1,4 +1,4 @@
-const CACHE_VERSION = "cabit-pwa-20260819-11";
+const CACHE_VERSION = "cabit-pwa-20260819-12";
 const BASE_URL = new URL("./", self.registration.scope);
 const OFFLINE_URL = new URL("offline.html", BASE_URL).href;
 const HOME_URL = BASE_URL.href;
@@ -6,8 +6,8 @@ const PRECACHE_URLS = [
   HOME_URL,
   OFFLINE_URL,
   new URL("assets/css/cabit-home.min.css?v=20260819-5", BASE_URL).href,
-  new URL("assets/css/cabit-next.min.css?v=20260819-9", BASE_URL).href,
-  new URL("assets/js/cabit-next.min.js?v=20260819-8", BASE_URL).href,
+  new URL("assets/css/cabit-next.min.css?v=20260819-16", BASE_URL).href,
+  new URL("assets/js/cabit-next.min.js?v=20260819-19", BASE_URL).href,
   new URL("assets/img/brand/cab-it-header-symbol-clean.webp", BASE_URL).href,
   new URL("assets/img/brand/cab-it-c-symbol-app-v7.png", BASE_URL).href
 ];
