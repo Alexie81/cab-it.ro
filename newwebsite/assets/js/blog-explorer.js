@@ -35,7 +35,7 @@
 
   var mobileHead = document.createElement("div");
   mobileHead.className = "cabit-blog-search__mobile-head";
-  mobileHead.innerHTML = '<button class="cabit-blog-search__mobile-close" type="button" aria-label="Închide căutarea">←</button><span>Căutare inteligentă CAB-IT</span>';
+  mobileHead.innerHTML = '<button class="cabit-blog-search__mobile-close" type="button" aria-label="Închide căutarea">←</button><span>Găsește răspunsul potrivit</span>';
   form.insertBefore(mobileHead, form.firstChild);
   var mobileClose = mobileHead.querySelector("button");
 
