@@ -2,7 +2,10 @@
 declare(strict_types=1);
 
 const PUBLIC_ROOT = __DIR__ . '/..';
-const ASSET_VERSION = '20260819-4';
+const SITE_ASSET_VERSION = '20260819-4';
+const THEME_CSS_VERSION = '20260819-9';
+const THEME_JS_VERSION = '20260819-8';
+const BLOG_EXPLORER_VERSION = '20260819-3';
 
 function marker(string $path, string $start, string $end, string $fallback = ''): string
 {
@@ -38,12 +41,12 @@ function shell(string $title, string $description, string $canonical, string $bo
   <meta property="og:locale" content="ro_RO"><meta property="og:type" content="website"><meta property="og:site_name" content="CAB-IT Expert">
   <meta property="og:title" content="' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '"><meta property="og:description" content="' . htmlspecialchars($description, ENT_QUOTES, 'UTF-8') . '"><meta property="og:url" content="https://cab-it.ro/' . $canonical . '"><meta property="og:image" content="https://cab-it.ro/assets/img/brand/cab-it-c-symbol-app-v7.png">
   <link rel="shortcut icon" type="image/png" href="../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../site.webmanifest">
-  <link rel="stylesheet" href="../assets/css/site.min.css?v=' . ASSET_VERSION . '"><link rel="stylesheet" href="../assets/css/cabit-next.min.css?v=' . ASSET_VERSION . '">
+  <link rel="stylesheet" href="../assets/css/site.min.css?v=' . SITE_ASSET_VERSION . '"><link rel="stylesheet" href="../assets/css/cabit-next.min.css?v=' . THEME_CSS_VERSION . '">
   ' . $structured . analyticsHead() . '
 </head>
 <body class="cabit-theme-2026 cabit-inner-page ' . $bodyClass . '">' . analyticsBody() . '
 <main>' . $main . '</main>
-<script src="../assets/js/site-enhancements.js?v=' . ASSET_VERSION . '"></script><script defer src="../assets/js/cabit-next.min.js?v=' . ASSET_VERSION . '"></script>
+<script src="../assets/js/site-enhancements.js?v=' . SITE_ASSET_VERSION . '"></script><script defer src="../assets/js/cabit-next.min.js?v=' . THEME_JS_VERSION . '"></script>
 </body></html>';
 }
 
@@ -225,11 +228,14 @@ $blogSchema = marker(PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_SCHEMA_STA
 $blogCards = marker(PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_CARDS_START -->', '<!-- CMS_BLOG_CARDS_END -->');
 $blogMain = breadcrumbNav('Blog') . '
 <section class="cabit-page-header cabit-split-hero"><div class="container"><div><span class="cabit-eyebrow">Resurse CAB-IT</span><h1>Marketing digital explicat pentru decizii mai bune.</h1><p>Ghiduri clare despre SEO, promovare online, website-uri și măsurarea rezultatelor. Fără jargon inutil, cu exemple și pași aplicabili.</p><div class="cabit-topic-pills"><a href="/servicii/seo/">SEO</a><a href="/servicii/reclame-platite/">Google Ads</a><a href="/servicii/creare-site-web/">Website</a><a href="/glosar-seo/">Glosar</a></div></div><div class="cabit-editorial-visual"><span>Ghid nou</span><strong>Idei clare.<br>Decizii mai bune.</strong><i>↗</i></div></div></section>
-<section class="cabit-content-section"><div class="container"><div class="cabit-section-heading"><span class="cabit-eyebrow">Publicate recent</span><h2>Toate articolele</h2><p>Articolele sunt afișate de la cea mai recentă dată de publicare.</p></div><div class="cabit-blog-grid"><!-- CMS_BLOG_CARDS_START -->' . $blogCards . '<!-- CMS_BLOG_CARDS_END --></div></div></section>
+<section class="cabit-content-section"><div class="container" data-blog-explorer data-index-url="../blog-search-index.json?v=' . BLOG_EXPLORER_VERSION . '"><div class="cabit-section-heading"><span class="cabit-eyebrow">Biblioteca CAB-IT</span><h2>Găsește rapid articolul potrivit</h2><p>Caută după întrebare, serviciu sau obiectiv. Rezultatele sunt ordonate după relevanță, inclusiv pentru formulări apropiate și mici greșeli de tastare.</p></div><div class="cabit-blog-tools"><form class="cabit-blog-search" role="search" data-blog-search-form><label for="blog-smart-search">Caută în toate articolele</label><div class="cabit-blog-search__field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path></svg><input id="blog-smart-search" type="search" placeholder="Ex.: cât costă un site, SEO local, Google Ads…" autocomplete="off" aria-autocomplete="list" aria-controls="blog-search-suggestions" aria-expanded="false" data-blog-search><button class="cabit-blog-search__clear" type="button" aria-label="Șterge căutarea" data-blog-search-clear hidden>×</button></div><div class="cabit-blog-suggestions" id="blog-search-suggestions" role="listbox" data-blog-suggestions hidden></div></form><div class="cabit-blog-page-size"><label for="blog-page-size">Articole pe pagină</label><select id="blog-page-size" data-blog-page-size><option value="10" selected>10 articole</option><option value="20">20 articole</option><option value="50">50 articole</option><option value="100">100 articole</option><option value="all">Toate articolele</option></select></div></div><div class="cabit-blog-result-bar" role="status" aria-live="polite"><span data-blog-result-count><strong>10</strong> articole afișate</span><span data-blog-result-context>ordonate de la cele mai recente</span></div><div class="cabit-blog-grid" id="blog-results" data-blog-results><!-- CMS_BLOG_CARDS_START -->' . $blogCards . '<!-- CMS_BLOG_CARDS_END --></div><nav class="cabit-blog-pagination" aria-label="Paginarea articolelor" data-blog-pagination hidden></nav><noscript><p>Activează JavaScript pentru căutare, selector și paginare. Primele 10 articole sunt afișate mai sus, iar toate paginile sunt disponibile în <a href="../sitemap-articles.xml">sitemap-ul articolelor</a>.</p></noscript></div></section>
 <section class="cabit-inner-cta section-shell"><span>Ai o întrebare concretă?</span><h2>Transformăm informația într-un plan pentru afacerea ta.</h2><a class="button button-primary" href="/contact/">Hai să discutăm →</a></section>';
 $blogSchemaTag = trim($blogSchema);
 $blogDescription = 'Ghiduri practice despre SEO, Google Ads, social media, creare website și măsurarea rezultatelor pentru afaceri din București și România.';
-writePage('blog', shell('Blog Marketing Digital, SEO și Website | CAB-IT Expert', $blogDescription, 'blog/', 'cabit-page-blog', '<!-- CMS_BLOG_SCHEMA_START -->' . $blogSchemaTag . '<!-- CMS_BLOG_SCHEMA_END -->' . $blogMain, hubSchema('CollectionPage', 'blog', 'Blog CAB-IT Expert', $blogDescription)));
+$blogHtml = shell('Blog Marketing Digital, SEO și Website | CAB-IT Expert', $blogDescription, 'blog/', 'cabit-page-blog', '<!-- CMS_BLOG_SCHEMA_START -->' . $blogSchemaTag . '<!-- CMS_BLOG_SCHEMA_END -->' . $blogMain, hubSchema('CollectionPage', 'blog', 'Blog CAB-IT Expert', $blogDescription));
+$blogHtml = str_replace('</head>', '<link rel="stylesheet" href="../assets/css/blog-explorer.min.css?v=' . BLOG_EXPLORER_VERSION . '"></head>', $blogHtml);
+$blogHtml = str_replace('</body>', '<script defer src="../assets/js/blog-explorer.min.js?v=' . BLOG_EXPLORER_VERSION . '"></script></body>', $blogHtml);
+writePage('blog', $blogHtml);
 
 $termsMain = breadcrumbNav('Termeni și condiții') . '
 <section class="cabit-page-header"><div class="container"><span class="cabit-eyebrow">Informații legale</span><h1>Termeni și condiții</h1><p>Condițiile generale pentru utilizarea website-ului cab-it.ro și pentru transmiterea solicitărilor către CAB IT EXPERT SRL.</p></div></section>

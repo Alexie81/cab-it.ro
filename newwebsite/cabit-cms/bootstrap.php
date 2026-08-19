@@ -612,11 +612,11 @@ function cms_update_blog_index(PDO $pdo): void
                 'dateModified' => max(substr((string) $article['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE),
                 'image' => $image,
             ];
-        }, $articles),
+        }, array_slice($articles, 0, 10)),
     ];
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_SCHEMA_START -->', '<!-- CMS_BLOG_SCHEMA_END -->', '<script type="application/ld+json">' . cms_json($blogSchema) . '</script>');
     $cards = [];
-    foreach ($articles as $article) {
+    foreach (array_slice($articles, 0, 10) as $article) {
         $metadata = cms_article_metadata($article);
         $image = cms_relative_asset($article['cover_image'], 1);
         $imageAlt = (string) ($metadata['image_alt'] ?? $article['title']);
@@ -625,6 +625,59 @@ function cms_update_blog_index(PDO $pdo): void
         $cards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_CARDS_START -->', '<!-- CMS_BLOG_CARDS_END -->', implode("\n", $cards));
+
+    $searchEntries = [];
+    $knowledgeEntries = [];
+    foreach ($articles as $article) {
+        $metadata = cms_article_metadata($article);
+        $coverImage = (string) ($article['cover_image'] ?? '');
+        $image = preg_match('~^https?://~i', $coverImage) ? $coverImage : '/' . ltrim($coverImage, '/');
+        $contentText = html_entity_decode(strip_tags((string) ($article['content'] ?? '')), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $contentText = trim((string) preg_replace('/\s+/u', ' ', $contentText));
+        $searchText = function_exists('mb_substr') ? mb_substr($contentText, 0, 4000, 'UTF-8') : substr($contentText, 0, 4000);
+        $secondaryKeywords = is_array($metadata['secondary_keywords'] ?? null) ? array_values(array_map('strval', $metadata['secondary_keywords'])) : [];
+        $primaryKeyword = trim((string) ($metadata['primary_keyword'] ?? ''));
+        $keywords = array_values(array_filter(array_merge([$primaryKeyword], $secondaryKeywords)));
+        $entry = [
+            'title' => (string) $article['title'],
+            'slug' => (string) $article['slug'],
+            'url' => '/blog/' . $article['slug'] . '/',
+            'excerpt' => (string) $article['excerpt'],
+            'cluster' => (string) ($metadata['cluster'] ?? 'Articol'),
+            'keywords' => $keywords,
+            'date' => (string) $article['date_published'],
+            'date_label' => date('d.m.Y', strtotime((string) $article['date_published'])),
+            'image' => $image,
+            'image_alt' => (string) ($metadata['image_alt'] ?? $article['title']),
+            'search_text' => $searchText,
+        ];
+        $searchEntries[] = $entry;
+        $knowledgeEntries[] = [
+            'id' => 'cab-it-blog-' . $article['slug'],
+            'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
+            'title' => (string) $article['title'],
+            'summary' => (string) $article['excerpt'],
+            'cluster' => $entry['cluster'],
+            'keywords' => $keywords,
+            'published' => (string) $article['date_published'],
+            'updated' => max(substr((string) $article['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE),
+            'content' => $contentText,
+        ];
+    }
+    cms_write_file(CABIT_PUBLIC_ROOT . '/blog-search-index.json', cms_json([
+        'version' => date('c'),
+        'language' => 'ro-RO',
+        'count' => count($searchEntries),
+        'articles' => $searchEntries,
+    ]));
+    cms_write_file(CABIT_PUBLIC_ROOT . '/ai-knowledge-base.json', cms_json([
+        'version' => date('c'),
+        'language' => 'ro-RO',
+        'source' => CABIT_SITE_URL . '/blog/',
+        'usage' => 'Corpus editorial CAB-IT pentru căutare semantică și un viitor agent AI. Răspunsurile trebuie să trimită utilizatorul la sursa publică.',
+        'count' => count($knowledgeEntries),
+        'documents' => $knowledgeEntries,
+    ]));
 
     $homeCards = [];
     foreach (array_slice($articles, 0, 6) as $article) {
