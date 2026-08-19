@@ -561,8 +561,14 @@ body.cabit-theme-2026.cabit-page-blog .cabit-page-header .cabit-eyebrow {
   }
 
   .cabit-blog-tools {
+    width: calc(100% + 58px);
     grid-template-columns: 1fr;
+    margin-right: -29px;
+    margin-left: -29px;
     padding: 14px;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
   }
 
   body.cabit-blog-search-open .cabit-blog-search {
