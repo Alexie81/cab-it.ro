@@ -18,6 +18,7 @@
   var filtered = [];
   var activeSuggestion = -1;
   var inputTimer = 0;
+  var recentSearches = [];
 
   var synonymGroups = [
     ["site", "website", "web", "pagina"],
@@ -31,6 +32,48 @@
     ["social", "facebook", "instagram", "tiktok", "meta"],
     ["masurare", "tracking", "analytics", "ga4", "raportare"]
   ];
+
+  var mobileHead = document.createElement("div");
+  mobileHead.className = "cabit-blog-search__mobile-head";
+  mobileHead.innerHTML = '<button class="cabit-blog-search__mobile-close" type="button" aria-label="Închide căutarea">←</button><span>Căutare inteligentă CAB-IT</span>';
+  form.insertBefore(mobileHead, form.firstChild);
+  var mobileClose = mobileHead.querySelector("button");
+
+  function isMobileSearch() {
+    return window.matchMedia && window.matchMedia("(max-width: 680px)").matches;
+  }
+
+  function loadRecentSearches() {
+    try {
+      var stored = JSON.parse(window.localStorage.getItem("cabit-blog-recent-searches") || "[]");
+      recentSearches = Array.isArray(stored) ? stored.filter(function (item) {
+        return typeof item === "string" && normalize(item);
+      }).slice(0, 5) : [];
+    } catch (error) {
+      recentSearches = [];
+    }
+  }
+
+  function saveRecentSearch(query) {
+    query = String(query || "").trim();
+    if (normalize(query).length < 2) return;
+    recentSearches = [query].concat(recentSearches.filter(function (item) {
+      return normalize(item) !== normalize(query);
+    })).slice(0, 5);
+    try {
+      window.localStorage.setItem("cabit-blog-recent-searches", JSON.stringify(recentSearches));
+    } catch (error) {}
+  }
+
+  function openMobileSearch() {
+    if (isMobileSearch()) document.body.classList.add("cabit-blog-search-open");
+  }
+
+  function closeMobileSearch() {
+    document.body.classList.remove("cabit-blog-search-open");
+    closeSuggestions();
+    input.blur();
+  }
 
   function normalize(value) {
     return String(value || "")
@@ -182,6 +225,7 @@
   function render(options) {
     options = options || {};
     var state = currentState();
+    if (Object.prototype.hasOwnProperty.call(options, "query")) state.query = options.query;
     filtered = ranked(state.query);
     var totalPages = Math.max(1, Math.ceil(filtered.length / state.perPage));
     state.page = Math.min(state.page, totalPages);
@@ -236,7 +280,7 @@
       closeSuggestions();
       return;
     }
-    var matches = ranked(query).slice(0, 6);
+    var matches = ranked(query).slice(0, isMobileSearch() ? 10 : 6);
     if (!matches.length) {
       closeSuggestions();
       return;
@@ -248,6 +292,18 @@
     suggestions.hidden = false;
     input.setAttribute("aria-expanded", "true");
     activeSuggestion = -1;
+  }
+
+  function renderRecentSearches() {
+    if (!isMobileSearch() || !recentSearches.length) {
+      closeSuggestions();
+      return;
+    }
+    suggestions.innerHTML = '<div class="cabit-blog-recent-heading"><span>Căutări recente</span><button type="button" data-clear-recents>Șterge toate</button></div>' + recentSearches.map(function (query, index) {
+      return '<div class="cabit-blog-suggestion cabit-blog-recent" role="option"><span class="cabit-blog-recent__icon" aria-hidden="true">↺</span><button class="cabit-blog-recent__query" type="button" data-recent-query="' + index + '">' + escapeHtml(query) + '</button><button class="cabit-blog-recent__remove" type="button" aria-label="Șterge căutarea ' + escapeHtml(query) + '" data-remove-recent="' + index + '">×</button></div>';
+    }).join("");
+    suggestions.hidden = false;
+    input.setAttribute("aria-expanded", "true");
   }
 
   function moveSuggestion(direction) {
@@ -264,7 +320,9 @@
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
-    closeSuggestions();
+    saveRecentSearch(input.value);
+    if (isMobileSearch()) closeMobileSearch();
+    else closeSuggestions();
     setUrl(input.value, 1, pageSize.value, false);
     render({ scroll: true });
   });
@@ -274,18 +332,24 @@
     clearButton.hidden = !normalize(input.value);
     inputTimer = window.setTimeout(function () {
       setUrl(input.value, 1, pageSize.value, true);
-      render();
-      renderSuggestions();
+      render({ query: input.value });
+      if (normalize(input.value).length >= 2) renderSuggestions();
+      else renderRecentSearches();
     }, 180);
   });
 
   input.addEventListener("focus", function () {
-    if (articles.length && normalize(input.value).length >= 2) {
-      renderSuggestions();
-    }
+    openMobileSearch();
+    if (!articles.length) return;
+    if (normalize(input.value).length >= 2) renderSuggestions();
+    else renderRecentSearches();
   });
 
   input.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && document.body.classList.contains("cabit-blog-search-open")) {
+      closeMobileSearch();
+      return;
+    }
     if (suggestions.hidden) return;
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
@@ -305,12 +369,40 @@
     setUrl("", 1, pageSize.value, false);
     render();
     input.focus();
+    if (isMobileSearch()) renderRecentSearches();
   });
 
   suggestions.addEventListener("click", function (event) {
     var suggestion = event.target.closest("[data-suggestion]");
-    if (suggestion) window.location.href = suggestion.getAttribute("data-url");
+    if (suggestion) {
+      saveRecentSearch(input.value);
+      window.location.href = suggestion.getAttribute("data-url");
+      return;
+    }
+    var recent = event.target.closest("[data-recent-query]");
+    if (recent) {
+      input.value = recentSearches[Number(recent.getAttribute("data-recent-query"))] || "";
+      setUrl(input.value, 1, pageSize.value, true);
+      render();
+      renderSuggestions();
+      input.focus();
+      return;
+    }
+    var remove = event.target.closest("[data-remove-recent]");
+    if (remove) {
+      recentSearches.splice(Number(remove.getAttribute("data-remove-recent")), 1);
+      try { window.localStorage.setItem("cabit-blog-recent-searches", JSON.stringify(recentSearches)); } catch (error) {}
+      renderRecentSearches();
+      return;
+    }
+    if (event.target.closest("[data-clear-recents]")) {
+      recentSearches = [];
+      try { window.localStorage.removeItem("cabit-blog-recent-searches"); } catch (error) {}
+      closeSuggestions();
+    }
   });
+
+  mobileClose.addEventListener("click", closeMobileSearch);
 
   pageSize.addEventListener("change", function () {
     setUrl(input.value, 1, pageSize.value, false);
@@ -329,6 +421,11 @@
     if (!form.contains(event.target)) closeSuggestions();
   });
   window.addEventListener("popstate", function () { render(); });
+  window.addEventListener("resize", function () {
+    if (!isMobileSearch()) document.body.classList.remove("cabit-blog-search-open");
+  }, { passive: true });
+
+  loadRecentSearches();
 
   fetch(indexUrl, { credentials: "same-origin" })
     .then(function (response) {

@@ -21,6 +21,11 @@
   position: relative;
 }
 
+.cabit-blog-search__mobile-head,
+.cabit-blog-recent-heading {
+  display: none;
+}
+
 .cabit-blog-search label,
 .cabit-blog-page-size label {
   display: block;
@@ -298,9 +303,153 @@
 }
 
 @media (max-width: 680px) {
+  body.cabit-blog-search-open {
+    overflow: hidden;
+  }
+
+  body.cabit-blog-search-open .mobile-contact {
+    display: none !important;
+  }
+
   .cabit-blog-tools {
     grid-template-columns: 1fr;
     padding: 14px;
+  }
+
+  body.cabit-blog-search-open .cabit-blog-search {
+    position: fixed;
+    z-index: 10020;
+    inset: 0;
+    overflow-y: auto;
+    padding: max(14px, env(safe-area-inset-top)) 14px max(22px, env(safe-area-inset-bottom));
+    background:
+      radial-gradient(circle at 92% 4%, rgba(20, 184, 166, .17), transparent 28%),
+      linear-gradient(180deg, #f5fbfa 0%, #eef7f7 100%);
+    overscroll-behavior: contain;
+  }
+
+  .cabit-blog-search__mobile-head {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  body.cabit-blog-search-open .cabit-blog-search__mobile-head {
+    display: flex;
+  }
+
+  .cabit-blog-search__mobile-close {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    flex: 0 0 42px;
+    place-items: center;
+    border: 1px solid rgba(15, 118, 110, .18);
+    border-radius: 50%;
+    color: #0f766e;
+    background: rgba(255, 255, 255, .88);
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .cabit-blog-search__mobile-head span {
+    color: #101828;
+    font-size: 15px;
+    font-weight: 850;
+  }
+
+  body.cabit-blog-search-open .cabit-blog-search > label {
+    margin: 0 0 9px;
+  }
+
+  body.cabit-blog-search-open .cabit-blog-search input {
+    min-height: 58px;
+    border-radius: 18px;
+    font-size: 17px;
+    box-shadow: 0 0 0 3px rgba(15, 159, 148, .09), 0 14px 34px rgba(15, 23, 42, .08);
+  }
+
+  body.cabit-blog-search-open .cabit-blog-suggestions {
+    position: static;
+    margin-top: 14px;
+    border-radius: 22px;
+    box-shadow: 0 18px 48px rgba(15, 23, 42, .1);
+  }
+
+  body.cabit-blog-search-open .cabit-blog-suggestion {
+    min-height: 72px;
+    padding: 13px 14px;
+    grid-template-columns: 50px minmax(0, 1fr) auto;
+  }
+
+  body.cabit-blog-search-open .cabit-blog-suggestion img {
+    width: 50px;
+    height: 46px;
+    border-radius: 13px;
+  }
+
+  body.cabit-blog-search-open .cabit-blog-suggestion strong {
+    font-size: 14px;
+  }
+
+  body.cabit-blog-search-open .cabit-blog-suggestion small {
+    font-size: 12px;
+  }
+
+  .cabit-blog-recent-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px 7px;
+    color: #0f766e;
+    background: #fff;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .cabit-blog-recent-heading button {
+    border: 0;
+    color: #667085;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer;
+  }
+
+  .cabit-blog-recent {
+    grid-template-columns: 38px minmax(0, 1fr) 34px;
+  }
+
+  .cabit-blog-recent__icon,
+  .cabit-blog-recent__remove {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #e4e7ec;
+    border-radius: 50%;
+    color: #475467;
+    background: #f2f4f7;
+  }
+
+  .cabit-blog-recent__remove {
+    cursor: pointer;
+  }
+
+  .cabit-blog-recent__query {
+    overflow: hidden;
+    border: 0;
+    color: #101828;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
   }
 
   .cabit-blog-page-size select {
