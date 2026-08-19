@@ -193,10 +193,10 @@
 
   function cardHtml(article) {
     return '<article class="cabit-blog-card">' +
-      '<img src="' + escapeHtml(article.image) + '" alt="' + escapeHtml(article.image_alt || article.title) + '" width="600" height="315" loading="lazy" decoding="async">' +
+      '<a class="cabit-blog-card__link" href="' + escapeHtml(article.url) + '"><img src="' + escapeHtml(article.image) + '" alt="' + escapeHtml(article.image_alt || article.title) + '" width="600" height="315" loading="lazy" decoding="async">' +
       '<div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' + escapeHtml(article.cluster || "Articol") + '</span><time datetime="' + escapeHtml(article.date) + '">' + escapeHtml(article.date_label) + '</time></div>' +
       '<h3>' + escapeHtml(article.title) + '</h3><p>' + escapeHtml(article.excerpt) + '</p>' +
-      '<a class="cabit-text-link" href="' + escapeHtml(article.url) + '">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
+      '<span class="cabit-text-link">Citește articolul <span aria-hidden="true">→</span></span></div></a></article>';
   }
 
   function currentState() {

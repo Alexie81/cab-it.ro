@@ -438,6 +438,101 @@ function cms_article_metadata_related(array $metadata): string
     return $items ? cms_related_links('Continuă cu ghidurile din același subiect', array_slice($items, 0, 3), 'Ghiduri conexe din același cluster editorial') : '';
 }
 
+function cms_recommendation_tokens(string $value): array
+{
+    $value = function_exists('mb_strtolower') ? mb_strtolower($value, 'UTF-8') : strtolower($value);
+    $value = strtr($value, ['ă' => 'a', 'â' => 'a', 'î' => 'i', 'ș' => 's', 'ş' => 's', 'ț' => 't', 'ţ' => 't']);
+    $tokens = preg_split('/[^a-z0-9]+/', $value, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    $stopWords = ['acest', 'aceasta', 'aceste', 'acesti', 'care', 'cand', 'cum', 'din', 'intr', 'pentru', 'prin', 'sau', 'este', 'sunt', 'unui', 'unei', 'fara', 'ghid', 'romania', '2026'];
+    return array_values(array_unique(array_filter($tokens, static fn(string $token): bool => strlen($token) >= 3 && !in_array($token, $stopWords, true))));
+}
+
+function cms_article_pillar(array $metadata): array
+{
+    $context = function_exists('mb_strtolower')
+        ? mb_strtolower((string) ($metadata['cluster'] ?? '') . ' ' . (string) ($metadata['primary_keyword'] ?? ''), 'UTF-8')
+        : strtolower((string) ($metadata['cluster'] ?? '') . ' ' . (string) ($metadata['primary_keyword'] ?? ''));
+    if (preg_match('/seo local|google maps|business profile/u', $context)) {
+        return ['/servicii/seo-local/', 'Vezi serviciile de SEO local'];
+    }
+    if (preg_match('/seo|organic|search|conținut|continut|ai overview|geo|aeo/u', $context)) {
+        return ['/servicii/seo/', 'Vezi serviciile SEO'];
+    }
+    if (preg_match('/google ads|meta ads|tiktok|paid|reclam|promovare/u', $context)) {
+        return ['/servicii/reclame-platite/', 'Vezi serviciile de promovare online'];
+    }
+    if (preg_match('/automatiz|agent ai|crm|tracking|analytics|consent/u', $context)) {
+        return ['/servicii/integrari-digitale/', 'Vezi automatizările și integrările digitale'];
+    }
+    if (preg_match('/website|web design|e-commerce|magazin|shopify|woocommerce|cms|landing/u', $context)) {
+        return ['/servicii/creare-site-web/', 'Vezi serviciile de web design și creare website'];
+    }
+    return ['/servicii/', 'Vezi serviciile agenției de marketing online'];
+}
+
+function cms_smart_article_recommendations(array $article, array $metadata): string
+{
+    $statement = cms_db()->prepare('SELECT * FROM articles WHERE id <> ? ORDER BY date_published DESC, created_at DESC, id DESC');
+    $statement->execute([(int) $article['id']]);
+    $candidates = $statement->fetchAll();
+    $cluster = trim((string) ($metadata['cluster'] ?? ''));
+    $sourceKeywords = array_values(array_filter(array_merge(
+        [(string) ($metadata['primary_keyword'] ?? '')],
+        array_map('strval', is_array($metadata['secondary_keywords'] ?? null) ? $metadata['secondary_keywords'] : [])
+    )));
+    $sourceTokens = cms_recommendation_tokens((string) $article['title'] . ' ' . implode(' ', $sourceKeywords));
+    $curatedUrls = [];
+    foreach (($metadata['related_articles'] ?? []) as $position => $item) {
+        if (is_array($item) && !empty($item['url'])) {
+            $curatedUrls[(string) parse_url((string) $item['url'], PHP_URL_PATH)] = max(0, 3 - (int) $position);
+        }
+    }
+
+    $ranked = [];
+    foreach ($candidates as $candidate) {
+        $candidateMetadata = cms_article_metadata($candidate);
+        $candidateCluster = trim((string) ($candidateMetadata['cluster'] ?? ''));
+        $candidateKeywords = array_values(array_filter(array_merge(
+            [(string) ($candidateMetadata['primary_keyword'] ?? '')],
+            array_map('strval', is_array($candidateMetadata['secondary_keywords'] ?? null) ? $candidateMetadata['secondary_keywords'] : [])
+        )));
+        $candidateTokens = cms_recommendation_tokens((string) $candidate['title'] . ' ' . implode(' ', $candidateKeywords));
+        $candidateUrl = '/blog/' . $candidate['slug'] . '/';
+        $score = ($cluster !== '' && $cluster === $candidateCluster) ? 90 : 0;
+        $score += count(array_intersect($sourceTokens, $candidateTokens)) * 14;
+        if (isset($curatedUrls[$candidateUrl])) {
+            $score += 180 + ($curatedUrls[$candidateUrl] * 10);
+        }
+        if ($score <= 0) {
+            continue;
+        }
+        $ranked[] = ['score' => $score, 'article' => $candidate, 'metadata' => $candidateMetadata];
+    }
+
+    usort($ranked, static function (array $left, array $right): int {
+        return $right['score'] <=> $left['score']
+            ?: strcmp((string) $right['article']['date_published'], (string) $left['article']['date_published'])
+            ?: ((int) $right['article']['id'] <=> (int) $left['article']['id']);
+    });
+
+    $cards = '';
+    foreach (array_slice($ranked, 0, 3) as $recommendation) {
+        $candidate = $recommendation['article'];
+        $candidateMetadata = $recommendation['metadata'];
+        $image = cms_relative_asset((string) $candidate['cover_image'], 2);
+        $imageAlt = (string) ($candidateMetadata['image_alt'] ?? $candidate['title']);
+        $candidateCluster = (string) ($candidateMetadata['cluster'] ?? 'Ghid CAB-IT');
+        $cards .= '<a class="cabit-smart-related-card" href="/blog/' . cms_e($candidate['slug']) . '/"><figure><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"></figure><span>' . cms_e($candidateCluster) . '</span><strong>' . cms_e($candidate['title']) . '</strong><small>Citește ghidul <b aria-hidden="true">→</b></small></a>';
+    }
+
+    if ($cards === '') {
+        return cms_article_related((string) $article['slug']);
+    }
+
+    [$pillarUrl, $pillarLabel] = cms_article_pillar($metadata);
+    return '<section class="cabit-content-section is-soft cabit-smart-related-section"><div class="container"><div class="cabit-service-section-head"><span class="cabit-eyebrow">Recomandări pentru tine</span><h2>Continuă cu ghidurile potrivite întrebării tale</h2><p>Selectate după subiect, intenție și cuvintele-cheie comune cu articolul citit.</p><a class="cabit-smart-related-pillar" href="' . cms_e($pillarUrl) . '">' . cms_e($pillarLabel) . ' <span aria-hidden="true">→</span></a></div><nav class="cabit-smart-related-grid" aria-label="Articole recomandate inteligent">' . $cards . '</nav></div></section>';
+}
+
 function cms_article_page(array $article): string
 {
     $metadata = cms_article_metadata($article);
@@ -510,16 +605,13 @@ function cms_article_page(array $article): string
     $authorCard = $hasNamedAuthor
         ? '<section class="cabit-author-card" id="autor"><span class="cabit-author-card__avatar" aria-hidden="true">AP</span><div><span>Autor și revizie editorială</span><h2>' . cms_e($authorName) . '</h2><p><strong>' . cms_e($authorRole) . '.</strong> ' . cms_e($authorBio) . '</p><a href="/despre-noi/#alexie-popescu">Despre autor și metodologia editorială →</a></div></section>'
         : '';
-    $related = cms_article_metadata_related($metadata);
-    if ($related === '') {
-        $related = cms_article_related((string) $article['slug']);
-    }
+    $related = cms_smart_article_recommendations($article, $metadata);
     return '<!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' .
         '<title>' . $seoTitle . '</title><meta name="description" content="' . $description . '"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">' .
         '<link rel="canonical" href="' . $articleUrl . '">' . cms_agent_discovery_head() . '<meta property="og:type" content="article"><meta property="og:title" content="' . $seoTitle . '"><meta property="og:description" content="' . $description . '"><meta property="og:url" content="' . $articleUrl . '"><meta property="og:image" content="' . cms_e($imageUrl) . '"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="' . cms_e($imageAlt) . '"><meta property="article:published_time" content="' . cms_e($article['date_published']) . '"><meta property="article:modified_time" content="' . cms_e($modifiedIso) . '"><meta name="twitter:card" content="summary_large_image">' .
-        '<link rel="shortcut icon" type="image/png" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../../site.webmanifest"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260819-4"><link rel="stylesheet" href="../../assets/css/cabit-next.min.css?v=20260819-13"><script type="application/ld+json">' . $schema . '</script>' . cms_google_tag_head() . '</head><body class="cabit-theme-2026 cabit-page-article cabit-inner-page">' . cms_google_tag_body() .
+        '<link rel="shortcut icon" type="image/png" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../../site.webmanifest"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260819-4"><link rel="stylesheet" href="../../assets/css/cabit-next.min.css?v=20260819-15"><script type="application/ld+json">' . $schema . '</script>' . cms_google_tag_head() . '</head><body class="cabit-theme-2026 cabit-page-article cabit-inner-page">' . cms_google_tag_body() .
         '<main><article><nav class="cabit-article-breadcrumb" aria-label="Breadcrumb"><a href="/">Acasă</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>' . $title . '</span></nav><header class="cabit-page-header cabit-editorial-hero"><div class="container"><div><span class="cabit-eyebrow">' . cms_e($cluster) . '</span><h1>' . $title . '</h1><p>' . cms_e($article['excerpt']) . '</p><p class="cabit-article-date">Publicat la <time datetime="' . cms_e($article['date_published']) . '">' . cms_e($publishedDate) . '</time> · actualizat la <time datetime="' . cms_e($modifiedIso) . '">' . cms_e($modifiedDate) . '</time> · scris și revizuit de <a href="' . cms_e(parse_url($authorUrl, PHP_URL_PATH) . (parse_url($authorUrl, PHP_URL_FRAGMENT) ? '#' . parse_url($authorUrl, PHP_URL_FRAGMENT) : '')) . '">' . cms_e($authorName) . '</a></p></div><figure><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="1200" height="630" fetchpriority="high" decoding="async"></figure></div></header>' .
-        '<section class="cabit-content-section"><div class="container cabit-case-layout"><div><div class="cabit-content-card cabit-article-content">' . $article['content'] . '</div>' . $authorCard . '</div><aside class="cabit-sticky-aside"><div class="cabit-note"><strong>Ai nevoie de o strategie aplicată?</strong><p>Analizăm obiectivul, website-ul și canalele potrivite afacerii tale.</p><a class="button button-primary" href="/contact/">Hai să discutăm</a></div><a class="cabit-text-link" href="/blog/">← Toate articolele</a></aside></div></section>' . $related . '<section class="cabit-inner-cta section-shell"><span>Următorul pas</span><h2>Transformă informația într-un plan clar.</h2><p>Primești recomandări concrete pentru website, SEO și promovare online.</p><a class="button button-primary" href="/#audit">Cere auditul gratuit →</a></section></article></main>' .
+        '<section class="cabit-content-section"><div class="container cabit-case-layout"><div><div class="cabit-content-card cabit-article-content">' . $article['content'] . '</div>' . $authorCard . '</div><aside class="cabit-sticky-aside"><div class="cabit-note"><strong>Ai nevoie de o strategie aplicată?</strong><p>Analizăm obiectivul, website-ul și canalele potrivite afacerii tale.</p><a class="button button-primary" href="/contact/">Hai să discutăm</a></div><a class="cabit-text-link" href="/blog/">← Toate articolele</a></aside></div></section>' . $related . '<section class="cabit-inner-cta section-shell cabit-article-final-cta"><div class="cabit-article-final-cta__copy"><span>Ai găsit răspunsul?</span><h2>Transformă ideea într-un plan clar.</h2><p>Discutăm obiectivul, alegem pașii potriviți și stabilim ce merită măsurat.</p><a class="button button-primary" href="/contact/">Hai să construim planul <b aria-hidden="true">→</b></a></div><div class="cabit-article-final-cta__visual" aria-hidden="true"><i></i><i></i><i></i><strong>?</strong><b>✓</b></div></section></article></main>' .
         '<script src="../../assets/js/site-enhancements.js?v=20260819-4"></script><script defer src="../../assets/js/cabit-next.min.js?v=20260819-4"></script></body></html>';
 }
 
@@ -622,7 +714,7 @@ function cms_update_blog_index(PDO $pdo): void
         $imageAlt = (string) ($metadata['image_alt'] ?? $article['title']);
         $label = (string) ($metadata['cluster'] ?? 'Articol');
         $date = date('d.m.Y', strtotime((string) $article['date_published']));
-        $cards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
+        $cards[] = '<article class="cabit-blog-card"><a class="cabit-blog-card__link" href="/blog/' . cms_e($article['slug']) . '/"><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><span class="cabit-text-link">Citește articolul <span aria-hidden="true">→</span></span></div></a></article>';
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_CARDS_START -->', '<!-- CMS_BLOG_CARDS_END -->', implode("\n", $cards));
 
@@ -686,7 +778,7 @@ function cms_update_blog_index(PDO $pdo): void
         $imageAlt = (string) ($metadata['image_alt'] ?? $article['title']);
         $label = (string) ($metadata['cluster'] ?? 'Articol');
         $date = date('d.m.Y', strtotime((string) $article['date_published']));
-        $homeCards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
+        $homeCards[] = '<article class="cabit-blog-card"><a class="cabit-blog-card__link" href="/blog/' . cms_e($article['slug']) . '/"><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><span class="cabit-text-link">Citește articolul <span aria-hidden="true">→</span></span></div></a></article>';
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/index.html', '<!-- CMS_HOME_ARTICLES_START -->', '<!-- CMS_HOME_ARTICLES_END -->', implode("\n", $homeCards));
 }

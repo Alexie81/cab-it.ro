@@ -231,6 +231,30 @@
   flex-direction: column;
 }
 
+.cabit-page-blog .cabit-blog-card__link {
+  min-height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  text-decoration: none;
+}
+
+.cabit-page-blog .cabit-blog-card__link:focus-visible {
+  border-radius: inherit;
+  outline: 3px solid rgba(0, 169, 157, .48);
+  outline-offset: -3px;
+}
+
+.cabit-page-blog .cabit-blog-card__link > img {
+  width: 100%;
+  aspect-ratio: 1.75;
+  display: block;
+  object-fit: cover;
+}
+
 .cabit-page-blog .cabit-blog-card__body {
   display: flex;
   flex: 1;

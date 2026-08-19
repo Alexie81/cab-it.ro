@@ -683,7 +683,7 @@ ul, ol { margin: 0; padding: 0; }
 .home-blog-grid::-webkit-scrollbar { display: none; }
 .cabit-blog-card { min-width: 0; flex: 0 0 calc((100% - 36px) / 3); overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-sm); transition: transform .25s ease, box-shadow .25s ease; }
 .cabit-blog-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-.cabit-blog-card > img { width: 100%; aspect-ratio: 1.75; display: block; object-fit: cover; }
+.cabit-blog-card > img, .cabit-blog-card__link > img { width: 100%; aspect-ratio: 1.75; display: block; object-fit: cover; }
 .cabit-blog-card__body { padding: 22px; }
 .cabit-blog-card__meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 10px; }
 .cabit-blog-card__meta span { color: var(--teal-dark); font-weight: 700; text-transform: uppercase; }
@@ -3273,3 +3273,225 @@ body.testimonial-modal-open { overflow: hidden; }
 .mobile-contact__tooltip { animation: none; }
 .sales-area { opacity: 1; animation: none; }
 .conversation-form .conversation-fields button[type="submit"] { transition-property: opacity, filter, transform; }
+
+/* Entire editorial cards are accessible links, on the blog and homepage. */
+.cabit-blog-card__link {
+  min-height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0 !important;
+  color: inherit;
+  font-size: inherit !important;
+  text-decoration: none;
+}
+.cabit-blog-card__link:focus-visible {
+  border-radius: inherit;
+  outline: 3px solid rgba(0,169,157,.48);
+  outline-offset: -3px;
+}
+.cabit-blog-card__link .cabit-text-link {
+  margin-top: 18px;
+  color: var(--teal-dark);
+  font-size: 12px;
+}
+.cabit-blog-card__link:hover .cabit-text-link > span { transform: translateX(4px); }
+
+body.cabit-page-article .cabit-editorial-hero .cabit-eyebrow {
+  border-color: #b9e6e1;
+  color: #075e59 !important;
+  background: #d9f4f0 !important;
+}
+body.cabit-page-article .cabit-article-content p a {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+/* Smart visual recommendations on every article. */
+.cabit-smart-related-section .cabit-service-section-head > p {
+  max-width: 760px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 16px;
+}
+.cabit-smart-related-pillar {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: var(--teal-dark);
+  font-size: 13px;
+  font-weight: 850;
+}
+.cabit-smart-related-pillar span { transition: transform .25s; }
+.cabit-smart-related-pillar:hover span { transform: translateX(4px); }
+.cabit-smart-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 18px;
+}
+.cabit-smart-related-card {
+  min-width: 0;
+  min-height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid rgba(0,169,157,.2);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 13px 34px rgba(16,24,40,.07);
+  transition: transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s;
+}
+.cabit-smart-related-card:hover {
+  border-color: rgba(0,169,157,.55);
+  box-shadow: 0 23px 52px rgba(16,24,40,.12);
+  transform: translateY(-7px);
+}
+.cabit-smart-related-card:focus-visible {
+  outline: 3px solid rgba(0,169,157,.45);
+  outline-offset: 3px;
+}
+.cabit-smart-related-card figure {
+  aspect-ratio: 1.75;
+  margin: 0;
+  overflow: hidden;
+  background: #edf7f6;
+}
+.cabit-smart-related-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .55s cubic-bezier(.2,.8,.2,1);
+}
+.cabit-smart-related-card:hover img { transform: scale(1.045); }
+.cabit-smart-related-card > span {
+  margin: 20px 21px 0;
+  color: var(--teal-dark);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .045em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+.cabit-smart-related-card > strong {
+  margin: 9px 21px 0;
+  color: var(--ink);
+  font-family: Manrope,Inter,sans-serif;
+  font-size: 18px;
+  line-height: 1.35;
+}
+.cabit-smart-related-card > small {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: auto 21px 21px;
+  padding-top: 20px;
+  color: var(--teal-dark);
+  font-size: 12px;
+  font-weight: 800;
+}
+.cabit-smart-related-card > small b { transition: transform .25s; }
+.cabit-smart-related-card:hover > small b { transform: translateX(4px); }
+
+/* Article CTA uses the same visual language as the modern blog CTA. */
+.cabit-article-final-cta {
+  isolation: isolate;
+  position: relative;
+  min-height: 340px;
+  display: grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(220px,.85fr);
+  gap: 36px;
+  align-items: center;
+  padding: clamp(34px,5vw,72px);
+  border: 1px solid rgba(255,255,255,.2);
+  background: radial-gradient(circle at 80% 18%,rgba(45,212,191,.28),transparent 30%),linear-gradient(135deg,#063f3d 0%,#076e69 52%,#0a9f96 100%);
+  box-shadow: 0 28px 80px rgba(3,84,79,.25);
+}
+.cabit-article-final-cta::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: .18;
+  background-image: radial-gradient(rgba(255,255,255,.85) 1px,transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(90deg,transparent 20%,#000 100%);
+}
+.cabit-article-final-cta__copy { position: relative; z-index: 2; }
+.cabit-article-final-cta__copy > span { color: #99f6e4; font-size: 12px; font-weight: 800; }
+.cabit-article-final-cta__copy h2 {
+  max-width: 700px;
+  margin: 12px 0 14px;
+  font-size: clamp(34px,5vw,58px);
+  line-height: 1.02;
+  letter-spacing: -.05em;
+}
+.cabit-article-final-cta__copy p { max-width: 620px; margin: 0 0 24px; color: rgba(255,255,255,.78); font-size: 16px; line-height: 1.65; }
+.cabit-article-final-cta__copy .button { margin-top: 0; color: #075e59; background: #fff; box-shadow: 0 14px 34px rgba(0,40,38,.2); }
+.cabit-article-final-cta__visual { position: relative; width: min(260px,100%); aspect-ratio: 1; justify-self: center; }
+.cabit-article-final-cta__visual i {
+  position: absolute;
+  inset: 50%;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  animation: 5.4s ease-in-out infinite cabit-article-cta-ring;
+}
+.cabit-article-final-cta__visual i:first-child { width: 94%; height: 94%; }
+.cabit-article-final-cta__visual i:nth-child(2) { width: 68%; height: 68%; animation-delay: -.9s; }
+.cabit-article-final-cta__visual i:nth-child(3) { width: 42%; height: 42%; animation-delay: -1.8s; }
+.cabit-article-final-cta__visual strong,.cabit-article-final-cta__visual b {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: 0 16px 36px rgba(0,40,38,.22);
+}
+.cabit-article-final-cta__visual strong {
+  top: 18%;
+  left: 8%;
+  width: 70px;
+  height: 70px;
+  color: #fff;
+  background: rgba(255,255,255,.14);
+  font-size: 32px;
+  animation: 4s ease-in-out infinite cabit-article-cta-float;
+}
+.cabit-article-final-cta__visual b {
+  right: 10%;
+  bottom: 18%;
+  width: 82px;
+  height: 82px;
+  color: #075e59;
+  background: #fff;
+  font-size: 34px;
+  animation: 4s ease-in-out -2s infinite cabit-article-cta-float;
+}
+@keyframes cabit-article-cta-ring {
+  0%,100% { opacity: .48; transform: translate(-50%,-50%) scale(.96); }
+  50% { opacity: .9; transform: translate(-50%,-50%) scale(1.04); }
+}
+@keyframes cabit-article-cta-float {
+  0%,100% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(0,-9px,0); }
+}
+@media (max-width: 920px) {
+  .cabit-smart-related-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .cabit-smart-related-card:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 680px) {
+  .cabit-smart-related-grid { grid-template-columns: 1fr; }
+  .cabit-smart-related-card:last-child { grid-column: auto; }
+  .cabit-smart-related-section .cabit-service-section-head h2 { font-size: clamp(34px,10vw,48px); }
+  .cabit-article-final-cta { min-height: 430px; grid-template-columns: 1fr; padding: 38px 30px; }
+  .cabit-article-final-cta__copy { align-self: start; }
+  .cabit-article-final-cta__copy h2 { max-width: 290px; font-size: 40px; }
+  .cabit-article-final-cta__copy p { max-width: 275px; font-size: 14px; }
+  .cabit-article-final-cta__visual { position: absolute; right: -64px; bottom: -70px; width: 235px; opacity: .62; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cabit-article-final-cta__visual i,.cabit-article-final-cta__visual strong,.cabit-article-final-cta__visual b,.cabit-smart-related-card img { animation: none; transition: none; }
+}
