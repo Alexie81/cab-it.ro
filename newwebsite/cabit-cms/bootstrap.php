@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
 
+const CABIT_SEO_RELEASE_DATE = '2026-08-19';
+
 function cms_ensure_directories(): void
 {
     foreach ([CABIT_STORAGE_DIR, CABIT_UPLOADS_DIR, CABIT_UPLOADS_DIR . '/blog', CABIT_UPLOADS_DIR . '/portfolio'] as $directory) {
@@ -48,6 +50,13 @@ function cms_db(): PDO
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL
     )');
+    $articleColumns = [];
+    foreach ($pdo->query('PRAGMA table_info(articles)') as $column) {
+        $articleColumns[(string) $column['name']] = true;
+    }
+    if (!isset($articleColumns['seo_metadata'])) {
+        $pdo->exec('ALTER TABLE articles ADD COLUMN seo_metadata TEXT NOT NULL DEFAULT "{}"');
+    }
     $pdo->exec('CREATE TABLE IF NOT EXISTS categories (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL UNIQUE,
@@ -238,14 +247,14 @@ function cms_sanitize_html(string $html): string
     if ($html === strip_tags($html)) {
         return '<p>' . nl2br(cms_e($html)) . '</p>';
     }
-    $allowed = '<p><h2><h3><h4><ul><ol><li><strong><em><u><s><blockquote><a><br><hr><pre><code><table><thead><tbody><tr><th><td><figure><figcaption><img><div><span>';
+    $allowed = '<p><h2><h3><h4><ul><ol><li><strong><em><u><s><blockquote><a><br><hr><pre><code><table><thead><tbody><tr><th><td><figure><figcaption><img><div><span><nav><section><details><summary><time>';
     $clean = strip_tags($html, $allowed);
     $document = new DOMDocument('1.0', 'UTF-8');
     libxml_use_internal_errors(true);
     $document->loadHTML('<?xml encoding="utf-8" ?><div id="cms-root">' . $clean . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     libxml_clear_errors();
     $xpath = new DOMXPath($document);
-    $allowedClasses = ['cabit-rich-note', 'cabit-rich-cta', 'cabit-rich-columns', 'cabit-rich-button', 'cabit-rich-lead', 'text-center'];
+    $allowedClasses = ['cabit-rich-note', 'cabit-rich-cta', 'cabit-rich-columns', 'cabit-rich-button', 'cabit-rich-lead', 'cabit-answer-box', 'cabit-article-toc', 'cabit-article-faq', 'cabit-article-sources', 'cabit-related-guides', 'text-center'];
     foreach ($xpath->query('//*[@*]') ?: [] as $node) {
         $remove = [];
         foreach ($node->attributes as $attribute) {
@@ -253,7 +262,7 @@ function cms_sanitize_html(string $html): string
             $tag = strtolower($node->nodeName);
             $value = trim($attribute->value);
             $allowedAttribute = false;
-            if ($name === 'id' && $tag === 'div' && $value === 'cms-root') {
+            if ($name === 'id' && (($tag === 'div' && $value === 'cms-root') || (in_array($tag, ['h2', 'h3', 'section'], true) && preg_match('/^[a-z0-9][a-z0-9-]*$/', $value)))) {
                 $allowedAttribute = true;
             } elseif ($name === 'class') {
                 $classes = array_values(array_intersect(preg_split('/\s+/', $value) ?: [], $allowedClasses));
@@ -263,8 +272,12 @@ function cms_sanitize_html(string $html): string
                 }
             } elseif ($tag === 'a' && in_array($name, ['href', 'title', 'target', 'rel'], true)) {
                 $allowedAttribute = $name !== 'href' || (bool) preg_match('~^(?:https?://|mailto:|tel:|/|#)~i', $value);
-            } elseif ($tag === 'img' && in_array($name, ['src', 'alt', 'title', 'width', 'height', 'loading'], true)) {
+            } elseif ($tag === 'img' && in_array($name, ['src', 'alt', 'title', 'width', 'height', 'loading', 'decoding', 'fetchpriority'], true)) {
                 $allowedAttribute = $name !== 'src' || (bool) preg_match('~^(?:https?://|/)~i', $value);
+            } elseif ($tag === 'time' && $name === 'datetime') {
+                $allowedAttribute = true;
+            } elseif (in_array($tag, ['nav', 'section'], true) && $name === 'aria-label') {
+                $allowedAttribute = true;
             } elseif (in_array($tag, ['th', 'td'], true) && in_array($name, ['colspan', 'rowspan', 'scope'], true)) {
                 $allowedAttribute = true;
             }
@@ -337,7 +350,12 @@ function cms_json(array $data): string
 
 function cms_google_tag_head(): string
 {
-    return '<script async src="https://www.googletagmanager.com/gtag/js?id=G-QPKXFL2GW9"></script><script>window.__cabitGoogleTagLoaded=true;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-QPKXFL2GW9");gtag("config","AW-11509007584");gtag("config","AW-11509007584/6OY0CIeMyfsZEOCJ9u8q",{phone_conversion_number:"+40 771 532 949"});window.gtag_report_conversion=function(url){var done=false;var go=function(){if(!done&&url){done=true;window.location.href=url}};gtag("event","conversion",{send_to:"AW-11509007584/GqVQCOudyvsZEOCJ9u8q",event_callback:go});setTimeout(go,900);return false};</script>';
+    return '<script>window.__cabitGoogleTagLoaded=true;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-QPKXFL2GW9");gtag("config","AW-18343038330");gtag("config","AW-11509007584");gtag("config","AW-11509007584/6OY0CIeMyfsZEOCJ9u8q",{phone_conversion_number:"+40 771 532 949"});window.__cabitLoadGoogleTag=function(){if(window.__cabitGoogleTagRequested)return;window.__cabitGoogleTagRequested=true;var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=AW-18343038330";document.head.appendChild(s)};["pointerdown","keydown","touchstart"].forEach(function(e){window.addEventListener(e,window.__cabitLoadGoogleTag,{once:true,passive:true})});window.addEventListener("load",function(){setTimeout(window.__cabitLoadGoogleTag,5000)},{once:true});window.gtag_report_conversion=function(url){window.__cabitLoadGoogleTag();var done=false;var go=function(){if(!done&&url){done=true;window.location.href=url}};gtag("event","conversion",{send_to:"AW-11509007584/GqVQCOudyvsZEOCJ9u8q",event_callback:go});setTimeout(go,1200);return false};</script>';
+}
+
+function cms_google_tag_body(): string
+{
+    return '';
 }
 
 function cms_agent_discovery_head(): string
@@ -357,30 +375,152 @@ function cms_rich_content(string $content): string
     return cms_sanitize_html($content);
 }
 
+function cms_related_links(string $heading, array $items, string $label): string
+{
+    $links = '';
+    foreach ($items as [$eyebrow, $title, $url]) {
+        $links .= '<a href="' . cms_e($url) . '"><span>' . cms_e($eyebrow) . '</span><strong>' . cms_e($title) . '</strong></a>';
+    }
+    return '<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-service-section-head"><span class="cabit-eyebrow">Resurse utile</span><h2>' . cms_e($heading) . '</h2></div><nav class="cabit-service-related" aria-label="' . cms_e($label) . '">' . $links . '</nav></div></section>';
+}
+
+function cms_article_related(string $slug): string
+{
+    $maps = [
+        'administrare-facebook-instagram-pentru-firme' => [['Serviciu', 'Administrare social media', '/servicii/social-media/'], ['Ghid', 'Cum alegi canalele de promovare', '/blog/promovare-online-romania-canale-potrivite/'], ['Proiect', 'Traffic Restaurant & Lounge', '/portofoliu/traffic-restaurant/']],
+        'agenti-ai-pentru-firme' => [['Serviciu', 'Automatizări și agenți AI', '/servicii/integrari-digitale/'], ['Ghid', 'Automatizarea proceselor într-o firmă', '/blog/automatizarea-proceselor-intr-o-firma/'], ['Analiză', 'Audit și analiză digitală', '/servicii/analiza-digitala/']],
+        'automatizarea-proceselor-intr-o-firma' => [['Serviciu', 'Automatizări și integrări', '/servicii/integrari-digitale/'], ['Ghid', 'Agenți AI pentru firme', '/blog/agenti-ai-pentru-firme/'], ['Analiză', 'Identifică procesele prioritare', '/servicii/analiza-digitala/']],
+        'cat-costa-un-site-web-profesional' => [['Serviciu', 'Creare site web București', '/servicii/creare-site-web/'], ['Ghid', 'Ce trebuie să conțină site-ul unei firme', '/blog/creare-site-web-pentru-firme/'], ['Prețuri', 'Pachete și puncte de pornire', '/preturi/']],
+        'creare-magazin-online-functionalitati-cost' => [['Serviciu', 'Creare website și magazin online', '/servicii/creare-site-web/'], ['Ghid', 'Cât costă un site web profesional', '/blog/cat-costa-un-site-web-profesional/'], ['Proiect', 'Magazinul online IFY.ro', '/portofoliu/ify-ro/']],
+        'creare-site-web-pentru-firme' => [['Serviciu', 'Creare site web București', '/servicii/creare-site-web/'], ['Ghid', 'Semne că website-ul are nevoie de redesign', '/blog/redesign-website-semne-pierde-clienti/'], ['Proiect', 'Website-ul Nanu Events', '/portofoliu/nanu-events/']],
+        'optimizare-seo-pentru-site' => [['Serviciu', 'Servicii SEO București', '/servicii/seo/'], ['Ghid', 'SEO local în București', '/blog/seo-local-bucuresti/'], ['Proiect', 'SEO și Google Ads pentru Bilka Sistem', '/portofoliu/bilka-sistem/']],
+        'promovare-online-romania-canale-potrivite' => [['Serviciu', 'Google, Meta și TikTok Ads', '/servicii/reclame-platite/'], ['Ghid', 'SEO sau Google Ads?', '/blog/seo-sau-google-ads/'], ['Proiect', 'Promovarea Traffic Restaurant', '/portofoliu/traffic-restaurant/']],
+        'promovare-pe-google-campanii-care-aduc-clienti' => [['Serviciu', 'Administrare Google Ads', '/servicii/reclame-platite/'], ['Ghid', 'SEO sau Google Ads?', '/blog/seo-sau-google-ads/'], ['Proiect', 'Campanii pentru Auto La Domiciliu', '/portofoliu/auto-la-domiciliu/']],
+        'redesign-website-semne-pierde-clienti' => [['Serviciu', 'Optimizarea conversiilor', '/servicii/optimizare-conversii/'], ['Serviciu', 'Creare website', '/servicii/creare-site-web/'], ['Ghid', 'Ce trebuie să conțină site-ul unei firme', '/blog/creare-site-web-pentru-firme/']],
+        'seo-local-bucuresti' => [['Serviciu', 'SEO local București și Ilfov', '/servicii/seo-local/'], ['Ghid', 'Optimizare SEO pentru site', '/blog/optimizare-seo-pentru-site/'], ['Proiect', 'SEO local pentru Spălătoria Ozana', '/portofoliu/spalatoria-ozana/']],
+        'seo-sau-google-ads' => [['Serviciu', 'Optimizare SEO', '/servicii/seo/'], ['Serviciu', 'Administrare Google Ads', '/servicii/reclame-platite/'], ['Proiect', 'SEO și Ads pentru Bilka Sistem', '/portofoliu/bilka-sistem/']],
+    ];
+    $items = $maps[$slug] ?? [['Servicii', 'Toate serviciile digitale', '/servicii/'], ['Ghiduri', 'Articole de marketing digital', '/blog/'], ['Proiecte', 'Studii de caz CAB-IT', '/portofoliu/']];
+    return cms_related_links('Continuă cu următorul pas', $items, 'Articole, servicii și proiecte conexe');
+}
+
+function cms_work_related(string $category): string
+{
+    if (str_contains($category, 'E-commerce')) {
+        $items = [['Serviciu', 'Creare magazin online', '/servicii/creare-site-web/'], ['Ghid', 'Funcții și cost pentru un magazin online', '/blog/creare-magazin-online-functionalitati-cost/'], ['Prețuri', 'Pachete pentru website și e-commerce', '/preturi/']];
+    } elseif (str_contains($category, 'SEO')) {
+        $items = [['Serviciu', 'Optimizare SEO', '/servicii/seo/'], ['Serviciu', 'Google și Social Ads', '/servicii/reclame-platite/'], ['Ghid', 'SEO sau Google Ads?', '/blog/seo-sau-google-ads/']];
+    } else {
+        $items = [['Serviciu', 'Creare website', '/servicii/creare-site-web/'], ['Serviciu', 'Optimizare SEO', '/servicii/seo/'], ['Ghid', 'Ce trebuie să conțină site-ul unei firme', '/blog/creare-site-web-pentru-firme/']];
+    }
+    return cms_related_links('Servicii și resurse folosite în proiecte similare', $items, 'Servicii și ghiduri conexe proiectului');
+}
+
+function cms_article_metadata(array $article): array
+{
+    $metadata = json_decode((string) ($article['seo_metadata'] ?? '{}'), true);
+    return is_array($metadata) ? $metadata : [];
+}
+
+function cms_article_metadata_related(array $metadata): string
+{
+    $items = [];
+    foreach (($metadata['related_articles'] ?? []) as $item) {
+        if (!is_array($item) || empty($item['title']) || empty($item['url'])) {
+            continue;
+        }
+        $items[] = [
+            (string) ($item['label'] ?? 'Ghid conex'),
+            (string) $item['title'],
+            (string) $item['url'],
+        ];
+    }
+    return $items ? cms_related_links('Continuă cu ghidurile din același subiect', array_slice($items, 0, 3), 'Ghiduri conexe din același cluster editorial') : '';
+}
+
 function cms_article_page(array $article): string
 {
+    $metadata = cms_article_metadata($article);
     $title = cms_e($article['title']);
     $seoTitle = cms_e($article['seo_title']);
     $description = cms_e($article['meta_description']);
     $slug = cms_e($article['slug']);
     $image = cms_relative_asset($article['cover_image'], 2);
+    $imageUrl = str_starts_with((string) $article['cover_image'], 'http') ? (string) $article['cover_image'] : CABIT_SITE_URL . '/' . ltrim((string) $article['cover_image'], '/');
+    $imageAlt = (string) ($metadata['image_alt'] ?? $article['title']);
+    $cluster = trim((string) ($metadata['cluster'] ?? 'Ghid CAB-IT Expert'));
+    $articleUrl = CABIT_SITE_URL . '/blog/' . $article['slug'] . '/';
     $publishedDate = date('d.m.Y', strtotime((string) $article['date_published']));
-    $schema = cms_json([
-        '@context' => 'https://schema.org', '@type' => 'BlogPosting', 'headline' => $article['title'],
-        'description' => $article['meta_description'], 'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
-        'mainEntityOfPage' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
-        'image' => str_starts_with((string) $article['cover_image'], 'http') ? $article['cover_image'] : CABIT_SITE_URL . '/' . ltrim((string) $article['cover_image'], '/'),
-        'datePublished' => $article['date_published'], 'dateModified' => substr($article['updated_at'], 0, 10),
-        'author' => ['@id' => CABIT_SITE_URL . '/#organization'], 'publisher' => ['@id' => CABIT_SITE_URL . '/#organization'],
-        'isPartOf' => ['@type' => 'Blog', '@id' => CABIT_SITE_URL . '/blog/'], 'inLanguage' => 'ro-RO',
-    ]);
+    $modifiedIso = max(substr((string) $article['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE);
+    $modifiedDate = date('d.m.Y', strtotime($modifiedIso));
+    $keywords = array_values(array_unique(array_filter(array_merge(
+        [(string) ($metadata['primary_keyword'] ?? '')],
+        array_map('strval', is_array($metadata['secondary_keywords'] ?? null) ? $metadata['secondary_keywords'] : [])
+    ))));
+    $authorMetadata = is_array($metadata['author'] ?? null) ? $metadata['author'] : [];
+    $hasNamedAuthor = trim((string) ($authorMetadata['name'] ?? '')) !== '';
+    $authorName = $hasNamedAuthor ? trim((string) $authorMetadata['name']) : 'Echipa CAB-IT Expert';
+    $authorRole = trim((string) ($authorMetadata['role'] ?? 'Coordonator editorial CAB-IT Expert'));
+    $authorBio = trim((string) ($authorMetadata['bio'] ?? 'Documentează ghiduri despre website-uri, SEO, promovare online și măsurarea rezultatelor pentru firme.'));
+    $authorUrl = CABIT_SITE_URL . '/despre-noi/' . ($hasNamedAuthor ? '#alexie-popescu' : '');
+    $authorSchema = $hasNamedAuthor
+        ? ['@type' => 'Person', '@id' => CABIT_SITE_URL . '/despre-noi/#alexie-popescu', 'name' => $authorName, 'url' => $authorUrl, 'jobTitle' => $authorRole, 'worksFor' => ['@id' => CABIT_SITE_URL . '/#organization']]
+        : ['@type' => 'Organization', '@id' => CABIT_SITE_URL . '/#organization', 'name' => $authorName, 'url' => CABIT_SITE_URL . '/despre-noi/'];
+    preg_match_all('/\p{L}[\p{L}\p{N}’-]*/u', strip_tags((string) $article['content']), $wordMatches);
+    $articleSchema = [
+        '@type' => 'BlogPosting', '@id' => $articleUrl . '#article', 'headline' => $article['title'],
+        'description' => $article['meta_description'], 'url' => $articleUrl,
+        'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $articleUrl],
+        'image' => ['@type' => 'ImageObject', '@id' => $articleUrl . '#primaryimage', 'url' => $imageUrl, 'contentUrl' => $imageUrl, 'width' => 1200, 'height' => 630, 'caption' => $imageAlt],
+        'datePublished' => $article['date_published'], 'dateModified' => $modifiedIso,
+        'author' => $authorSchema,
+        'publisher' => ['@type' => 'Organization', '@id' => CABIT_SITE_URL . '/#organization', 'name' => 'CAB-IT Expert', 'url' => CABIT_SITE_URL . '/', 'logo' => ['@type' => 'ImageObject', 'url' => CABIT_SITE_URL . '/assets/img/brand/cab-it-c-symbol-app-v7.png', 'width' => 192, 'height' => 192]],
+        'isPartOf' => ['@type' => 'Blog', '@id' => CABIT_SITE_URL . '/blog/'],
+        'articleSection' => $cluster,
+        'wordCount' => count($wordMatches[0]),
+        'inLanguage' => 'ro-RO',
+    ];
+    if ($keywords) {
+        $articleSchema['keywords'] = $keywords;
+        $articleSchema['about'] = array_map(static fn(string $keyword): array => ['@type' => 'Thing', 'name' => $keyword], array_slice($keywords, 0, 6));
+    }
+    $schemaGraph = [
+        $articleSchema,
+        [
+            '@type' => 'BreadcrumbList', '@id' => $articleUrl . '#breadcrumb',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Acasă', 'item' => CABIT_SITE_URL . '/'],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => CABIT_SITE_URL . '/blog/'],
+                ['@type' => 'ListItem', 'position' => 3, 'name' => $article['title'], 'item' => $articleUrl],
+            ],
+        ],
+    ];
+    $faqs = [];
+    foreach (($metadata['faqs'] ?? []) as $faq) {
+        $question = trim((string) ($faq['q'] ?? ''));
+        $answer = trim((string) ($faq['a'] ?? ''));
+        if ($question !== '' && $answer !== '') {
+            $faqs[] = ['@type' => 'Question', 'name' => $question, 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $answer]];
+        }
+    }
+    if ($faqs) {
+        $schemaGraph[] = ['@type' => 'FAQPage', '@id' => $articleUrl . '#faq', 'mainEntity' => $faqs];
+    }
+    $schema = cms_json(['@context' => 'https://schema.org', '@graph' => $schemaGraph]);
+    $authorCard = $hasNamedAuthor
+        ? '<section class="cabit-author-card" id="autor"><span class="cabit-author-card__avatar" aria-hidden="true">AP</span><div><span>Autor și revizie editorială</span><h2>' . cms_e($authorName) . '</h2><p><strong>' . cms_e($authorRole) . '.</strong> ' . cms_e($authorBio) . '</p><a href="/despre-noi/#alexie-popescu">Despre autor și metodologia editorială →</a></div></section>'
+        : '';
+    $related = cms_article_metadata_related($metadata);
+    if ($related === '') {
+        $related = cms_article_related((string) $article['slug']);
+    }
     return '<!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' .
         '<title>' . $seoTitle . '</title><meta name="description" content="' . $description . '"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">' .
-        '<link rel="canonical" href="' . CABIT_SITE_URL . '/blog/' . $slug . '/">' . cms_agent_discovery_head() . '<meta property="og:type" content="article"><meta property="og:title" content="' . $seoTitle . '"><meta property="og:description" content="' . $description . '"><meta property="og:url" content="' . CABIT_SITE_URL . '/blog/' . $slug . '/"><meta property="og:image" content="' . CABIT_SITE_URL . '/' . ltrim((string) $article['cover_image'], '/') . '">' .
-        '<link rel="shortcut icon" type="image/png" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../../site.webmanifest"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260719-7"><link rel="stylesheet" href="../../assets/css/cabit-next.css?v=20260719-7"><script type="application/ld+json">' . $schema . '</script>' . cms_google_tag_head() . '</head><body class="cabit-theme-2026 cabit-page-article cabit-inner-page">' .
-        '<main><article><header class="cabit-page-header cabit-editorial-hero"><div class="container"><div><span class="cabit-eyebrow">Ghid Cab-IT Expert</span><h1>' . $title . '</h1><p>' . cms_e($article['excerpt']) . '</p><p class="cabit-article-date">Publicat la <time datetime="' . cms_e($article['date_published']) . '">' . cms_e($publishedDate) . '</time> · actualizat când conținutul se modifică</p></div><figure><img src="' . $image . '" alt="' . $title . '" width="900" height="620"></figure></div></header>' .
-        '<section class="cabit-content-section"><div class="container cabit-case-layout"><div class="cabit-content-card cabit-article-content">' . $article['content'] . '</div><aside class="cabit-sticky-aside"><div class="cabit-note"><strong>Ai nevoie de o strategie aplicată?</strong><p>Analizăm obiectivul, website-ul și canalele potrivite afacerii tale.</p><a class="button button-primary" href="/contact/">Hai să discutăm</a></div><a class="cabit-text-link" href="/blog/">← Toate articolele</a></aside></div></section><section class="cabit-inner-cta section-shell"><span>Următorul pas</span><h2>Transformă informația într-un plan clar.</h2><p>Primești recomandări concrete pentru website, SEO și promovare online.</p><a class="button button-primary" href="/#audit">Cere auditul gratuit →</a></section></article></main>' .
-        '<script src="../../assets/js/site-enhancements.js?v=20260719-7"></script><script defer src="../../assets/js/cabit-next.js?v=20260719-7"></script></body></html>';
+        '<link rel="canonical" href="' . $articleUrl . '">' . cms_agent_discovery_head() . '<meta property="og:type" content="article"><meta property="og:title" content="' . $seoTitle . '"><meta property="og:description" content="' . $description . '"><meta property="og:url" content="' . $articleUrl . '"><meta property="og:image" content="' . cms_e($imageUrl) . '"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="' . cms_e($imageAlt) . '"><meta property="article:published_time" content="' . cms_e($article['date_published']) . '"><meta property="article:modified_time" content="' . cms_e($modifiedIso) . '"><meta name="twitter:card" content="summary_large_image">' .
+        '<link rel="shortcut icon" type="image/png" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../../site.webmanifest"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260819-4"><link rel="stylesheet" href="../../assets/css/cabit-next.min.css?v=20260819-4"><script type="application/ld+json">' . $schema . '</script>' . cms_google_tag_head() . '</head><body class="cabit-theme-2026 cabit-page-article cabit-inner-page">' . cms_google_tag_body() .
+        '<main><article><nav class="cabit-article-breadcrumb" aria-label="Breadcrumb"><a href="/">Acasă</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>' . $title . '</span></nav><header class="cabit-page-header cabit-editorial-hero"><div class="container"><div><span class="cabit-eyebrow">' . cms_e($cluster) . '</span><h1>' . $title . '</h1><p>' . cms_e($article['excerpt']) . '</p><p class="cabit-article-date">Publicat la <time datetime="' . cms_e($article['date_published']) . '">' . cms_e($publishedDate) . '</time> · actualizat la <time datetime="' . cms_e($modifiedIso) . '">' . cms_e($modifiedDate) . '</time> · scris și revizuit de <a href="' . cms_e(parse_url($authorUrl, PHP_URL_PATH) . (parse_url($authorUrl, PHP_URL_FRAGMENT) ? '#' . parse_url($authorUrl, PHP_URL_FRAGMENT) : '')) . '">' . cms_e($authorName) . '</a></p></div><figure><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="1200" height="630" fetchpriority="high" decoding="async"></figure></div></header>' .
+        '<section class="cabit-content-section"><div class="container cabit-case-layout"><div><div class="cabit-content-card cabit-article-content">' . $article['content'] . '</div>' . $authorCard . '</div><aside class="cabit-sticky-aside"><div class="cabit-note"><strong>Ai nevoie de o strategie aplicată?</strong><p>Analizăm obiectivul, website-ul și canalele potrivite afacerii tale.</p><a class="button button-primary" href="/contact/">Hai să discutăm</a></div><a class="cabit-text-link" href="/blog/">← Toate articolele</a></aside></div></section>' . $related . '<section class="cabit-inner-cta section-shell"><span>Următorul pas</span><h2>Transformă informația într-un plan clar.</h2><p>Primești recomandări concrete pentru website, SEO și promovare online.</p><a class="button button-primary" href="/#audit">Cere auditul gratuit →</a></section></article></main>' .
+        '<script src="../../assets/js/site-enhancements.js?v=20260819-4"></script><script defer src="../../assets/js/cabit-next.min.js?v=20260819-4"></script></body></html>';
 }
 
 function cms_generate_article(array $article): void
@@ -408,7 +548,7 @@ function cms_work_page(PDO $pdo, array $work): string
     $schema = cms_json([
         '@context' => 'https://schema.org', '@type' => 'CreativeWork', 'name' => $work['title'],
         'description' => $work['meta_description'], 'url' => CABIT_SITE_URL . '/portofoliu/' . $work['slug'] . '/',
-        'dateCreated' => $work['date_added'], 'dateModified' => substr((string) $work['updated_at'], 0, 10), 'creator' => ['@id' => CABIT_SITE_URL . '/#organization'],
+        'dateCreated' => $work['date_added'], 'dateModified' => max(substr((string) $work['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE), 'creator' => ['@id' => CABIT_SITE_URL . '/#organization'],
         'image' => array_map(fn($image) => str_starts_with($image['path'], 'http') ? $image['path'] : CABIT_SITE_URL . '/' . ltrim($image['path'], '/'), $allImages),
         'inLanguage' => 'ro-RO',
     ]);
@@ -416,11 +556,11 @@ function cms_work_page(PDO $pdo, array $work): string
     $testimonial = $work['testimonial'] !== '' ? '<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-content-card cabit-testimonial-card"><span class="cabit-eyebrow">Recenzie client</span><h2>Experiența colaborării</h2><blockquote>' . cms_rich_content($work['testimonial']) . '</blockquote></div></div></section>' : '';
     return '<!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' .
         '<title>' . cms_e($work['seo_title']) . '</title><meta name="description" content="' . cms_e($work['meta_description']) . '"><meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical" href="' . CABIT_SITE_URL . '/portofoliu/' . cms_e($work['slug']) . '/">' . cms_agent_discovery_head() .
-        '<link rel="shortcut icon" type="image/png" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../../site.webmanifest"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260719-7"><link rel="stylesheet" href="../../assets/css/cabit-next.css?v=20260719-7"><script type="application/ld+json">' . $schema . '</script>' . cms_google_tag_head() . '</head><body class="cabit-theme-2026 cabit-page-case cabit-inner-page">' .
-        '<main><section class="cabit-page-header cabit-case-hero"><div class="container"><div><span class="cabit-eyebrow">Studiu de caz · ' . cms_e($work['category_name'] ?? 'Portofoliu') . '</span><h1>' . cms_e($work['title']) . '</h1><p>' . cms_e($work['meta_description']) . '</p><div class="cabit-service-hero-actions"><a class="cabit-service-primary" href="/contact/">Vreau un proiect similar</a><a class="cabit-service-secondary" href="/portofoliu/">Toate proiectele</a></div></div><figure><img src="' . cms_e(cms_relative_asset($work['cover_image'], 2)) . '" alt="Proiectul ' . cms_e($work['title']) . '" width="1000" height="700"></figure></div></section>' .
+        '<link rel="shortcut icon" type="image/png" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../../site.webmanifest"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260819-4"><link rel="stylesheet" href="../../assets/css/cabit-next.min.css?v=20260819-4"><script type="application/ld+json">' . $schema . '</script>' . cms_google_tag_head() . '</head><body class="cabit-theme-2026 cabit-page-case cabit-inner-page">' . cms_google_tag_body() .
+        '<main><section class="cabit-page-header cabit-case-hero"><div class="container"><div><span class="cabit-eyebrow">Studiu de caz · ' . cms_e($work['category_name'] ?? 'Portofoliu') . '</span><h1>' . cms_e($work['title']) . '</h1><p>' . cms_e($work['meta_description']) . '</p><div class="cabit-service-hero-actions"><a class="cabit-service-primary" href="/contact/">Vreau un proiect similar</a><a class="cabit-service-secondary" href="/portofoliu/">Toate proiectele</a></div></div><figure><img src="' . cms_e(cms_relative_asset($work['cover_image'], 2)) . '" alt="Proiectul ' . cms_e($work['title']) . '" width="1000" height="700" fetchpriority="high" decoding="async"></figure></div></section>' .
         '<section class="cabit-content-section"><div class="container cabit-case-layout"><article class="cabit-case-story"><div class="cabit-content-card"><span>01</span><h2>Obiectivul inițial</h2>' . cms_rich_content($work['objective']) . '</div><div class="cabit-content-card"><span>02</span><h2>Ce am construit</h2>' . cms_rich_content($work['work_done']) . '</div><div class="cabit-content-card"><span>03</span><h2>Rezultate și măsurare</h2>' . cms_rich_content($work['results']) . '</div></article><aside class="cabit-sticky-aside"><div class="cabit-note"><strong>Proiect publicat</strong><br><time datetime="' . cms_e($work['date_added']) . '">' . cms_e($work['date_added']) . '</time></div>' . $external . '</aside></div></section>' .
-        ($gallery !== '' ? '<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-section-heading"><span class="cabit-eyebrow">Detalii vizuale</span><h2>Galeria proiectului</h2></div><div class="cabit-gallery">' . $gallery . '</div></div></section>' : '') . $testimonial . '<section class="cabit-inner-cta section-shell"><span>Ai un proiect în plan?</span><h2>Construim o soluție potrivită obiectivului tău.</h2><a class="button button-primary" href="/contact/">Hai să discutăm →</a></section></main>' .
-        '<script src="../../assets/js/site-enhancements.js?v=20260719-7"></script><script defer src="../../assets/js/cabit-next.js?v=20260719-7"></script></body></html>';
+        ($gallery !== '' ? '<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-section-heading"><span class="cabit-eyebrow">Detalii vizuale</span><h2>Galeria proiectului</h2></div><div class="cabit-gallery">' . $gallery . '</div></div></section>' : '') . $testimonial . cms_work_related((string) ($work['category_name'] ?? '')) . '<section class="cabit-inner-cta section-shell"><span>Ai un proiect în plan?</span><h2>Construim o soluție potrivită obiectivului tău.</h2><a class="button button-primary" href="/contact/">Hai să discutăm →</a></section></main>' .
+        '<script src="../../assets/js/site-enhancements.js?v=20260819-4"></script><script defer src="../../assets/js/cabit-next.min.js?v=20260819-4"></script></body></html>';
 }
 
 function cms_generate_work(PDO $pdo, array $work): void
@@ -457,32 +597,43 @@ function cms_update_blog_index(PDO $pdo): void
     $blogSchema = [
         '@context' => 'https://schema.org',
         '@type' => 'Blog',
-        'name' => 'Blog Cab-IT Expert',
+        'name' => 'Blog CAB-IT Expert',
         'url' => CABIT_SITE_URL . '/blog/',
         'description' => 'Ghiduri de marketing digital pentru IMM-uri din România.',
         'publisher' => ['@id' => CABIT_SITE_URL . '/#organization'],
         'inLanguage' => 'ro-RO',
-        'blogPost' => array_map(static fn(array $article): array => [
-            '@type' => 'BlogPosting',
-            'headline' => $article['title'],
-            'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
-            'datePublished' => $article['date_published'],
-        ], $articles),
+        'blogPost' => array_map(static function (array $article): array {
+            $image = str_starts_with((string) $article['cover_image'], 'http') ? (string) $article['cover_image'] : CABIT_SITE_URL . '/' . ltrim((string) $article['cover_image'], '/');
+            return [
+                '@type' => 'BlogPosting',
+                'headline' => $article['title'],
+                'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
+                'datePublished' => $article['date_published'],
+                'dateModified' => max(substr((string) $article['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE),
+                'image' => $image,
+            ];
+        }, $articles),
     ];
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_SCHEMA_START -->', '<!-- CMS_BLOG_SCHEMA_END -->', '<script type="application/ld+json">' . cms_json($blogSchema) . '</script>');
     $cards = [];
     foreach ($articles as $article) {
+        $metadata = cms_article_metadata($article);
         $image = cms_relative_asset($article['cover_image'], 1);
+        $imageAlt = (string) ($metadata['image_alt'] ?? $article['title']);
+        $label = (string) ($metadata['cluster'] ?? 'Articol');
         $date = date('d.m.Y', strtotime((string) $article['date_published']));
-        $cards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($article['title']) . '" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>Articol</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
+        $cards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_CARDS_START -->', '<!-- CMS_BLOG_CARDS_END -->', implode("\n", $cards));
 
     $homeCards = [];
     foreach (array_slice($articles, 0, 6) as $article) {
+        $metadata = cms_article_metadata($article);
         $image = cms_relative_asset($article['cover_image'], 0);
+        $imageAlt = (string) ($metadata['image_alt'] ?? $article['title']);
+        $label = (string) ($metadata['cluster'] ?? 'Articol');
         $date = date('d.m.Y', strtotime((string) $article['date_published']));
-        $homeCards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($article['title']) . '" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>Articol</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
+        $homeCards[] = '<article class="cabit-blog-card"><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><a class="cabit-text-link" href="/blog/' . cms_e($article['slug']) . '/">Citește articolul <span aria-hidden="true">→</span></a></div></article>';
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/index.html', '<!-- CMS_HOME_ARTICLES_START -->', '<!-- CMS_HOME_ARTICLES_END -->', implode("\n", $homeCards));
 }
@@ -516,7 +667,12 @@ function cms_update_portfolio_index(PDO $pdo): void
     if ($works) {
         $latest = $works[0];
         $featuredImage = cms_relative_asset($latest['cover_image'], 0);
-        $featured = '<section class="featured-project featured-project-wide section-shell reveal" aria-labelledby="featured-project-title"><div class="card-heading"><span>Proiect recent</span><a href="/portofoliu/">Vezi toate proiectele →</a></div><div class="featured-project-body"><img src="' . cms_e($featuredImage) . '" alt="Website ' . cms_e($latest['title']) . ' realizat de CAB-IT Expert" loading="lazy" decoding="async"><div><span class="project-tag">' . cms_e($latest['category_name'] ?: 'Proiect digital') . '</span><h2 id="featured-project-title">' . cms_e($latest['title']) . '</h2><p>' . cms_e($latest['meta_description']) . '</p><a class="button button-ghost" href="/portofoliu/' . cms_e($latest['slug']) . '/">Vezi studiul de caz <span>→</span></a></div></div></section>';
+        $featuredDimensions = '';
+        if (ltrim((string) $latest['cover_image'], '/') === 'assets/img/case-studies/ify-ro.webp' && is_file(CABIT_PUBLIC_ROOT . '/assets/img/case-studies/ify-ro-480.webp')) {
+            $featuredImage = 'assets/img/case-studies/ify-ro-480.webp';
+            $featuredDimensions = ' width="800" height="369" srcset="assets/img/case-studies/ify-ro-480.webp 480w, assets/img/case-studies/ify-ro-800.webp 800w, assets/img/case-studies/ify-ro.webp 1536w" sizes="(max-width: 700px) calc(100vw - 58px), 50vw"';
+        }
+        $featured = '<section class="featured-project featured-project-wide section-shell reveal" aria-labelledby="featured-project-title"><div class="card-heading"><span>Proiect recent</span><a href="/portofoliu/">Vezi toate proiectele →</a></div><div class="featured-project-body"><img src="' . cms_e($featuredImage) . '" alt="Website ' . cms_e($latest['title']) . ' realizat de CAB-IT Expert"' . $featuredDimensions . ' loading="lazy" decoding="async"><div><span class="project-tag">' . cms_e($latest['category_name'] ?: 'Proiect digital') . '</span><h2 id="featured-project-title">' . cms_e($latest['title']) . '</h2><p>' . cms_e($latest['meta_description']) . '</p><a class="button button-ghost" href="/portofoliu/' . cms_e($latest['slug']) . '/">Vezi studiul de caz <span>→</span></a></div></div></section>';
         cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/index.html', '<!-- CMS_FEATURED_PROJECT_START -->', '<!-- CMS_FEATURED_PROJECT_END -->', $featured);
     }
 }
@@ -530,7 +686,8 @@ function cms_update_sitemap(PDO $pdo): void
     foreach ($matches as $match) {
         $url = html_entity_decode(trim((string) ($match[1] ?? '')), ENT_XML1, 'UTF-8');
         if (!preg_match('~^https://cab-it\.ro/(?:blog|portofoliu)/[^/]+/$~', $url)) {
-            $staticUrls[$url] = preg_match('/^\d{4}-\d{2}-\d{2}$/', trim((string) ($match[2] ?? ''))) ? trim((string) $match[2]) : date('Y-m-d');
+            $storedLastmod = preg_match('/^\d{4}-\d{2}-\d{2}$/', trim((string) ($match[2] ?? ''))) ? trim((string) $match[2]) : date('Y-m-d');
+            $staticUrls[$url] = max($storedLastmod, CABIT_SEO_RELEASE_DATE);
         }
     }
     ksort($staticUrls);
@@ -539,8 +696,8 @@ function cms_update_sitemap(PDO $pdo): void
     $works = $pdo->query('SELECT title, slug, meta_description, date_added, updated_at FROM works ORDER BY date_added DESC, id DESC')->fetchAll();
     $today = date('Y-m-d');
     $orderedUrls = [];
-    $latestArticleUpdate = $articles ? max(array_map(static fn(array $article): string => substr((string) $article['updated_at'], 0, 10), $articles)) : '';
-    $latestWorkUpdate = $works ? max(array_map(static fn(array $work): string => substr((string) $work['updated_at'], 0, 10), $works)) : '';
+    $latestArticleUpdate = max(CABIT_SEO_RELEASE_DATE, $articles ? max(array_map(static fn(array $article): string => substr((string) $article['updated_at'], 0, 10), $articles)) : '');
+    $latestWorkUpdate = max(CABIT_SEO_RELEASE_DATE, $works ? max(array_map(static fn(array $work): string => substr((string) $work['updated_at'], 0, 10), $works)) : '');
     foreach ($staticUrls as $url => $staticLastmod) {
         $lastmod = $staticLastmod;
         if ($url === CABIT_SITE_URL . '/blog/' && $latestArticleUpdate !== '') {
@@ -583,11 +740,11 @@ function cms_update_sitemap(PDO $pdo): void
     ));
     $articleUrls = array_map(static fn(array $article): array => [
         'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
-        'lastmod' => substr((string) $article['updated_at'], 0, 10) ?: date('Y-m-d'),
+        'lastmod' => max(substr((string) $article['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE),
     ], $articles);
     $projectUrls = array_map(static fn(array $work): array => [
         'url' => CABIT_SITE_URL . '/portofoliu/' . $work['slug'] . '/',
-        'lastmod' => substr((string) $work['updated_at'], 0, 10) ?: date('Y-m-d'),
+        'lastmod' => max(substr((string) $work['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE),
     ], $works);
 
     $sitemapFiles = [
@@ -615,8 +772,16 @@ function cms_update_sitemap(PDO $pdo): void
     file_put_contents($indexPath, $indexXml, LOCK_EX);
     cms_gzip_file($indexPath);
 
-    $llms = "# CAB-IT Expert SRL\n\n"
+    $llms = "# CAB-IT Expert\n\n"
         . "> Agenție de marketing online din București pentru creare site web, SEO, promovare online, Google Ads, Social Media Ads și automatizări AI.\n\n"
+        . "## Identitate\n\n"
+        . "- Nume comercial: CAB-IT Expert\n"
+        . "- Variante de nume: CAB-IT, Cab-IT Expert\n"
+        . "- Operator legal: CAB IT EXPERT SRL\n"
+        . "- CUI: 49972605\n"
+        . "- Website oficial: " . CABIT_SITE_URL . "/\n"
+        . "- Fondator și coordonator editorial: Alexie Popescu\n"
+        . "- Arie deservită: București, Ilfov și România; întâlnirile au loc online.\n\n"
         . "## Servicii principale\n\n"
         . "- [Creare website București](" . CABIT_SITE_URL . "/servicii/creare-site-web/): site-uri de prezentare și magazine online rapide, responsive și ușor de administrat.\n"
         . "- [Optimizare SEO](" . CABIT_SITE_URL . "/servicii/seo/): SEO tehnic, conținut și vizibilitate organică pentru București, Ilfov și România.\n"
@@ -636,10 +801,11 @@ function cms_update_sitemap(PDO $pdo): void
     $llms .= "\n## Informații verificate\n\n"
         . "- Audit website 100% gratuit, livrat manual prin email în maximum 30 de minute.\n"
         . "- Site-urile de prezentare pot fi finalizate chiar în 24 de ore; magazinele online în 3–7 zile, în funcție de complexitate și materiale.\n"
-        . "- CAB-IT Expert SRL este Google Partner.\n"
+        . "- CAB-IT Expert este Google Partner; serviciile sunt operate de CAB IT EXPERT SRL.\n"
         . "- Telefon și WhatsApp: +40 771 532 949\n"
         . "- Email: contact@cab-it.ro\n"
-        . "- Adresă: Intrarea Humulești 6A, 052034 București, România.\n\n"
+        . "- Sediu social: Intrarea Humulești 6A, 052034 București, România.\n"
+        . "- Întâlniri: online, cu programare.\n\n"
         . "## Descoperire și indexare\n\n"
         . "- [Sitemap index](" . CABIT_SITE_URL . "/sitemap-index.xml)\n"
         . "- [Sitemap complet](" . CABIT_SITE_URL . "/sitemap.xml)\n"

@@ -1,6 +1,16 @@
-# CAB-IT Expert SRL
+# CAB-IT Expert
 
 > Agenție de marketing online din București pentru creare site web, SEO, promovare online, Google Ads, Social Media Ads și automatizări AI.
+
+## Identitate
+
+- Nume comercial: CAB-IT Expert
+- Variante de nume: CAB-IT, Cab-IT Expert
+- Operator legal: CAB IT EXPERT SRL
+- CUI: 49972605
+- Website oficial: https://cab-it.ro/
+- Fondator și coordonator editorial: Alexie Popescu
+- Arie deservită: București, Ilfov și România; întâlnirile au loc online.
 
 ## Servicii principale
 
@@ -12,6 +22,56 @@
 
 ## Articole actualizate din CMS
 
+- [Cum alegi o agenție de marketing online: criterii și întrebări](https://cab-it.ro/blog/cum-alegi-o-agentie-de-marketing-online-criterii-si-intrebari/): O agenție bună leagă strategia, website-ul, traficul și măsurarea de un rezultat comercial clar, nu de indicatori de suprafață.
+- [Cum alegi o agenție de web design în București](https://cab-it.ro/blog/cum-alegi-o-agentie-de-web-design-in-bucuresti/): Un website trebuie evaluat după rolul comercial, administrare, SEO și performanță, nu doar după aspectul primei pagini.
+- [Cum alegi o agenție SEO: criterii, livrabile și semnale de alarmă](https://cab-it.ro/blog/cum-alegi-o-agentie-seo-criterii-livrabile-si-semnale-de-alarma/): O agenție SEO serioasă explică intențiile, paginile, implementarea, conținutul, autoritatea și măsurarea, fără să garanteze poziții fixe.
+- [Cum alegi o agenție Google Ads: criterii și livrabile](https://cab-it.ro/blog/cum-alegi-o-agentie-google-ads-criterii-si-livrabile/): O agenție Google Ads trebuie să optimizeze spre conversii și rezultate comerciale, păstrând contul și datele sub controlul clientului.
+- [Optimizare pentru AI Overviews și AI Mode: ghid 2026](https://cab-it.ro/blog/optimizare-pentru-ai-overviews-si-ai-mode-ghid-2026/): Google precizează că bunele practici SEO existente rămân baza: pagina trebuie să fie accesibilă, indexabilă și eligibilă pentru afișarea fragmentelor.
+- [Promovare online pentru afaceri locale: saloane, clinici și service-uri](https://cab-it.ro/blog/promovare-online-pentru-afaceri-locale-saloane-clinici-si-service-uri/): Afacerea locală trebuie să fie găsită în momentul nevoii, să ofere informații exacte și să transforme căutarea într-un apel sau o programare simplă.
+- [Cât costă promovarea online în 2026: bugete și rezultate](https://cab-it.ro/blog/cat-costa-promovarea-online-in-2026-bugete-si-rezultate/): Costul real include media, administrare, creație, pagină, măsurare și uneori instrumente; ofertele trebuie comparate componentă cu componentă.
+- [Site de prezentare vs landing page: ce alegi](https://cab-it.ro/blog/site-de-prezentare-vs-landing-page-ce-alegi/): Landing page-ul concentrează o singură acțiune, iar site-ul construiește context, autoritate și mai multe trasee de informare.
+- [Cât costă SEO în România în 2026](https://cab-it.ro/blog/cat-costa-seo-in-romania-in-2026/): Costul SEO depinde de starea tehnică, numărul de pagini, concurență, conținut, autoritate și capacitatea de implementare a firmei.
+- [Cât costă Google Ads în România în 2026](https://cab-it.ro/blog/cat-costa-google-ads-in-romania-in-2026/): Costul Google Ads include cheltuiala directă în platformă și resursele necesare pentru administrare, creație, pagini și măsurare.
+- [Cum apari în ChatGPT Search: OAI-SearchBot, conținut și măsurare](https://cab-it.ro/blog/cum-apari-in-chatgpt-search-oai-searchbot-continut-si-masurare/): Pentru includerea în rezultatele ChatGPT Search, website-ul trebuie să permită accesul OAI-SearchBot și să ofere pagini publice, clare și demne de citare.
+- [Promovare online pentru restaurante: strategie locală care aduce rezervări](https://cab-it.ro/blog/promovare-online-pentru-restaurante-strategie-locala-care-aduce-rezervari/): Restaurantele câștigă când informațiile locale, imaginile, meniul, reputația și acțiunea de rezervare sunt coerente pe Google, social și website.
+- [Promovare online pentru firme mici: plan practic pe 90 de zile](https://cab-it.ro/blog/promovare-online-pentru-firme-mici-plan-practic-pe-90-de-zile/): Primele 90 de zile trebuie să valideze oferta, pagina, canalul prioritar și modul de măsurare, nu să împrăștie bugetul pe toate platformele.
+- [Site custom vs WordPress în 2026: avantaje și riscuri](https://cab-it.ro/blog/site-custom-vs-wordpress-in-2026-avantaje-si-riscuri/): WordPress accelerează proiectele standard și oferă ecosistem, iar dezvoltarea custom oferă control asupra fluxurilor și codului când cerințele justifică investiția.
+- [Audit SEO complet în 2026: checklist tehnic și editorial](https://cab-it.ro/blog/audit-seo-complet-in-2026-checklist-tehnic-si-editorial/): Auditul SEO combină datele crawlerului cu Search Console, Analytics, SERP, loguri și verificare manuală a paginilor și intențiilor.
+- [Google Ads pentru firme mici: structură cu buget limitat](https://cab-it.ro/blog/google-ads-pentru-firme-mici-structura-cu-buget-limitat/): Un buget limitat funcționează mai bine când campania acoperă o ofertă cu intenție ridicată, o zonă realistă și o conversie verificată.
+- [GEO vs AEO vs SEO: ce este real și ce este marketing](https://cab-it.ro/blog/geo-vs-aeo-vs-seo-ce-este-real-si-ce-este-marketing/): SEO optimizează descoperirea și performanța în căutare, AEO pune accent pe răspunsuri directe, iar GEO descrie vizibilitatea în sisteme generative și citări.
+- [Audit de marketing digital: ce verifică și ce trebuie să primești](https://cab-it.ro/blog/audit-de-marketing-digital-ce-verifica-si-ce-trebuie-sa-primesti/): Un audit bun nu este o colecție de scoruri automate, ci o diagnoză prioritizată a traseului de la vizibilitate la solicitare și vânzare.
+- [Brief pentru creare website: model complet pentru firme](https://cab-it.ro/blog/brief-pentru-creare-website-model-complet-pentru-firme/): Un brief bun reduce ofertele incomparabile, schimbările de scop și întârzierile, fără să oblige clientul să cunoască toate detaliile tehnice.
+- [Keyword research pentru servicii locale: metodă pas cu pas](https://cab-it.ro/blog/keyword-research-pentru-servicii-locale-metoda-pas-cu-pas/): Cercetarea locală combină termenul de serviciu, problema, locația, urgența și modul în care oamenii formulează aceeași nevoie.
+- [Landing page pentru Google Ads: anatomia unei pagini care convertește](https://cab-it.ro/blog/landing-page-pentru-google-ads-anatomia-unei-pagini-care-converteste/): Pagina trebuie să continue exact intenția și promisiunea anunțului, apoi să reducă riscul și fricțiunea până la o acțiune clară.
+- [Cum creezi conținut citabil de motoarele AI](https://cab-it.ro/blog/cum-creezi-continut-citabil-de-motoarele-ai/): Conținutul citabil oferă o afirmație clară, context, dovadă și un URL stabil care poate fi verificat și folosit de cititor independent de promovarea brandului.
+- [ROI promovare online: cum îl măsori, formule și exemple](https://cab-it.ro/blog/roi-promovare-online-cum-il-masori-formule-si-exemple/): ROAS arată venitul raportat la media spend, în timp ce ROI trebuie să includă costurile și marja; pentru servicii, leadul trebuie urmărit până la contract.
+- [Structura ideală a unui site de servicii care generează leaduri](https://cab-it.ro/blog/structura-ideala-a-unui-site-de-servicii-care-genereaza-leaduri/): Un site de servicii trebuie să permită utilizatorului și motorului de căutare să înțeleagă rapid oferta, zona, diferențele și următorul pas.
+- [Arhitectură SEO pentru un site de servicii: hub-uri și pagini](https://cab-it.ro/blog/arhitectura-seo-pentru-un-site-de-servicii-hub-uri-si-pagini/): Arhitectura SEO organizează intențiile în URL-uri clare și distribuie contextul și autoritatea internă spre paginile care trebuie să genereze leaduri.
+- [AI Max pentru Search în 2026: când merită și cum îl controlezi](https://cab-it.ro/blog/ai-max-pentru-search-in-2026-cand-merita-si-cum-il-controlezi/): AI Max poate extinde potrivirea și adapta activele sau destinațiile, dar rezultatele depind de datele de conversie, paginile site-ului și controalele folosite.
+- [Schema markup pentru agenții și firme locale: ghid 2026](https://cab-it.ro/blog/schema-markup-pentru-agentii-si-firme-locale-ghid-2026/): Datele structurate descriu explicit entități și relații, dar trebuie să corespundă conținutului vizibil și nu garantează rich results sau poziții.
+- [Agenție de marketing vs freelancer vs echipă internă](https://cab-it.ro/blog/agentie-de-marketing-vs-freelancer-vs-echipa-interna/): Freelancerul, agenția și echipa internă pot fi corecte în contexte diferite; comparația trebuie făcută pe cost total și responsabilități.
+- [Mentenanță website: ce include și cât costă](https://cab-it.ro/blog/mentenanta-website-ce-include-si-cat-costa/): Mentenanța previne acumularea de vulnerabilități și erori și asigură un proces pentru actualizări, backup, monitorizare și intervenții.
+- [Canibalizare SEO: cum o identifici și o repari](https://cab-it.ro/blog/canibalizare-seo-cum-o-identifici-si-o-repari/): Canibalizarea apare când mai multe URL-uri încearcă să satisfacă aceeași intenție și semnalele se fragmentează sau rezultatul corect se schimbă instabil.
+- [Performance Max vs Search pentru lead generation: ce alegi](https://cab-it.ro/blog/performance-max-vs-search-pentru-lead-generation-ce-alegi/): Search captează intenții exprimate prin căutări, iar Performance Max distribuie pe mai multe inventare; alegerea depinde de date, creativ, control și calitatea conversiilor.
+- [llms.txt: ce face, ce nu face și cum îl folosești](https://cab-it.ro/blog/llms-txt-ce-face-ce-nu-face-si-cum-il-folosesti/): llms.txt este o propunere de format care poate prezenta resursele importante ale unui site într-o formă ușor de citit, dar nu este un factor oficial Google de ranking.
+- [Strategie de marketing digital B2B în România](https://cab-it.ro/blog/strategie-de-marketing-digital-b2b-in-romania/): În B2B, marketingul trebuie să creeze și să urmărească oportunități pe întreg ciclul, nu doar formulare atribuite ultimului click.
+- [Migrare website fără pierdere SEO: checklist complet](https://cab-it.ro/blog/migrare-website-fara-pierdere-seo-checklist-complet/): Migrarea poate schimba URL-uri, conținut, HTML, linking, performanță și semnale de indexare, iar riscul crește când modificările sunt lansate simultan fără mapare.
+- [Link building în 2026: metode sigure și utile](https://cab-it.ro/blog/link-building-in-2026-metode-sigure-si-utile/): Link buildingul sănătos obține mențiuni și linkuri în contexte relevante pentru că firma oferă date, expertiză, instrumente, cercetare sau o resursă utilă.
+- [Tracking conversii în Google Ads: apeluri, WhatsApp și formulare](https://cab-it.ro/blog/tracking-conversii-in-google-ads-apeluri-whatsapp-si-formulare/): O conversie nu este orice click pe un buton; evenimentele trebuie definite, testate, deduplicate și legate de rezultatul comercial.
+- [Zero-click search în 2026: cum măsori vizibilitatea fără click](https://cab-it.ro/blog/zero-click-search-in-2026-cum-masori-vizibilitatea-fara-click/): Zero-click search apare când utilizatorul primește suficientă informație în pagina de rezultate, în hărți sau într-un răspuns AI și nu mai accesează imediat un site.
+- [Social search în 2026: TikTok, Instagram și YouTube](https://cab-it.ro/blog/social-search-in-2026-tiktok-instagram-si-youtube/): Social search înseamnă că utilizatorii caută demonstrații, recenzii și tutoriale direct în platforme, apoi verifică brandul pe Google și pe website.
+- [Web design vs dezvoltare web: diferențe și roluri](https://cab-it.ro/blog/web-design-vs-dezvoltare-web-diferente-si-roluri/): Web designul definește experiența și interfața, iar dezvoltarea transformă soluția în software funcțional și administrabil.
+- [SEO pentru pagini de servicii: ghid practic](https://cab-it.ro/blog/seo-pentru-pagini-de-servicii-ghid-practic/): Pagina de serviciu trebuie să satisfacă o intenție comercială și să ajute vizitatorul să evalueze furnizorul, nu doar să repete definiția serviciului.
+- [Consent Mode v2 în România: ce trebuie să știe firmele](https://cab-it.ro/blog/consent-mode-v2-in-romania-ce-trebuie-sa-stie-firmele/): Consent Mode comunică tagurilor Google starea consimțământului; nu înlocuiește bannerul, politica, temeiul legal sau consultanța juridică.
+- [Cât durează realizarea unui website profesional](https://cab-it.ro/blog/cat-dureaza-realizarea-unui-website-profesional/): Durata depinde de claritatea cerințelor, conținut, numărul de pagini, funcționalități, aprobări, integrări și testare.
+- [SEO pentru firme mici: priorități cu buget limitat](https://cab-it.ro/blog/seo-pentru-firme-mici-prioritati-cu-buget-limitat/): O firmă mică nu trebuie să acopere toate cuvintele și toate orașele, ci să câștige vizibilitate pentru serviciile și zonele cu valoare reală.
+- [Core Web Vitals în 2026: LCP, INP și CLS explicate](https://cab-it.ro/blog/core-web-vitals-in-2026-lcp-inp-si-cls-explicate/): Core Web Vitals măsoară încărcarea principală, răspunsul la interacțiuni și stabilitatea vizuală, folosind evaluarea la percentila 75 pentru datele de teren.
+- [Web design responsive și mobile-first: ce trebuie testat](https://cab-it.ro/blog/web-design-responsive-si-mobile-first-ce-trebuie-testat/): Responsive nu înseamnă doar ca pagina să încapă pe ecran; experiența trebuie să rămână clară, rapidă și operabilă pe dispozitive și conexiuni diferite.
+- [SEO Google Maps: cum optimizezi profilul local pas cu pas](https://cab-it.ro/blog/seo-google-maps-cum-optimizezi-profilul-local-pas-cu-pas/): Vizibilitatea locală este influențată de relevanță, distanță și proeminență, iar profilul trebuie să reflecte corect activitatea și locația reală.
+- [CRO pentru site-uri de servicii: cum crești cererile fără mai mult trafic](https://cab-it.ro/blog/cro-pentru-site-uri-de-servicii-cum-cresti-cererile-fara-mai-mult-trafic/): CRO îmbunătățește procentul și calitatea vizitatorilor care fac pasul comercial, fără să presupună automat mai mult trafic.
+- [Pagini locale SEO fără doorway pages: ghid pentru București și Ilfov](https://cab-it.ro/blog/pagini-locale-seo-fara-doorway-pages-ghid-pentru-bucuresti-si-ilfov/): O pagină locală este justificată când firma servește real zona și poate oferi informație, dovezi, logistică și un traseu de contact distinct.
+- [GA4 pentru firme de servicii: evenimente, leaduri și rapoarte utile](https://cab-it.ro/blog/ga4-pentru-firme-de-servicii-evenimente-leaduri-si-rapoarte-utile/): GA4 trebuie să răspundă ce surse și pagini generează acțiuni relevante, nu doar câți utilizatori au intrat pe website.
+- [Recenzii Google și SEO local: impact, proces și răspunsuri](https://cab-it.ro/blog/recenzii-google-si-seo-local-impact-proces-si-raspunsuri/): Recenziile oferă dovadă socială, limbaj real și semnale de proeminență, dar trebuie obținute printr-un proces autentic și conform politicilor.
 - [Automatizarea proceselor într-o firmă: de unde începi și ce merită integrat](https://cab-it.ro/blog/automatizarea-proceselor-intr-o-firma/): Automatizarea eficientă elimină pașii repetitivi și transferul manual de date. Primul obiectiv este simplificarea procesului, nu adăugarea unei tehnologii noi.
 - [Agenți AI pentru firme: ce pot automatiza și cum alegi primul caz de utilizare](https://cab-it.ro/blog/agenti-ai-pentru-firme/): Un agent AI poate răspunde, căuta informații și executa pași definiți, dar trebuie conectat la date corecte și controlat prin reguli clare.
 - [Redesign website: 10 semne că site-ul firmei tale pierde clienți](https://cab-it.ro/blog/redesign-website-semne-pierde-clienti/): Un site poate funcționa tehnic și totuși să piardă clienți. Aceste semne arată când designul, mesajul sau structura nu mai susțin afacerea.
@@ -27,6 +87,7 @@
 
 ## Studii de caz
 
+- [IFY.ro — Magazin online pentru produse printate 3D](https://cab-it.ro/portofoliu/ify-ro/): Studiu de caz IFY.ro: magazin online complet pentru obiecte printate 3D, cu design responsive, catalog, coș, checkout și administrare simplă.
 - [Maison Bébé](https://cab-it.ro/portofoliu/maison-bebe/): Studiu de caz Maison Bébé: website e-commerce modern și elegant pentru un boutique premium dedicat bebelușilor, realizat de CAB-IT Expert.
 - [Auto La Domiciliu](https://cab-it.ro/portofoliu/auto-la-domiciliu/): Studiu de caz Auto La Domiciliu: website de servicii, structură SEO și campanii plătite pentru solicitări de service și diagnoză auto la domiciliu.
 - [Nanu Events](https://cab-it.ro/portofoliu/nanu-events/): Studiu de caz Nanu Events: website de prezentare responsive, structură de conținut și design modern pentru servicii și proiecte din domeniul evenimentelor.
@@ -40,10 +101,11 @@
 
 - Audit website 100% gratuit, livrat manual prin email în maximum 30 de minute.
 - Site-urile de prezentare pot fi finalizate chiar în 24 de ore; magazinele online în 3–7 zile, în funcție de complexitate și materiale.
-- CAB-IT Expert SRL este Google Partner.
+- CAB-IT Expert este Google Partner; serviciile sunt operate de CAB IT EXPERT SRL.
 - Telefon și WhatsApp: +40 771 532 949
 - Email: contact@cab-it.ro
-- Adresă: Intrarea Humulești 6A, 052034 București, România.
+- Sediu social: Intrarea Humulești 6A, 052034 București, România.
+- Întâlniri: online, cu programare.
 
 ## Descoperire și indexare
 

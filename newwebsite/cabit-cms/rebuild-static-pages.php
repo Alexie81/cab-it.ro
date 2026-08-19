@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 const PUBLIC_ROOT = __DIR__ . '/..';
-const ASSET_VERSION = '20260719-7';
+const ASSET_VERSION = '20260819-4';
 
 function marker(string $path, string $start, string $end, string $fallback = ''): string
 {
@@ -15,7 +15,12 @@ function marker(string $path, string $start, string $end, string $fallback = '')
 
 function analyticsHead(): string
 {
-    return '<script async src="https://www.googletagmanager.com/gtag/js?id=G-QPKXFL2GW9"></script><script>window.__cabitGoogleTagLoaded=true;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-QPKXFL2GW9");gtag("config","AW-11509007584");gtag("config","AW-11509007584/6OY0CIeMyfsZEOCJ9u8q",{phone_conversion_number:"+40 771 532 949"});window.gtag_report_conversion=function(url){var done=false;var go=function(){if(!done&&url){done=true;window.location.href=url}};gtag("event","conversion",{send_to:"AW-11509007584/GqVQCOudyvsZEOCJ9u8q",event_callback:go});setTimeout(go,900);return false};</script>';
+    return '<script>window.__cabitGoogleTagLoaded=true;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-QPKXFL2GW9");gtag("config","AW-18343038330");gtag("config","AW-11509007584");gtag("config","AW-11509007584/6OY0CIeMyfsZEOCJ9u8q",{phone_conversion_number:"+40 771 532 949"});window.__cabitLoadGoogleTag=function(){if(window.__cabitGoogleTagRequested)return;window.__cabitGoogleTagRequested=true;var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=AW-18343038330";document.head.appendChild(s)};["pointerdown","keydown","touchstart"].forEach(function(e){window.addEventListener(e,window.__cabitLoadGoogleTag,{once:true,passive:true})});window.addEventListener("load",function(){setTimeout(window.__cabitLoadGoogleTag,5000)},{once:true});window.gtag_report_conversion=function(url){window.__cabitLoadGoogleTag();var done=false;var go=function(){if(!done&&url){done=true;window.location.href=url}};gtag("event","conversion",{send_to:"AW-11509007584/GqVQCOudyvsZEOCJ9u8q",event_callback:go});setTimeout(go,1200);return false};</script>';
+}
+
+function analyticsBody(): string
+{
+    return '';
 }
 
 function shell(string $title, string $description, string $canonical, string $bodyClass, string $main, string $schema = ''): string
@@ -30,16 +35,51 @@ function shell(string $title, string $description, string $canonical, string $bo
   <meta name="robots" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
   <link rel="canonical" href="https://cab-it.ro/' . $canonical . '">
   <link rel="alternate" type="text/plain" href="https://cab-it.ro/llms.txt" title="CAB-IT Expert — informații pentru agenți AI">
-  <meta property="og:locale" content="ro_RO"><meta property="og:type" content="website"><meta property="og:site_name" content="Cab-IT Expert">
+  <meta property="og:locale" content="ro_RO"><meta property="og:type" content="website"><meta property="og:site_name" content="CAB-IT Expert">
   <meta property="og:title" content="' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '"><meta property="og:description" content="' . htmlspecialchars($description, ENT_QUOTES, 'UTF-8') . '"><meta property="og:url" content="https://cab-it.ro/' . $canonical . '"><meta property="og:image" content="https://cab-it.ro/assets/img/brand/cab-it-c-symbol-app-v7.png">
   <link rel="shortcut icon" type="image/png" href="../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../site.webmanifest">
-  <link rel="stylesheet" href="../assets/css/site.min.css?v=' . ASSET_VERSION . '"><link rel="stylesheet" href="../assets/css/cabit-next.css?v=' . ASSET_VERSION . '">
+  <link rel="stylesheet" href="../assets/css/site.min.css?v=' . ASSET_VERSION . '"><link rel="stylesheet" href="../assets/css/cabit-next.min.css?v=' . ASSET_VERSION . '">
   ' . $structured . analyticsHead() . '
 </head>
-<body class="cabit-theme-2026 cabit-inner-page ' . $bodyClass . '">
+<body class="cabit-theme-2026 cabit-inner-page ' . $bodyClass . '">' . analyticsBody() . '
 <main>' . $main . '</main>
-<script src="../assets/js/site-enhancements.js?v=' . ASSET_VERSION . '"></script><script defer src="../assets/js/cabit-next.js?v=' . ASSET_VERSION . '"></script>
+<script src="../assets/js/site-enhancements.js?v=' . ASSET_VERSION . '"></script><script defer src="../assets/js/cabit-next.min.js?v=' . ASSET_VERSION . '"></script>
 </body></html>';
+}
+
+function breadcrumbNav(string $label): string
+{
+    return '<nav class="cabit-article-breadcrumb" aria-label="Breadcrumb"><a href="/">Acasă</a><span aria-hidden="true">/</span><span>'
+        . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '</span></nav>';
+}
+
+function hubSchema(string $type, string $path, string $name, string $description): string
+{
+    $url = 'https://cab-it.ro/' . trim($path, '/') . '/';
+    return (string) json_encode([
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => $type,
+                '@id' => $url . '#webpage',
+                'url' => $url,
+                'name' => $name,
+                'description' => $description,
+                'isPartOf' => ['@id' => 'https://cab-it.ro/#website'],
+                'about' => ['@id' => 'https://cab-it.ro/#organization'],
+                'breadcrumb' => ['@id' => $url . '#breadcrumb'],
+                'inLanguage' => 'ro-RO',
+            ],
+            [
+                '@type' => 'BreadcrumbList',
+                '@id' => $url . '#breadcrumb',
+                'itemListElement' => [
+                    ['@type' => 'ListItem', 'position' => 1, 'name' => 'Acasă', 'item' => 'https://cab-it.ro/'],
+                    ['@type' => 'ListItem', 'position' => 2, 'name' => $name, 'item' => $url],
+                ],
+            ],
+        ],
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
 function writePage(string $directory, string $html): void
@@ -82,53 +122,119 @@ foreach ($services as [$type, $number, $name, $copy, $slug, $link]) {
     $serviceCards .= '<article class="cabit-service-overview-card reveal" data-service="' . $type . '"><span class="service-number">' . $number . '</span>' . icon($type) . '<h2>' . $name . '</h2><p>' . $copy . '</p><a href="/servicii/' . $slug . '/">' . $link . ' <span>→</span></a></article>';
 }
 
-$servicesMain = '
+$servicesMain = breadcrumbNav('Servicii') . '
 <section class="cabit-page-header cabit-split-hero"><div class="container"><div><span class="cabit-eyebrow">Servicii digitale · București și România</span><h1>Un sistem digital complet, construit pentru rezultate.</h1><p>Website, SEO, promovare plătită și automatizări conectate într-o strategie clară. Alegem ce are sens pentru obiectivul tău și măsurăm fiecare pas.</p><div class="cabit-service-hero-actions"><a class="cabit-service-primary" href="/#audit">Cere auditul gratuit</a><a class="cabit-service-secondary" href="/portofoliu/">Vezi proiectele</a></div></div><div class="cabit-orbit-visual" aria-hidden="true"><span>Website</span><span>SEO</span><span>Ads</span><span>AI</span><strong>CAB-IT</strong></div></div></section>
 <section class="cabit-content-section"><div class="container"><div class="cabit-section-heading"><span class="cabit-eyebrow">Tot ce are nevoie afacerea</span><h2>Servicii care lucrează împreună</h2><p>Fiecare serviciu are o pagină completă, cu livrabile, proces și întrebări frecvente.</p></div><div class="cabit-services-overview-grid">' . $serviceCards . '</div></div></section>
 <section class="cabit-content-section is-soft"><div class="container cabit-rich-columns"><div><span class="cabit-eyebrow">Livrare rapidă</span><h2>Website de prezentare chiar în 24h. Magazin online în 3–7 zile.</h2><p>Termenul final depinde de complexitate și de disponibilitatea materialelor, însă procesul rămâne transparent: clarificare, implementare, testare, lansare.</p></div><ol class="cabit-service-steps"><li><b>01</b><span><strong>Audităm</strong>Înțelegem obiectivul și punctul de plecare.</span></li><li><b>02</b><span><strong>Prioritizăm</strong>Alegem intervențiile cu sens comercial.</span></li><li><b>03</b><span><strong>Implementăm</strong>Construim, măsurăm și îmbunătățim.</span></li></ol></div></section>
 <section class="cabit-inner-cta section-shell"><span>100% gratuit</span><h2>Primește un audit complet în maximum 30 de minute.</h2><p>Introdu website-ul și emailul. Îți trimitem evaluarea direct pe email, fără costuri și fără obligații.</p><a class="button button-primary" href="/#audit">Cere auditul gratuit →</a></section>';
-writePage('servicii', shell('Servicii Marketing Online București | Cab-IT Expert', 'Website-uri, SEO, Google Ads, social media și automatizări AI pentru afaceri din București și România. Audit gratuit și plan clar de implementare.', 'servicii/', 'cabit-page-services', $servicesMain));
+$servicesDescription = 'Website-uri, SEO, Google Ads, social media și automatizări AI pentru afaceri din București și România. Audit gratuit și plan clar de implementare.';
+writePage('servicii', shell(
+    'Servicii Marketing Online București | CAB-IT Expert',
+    $servicesDescription,
+    'servicii/',
+    'cabit-page-services',
+    $servicesMain,
+    hubSchema('CollectionPage', 'servicii', 'Servicii CAB-IT Expert', $servicesDescription)
+));
 
-$aboutMain = '
+$aboutMain = breadcrumbNav('Despre noi') . '
 <section class="cabit-page-header cabit-split-hero"><div class="container"><div><span class="cabit-eyebrow">CAB-IT Expert SRL · București</span><h1>Partener digital, nu doar furnizor.</h1><p>Construim soluții digitale pe care oamenii le înțeleg și afacerile le pot măsura. Combinăm dezvoltarea web, SEO, promovarea online și automatizarea într-un proces simplu și transparent.</p><div class="cabit-service-hero-actions"><a class="cabit-service-primary" href="/contact/">Hai să discutăm</a><a class="cabit-service-secondary" href="/portofoliu/">Vezi proiectele</a></div></div><figure class="cabit-brand-figure"><img src="../img/logo_home.png" alt="CAB-IT Expert SRL — Future is Online" width="560" height="195"><span>Google Partner</span></figure></div></section>
+<section class="cabit-content-section is-soft" aria-labelledby="entity-facts-title"><div class="container"><div class="cabit-section-heading"><span class="cabit-eyebrow">Identitate verificabilă</span><h2 id="entity-facts-title">CAB-IT Expert, pe scurt</h2><p>Informațiile esențiale despre brand, operator și modul de colaborare, prezentate consecvent pentru clienți și motoare de căutare.</p></div><dl class="cabit-entity-facts"><div><dt>Nume comercial</dt><dd>CAB-IT Expert</dd></div><div><dt>Operator</dt><dd>CAB IT EXPERT SRL · CUI 49972605</dd></div><div><dt>Servicii</dt><dd>Creare website, SEO, promovare online și automatizări digitale</dd></div><div><dt>Arie deservită</dt><dd>București, Ilfov și România · întâlniri online</dd></div></dl></div></section>
 <section class="cabit-content-section"><div class="container cabit-rich-columns"><div><span class="cabit-eyebrow">Cum lucrăm</span><h2>Claritate înainte de execuție.</h2><p>Începem cu întrebările care contează: cine este clientul, ce problemă rezolvă oferta, ce acțiune trebuie să facă vizitatorul și cum verificăm rezultatul.</p><p>Nu livrăm doar pagini sau campanii. Documentăm deciziile, păstrăm administrarea simplă și construim un sistem care poate fi îmbunătățit pe baza datelor.</p></div><div class="cabit-values-grid"><article>' . icon('audit') . '<h3>Transparență</h3><p>Livrabile, termene și indicatori clar definiți.</p></article><article>' . icon('web') . '<h3>Execuție modernă</h3><p>Design responsive, performanță și administrare simplă.</p></article><article>' . icon('seo') . '<h3>Vizibilitate relevantă</h3><p>SEO și promovare conectate la cererea reală.</p></article><article>' . icon('cro') . '<h3>Rezultate măsurabile</h3><p>Urmărim solicitări, vânzări și acțiuni utile.</p></article></div></div></section>
-<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-proof-grid"><article><strong>120+</strong><span>clienți mulțumiți</span></article><article><strong>200+</strong><span>proiecte finalizate</span></article><article><strong>8+</strong><span>ani de experiență</span></article><article><strong>5.0</strong><span>rating pe Google</span></article></div></div></section>
+<section class="cabit-content-section is-soft"><div class="container"><div class="cabit-proof-grid"><article><strong>120+</strong><span>clienți mulțumiți</span></article><article><strong>200+</strong><span>proiecte finalizate</span></article><article><strong>8+</strong><span>ani de experiență profesională</span></article><article><strong>5.0</strong><span>rating pe Google</span></article></div></div></section>
+<section class="cabit-content-section" id="alexie-popescu"><div class="container cabit-rich-columns"><div><span class="cabit-eyebrow">Autor și coordonare editorială</span><h2>Alexie Popescu</h2><p><strong>Fondator și coordonator editorial CAB-IT Expert.</strong> Documentează și revizuiește ghidurile despre creare website, SEO, promovare online, măsurarea conversiilor și automatizări digitale.</p><p>Recomandările sunt organizate pe baza experienței profesionale și a proiectelor gestionate de CAB-IT Expert. CAB IT EXPERT SRL funcționează în actuala formă juridică din 2024, iar indicatorul de peste 8 ani se referă la experiența profesională acumulată înainte și după înființarea companiei.</p></div><div class="cabit-content-card"><h3>Principii editoriale</h3><ul><li>Nu garantăm poziții fixe în Google.</li><li>Publicăm rezultate cantitative numai după validare.</li><li>Separăm exemplele demonstrative de rezultatele clienților.</li><li>Indicăm sursele oficiale pentru informațiile despre platforme.</li><li>Actualizăm ghidurile când se schimbă procedurile sau instrumentele.</li></ul><a class="cabit-text-link" href="/blog/">Vezi ghidurile CAB-IT →</a></div></div></section>
 <section class="cabit-content-section"><div class="container"><div class="cabit-section-heading centered"><span class="cabit-eyebrow">Proces simplu</span><h2>De la idee la un sistem care produce rezultate</h2></div><ol class="cabit-timeline"><li><b>01</b><div><h3>Înțelegem afacerea</h3><p>Analizăm obiectivele, clienții și concurența.</p></div></li><li><b>02</b><div><h3>Construim strategia</h3><p>Stabilim ce merită implementat și în ce ordine.</p></div></li><li><b>03</b><div><h3>Implementăm</h3><p>Dezvoltăm, testăm și optimizăm fiecare componentă.</p></div></li><li><b>04</b><div><h3>Măsurăm</h3><p>Urmărim datele și îmbunătățim soluția.</p></div></li></ol></div></section>
 <section class="cabit-inner-cta section-shell"><span>Future is Online</span><h2>Ai un proiect în plan?</h2><p>Spune-ne ce vrei să obții, iar noi îți propunem pașii potriviți.</p><a class="button button-primary" href="/contact/">Hai să discutăm →</a></section>';
-writePage('despre-noi', shell('Despre Cab-IT Expert | Agenție Digitală București', 'CAB-IT Expert este o agenție digitală din București pentru creare website, SEO, Google Ads și automatizări, cu proces transparent și rezultate măsurabile.', 'despre-noi/', 'cabit-page-about', $aboutMain));
+$aboutSchema = (string) json_encode([
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'AboutPage',
+            '@id' => 'https://cab-it.ro/despre-noi/#about',
+            'url' => 'https://cab-it.ro/despre-noi/',
+            'name' => 'Despre CAB-IT Expert',
+            'about' => [['@id' => 'https://cab-it.ro/#organization'], ['@id' => 'https://cab-it.ro/despre-noi/#alexie-popescu']],
+            'isPartOf' => ['@id' => 'https://cab-it.ro/#website'],
+            'breadcrumb' => ['@id' => 'https://cab-it.ro/despre-noi/#breadcrumb'],
+            'inLanguage' => 'ro-RO',
+        ],
+        [
+            '@type' => 'Organization',
+            '@id' => 'https://cab-it.ro/#organization',
+            'name' => 'CAB-IT Expert',
+            'legalName' => 'CAB IT EXPERT SRL',
+            'alternateName' => ['CAB-IT', 'Cab-IT Expert'],
+            'url' => 'https://cab-it.ro/',
+            'identifier' => ['@type' => 'PropertyValue', 'propertyID' => 'CUI', 'value' => '49972605'],
+            'contactPoint' => [[
+                '@type' => 'ContactPoint',
+                'contactType' => 'customer service',
+                'telephone' => '+40771532949',
+                'email' => 'contact@cab-it.ro',
+                'availableLanguage' => ['ro', 'en'],
+            ]],
+            'founder' => ['@id' => 'https://cab-it.ro/despre-noi/#alexie-popescu'],
+            'knowsAbout' => ['Creare website', 'Web design', 'SEO', 'Promovare online', 'Google Ads', 'Social media', 'Automatizări digitale'],
+            'areaServed' => [['@type' => 'City', 'name' => 'București'], ['@type' => 'Country', 'name' => 'România']],
+        ],
+        [
+            '@type' => 'Person',
+            '@id' => 'https://cab-it.ro/despre-noi/#alexie-popescu',
+            'name' => 'Alexie Popescu',
+            'url' => 'https://cab-it.ro/despre-noi/#alexie-popescu',
+            'jobTitle' => 'Fondator și coordonator editorial CAB-IT Expert',
+            'worksFor' => ['@id' => 'https://cab-it.ro/#organization'],
+            'knowsAbout' => ['Creare website', 'SEO', 'Promovare online', 'Google Ads', 'Analytics', 'Automatizări digitale'],
+        ],
+        [
+            '@type' => 'BreadcrumbList',
+            '@id' => 'https://cab-it.ro/despre-noi/#breadcrumb',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Acasă', 'item' => 'https://cab-it.ro/'],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Despre noi', 'item' => 'https://cab-it.ro/despre-noi/'],
+            ],
+        ],
+    ],
+], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+writePage('despre-noi', shell('Despre CAB-IT Expert | Agenție Digitală București', 'CAB-IT Expert este o agenție digitală din București pentru creare website, SEO, Google Ads și automatizări, cu proces transparent și rezultate măsurabile.', 'despre-noi/', 'cabit-page-about', $aboutMain, $aboutSchema));
 
 $contactForm = '<form class="conversation-form reveal" action="../whatsapp-contact.php" method="post" data-conversation-form aria-label="Solicitare servicii prin WhatsApp"><fieldset><legend>1. Selectează obiectivul</legend><div class="choice-grid"><label><input type="radio" name="objective" value="website" required><span>' . icon('web') . '<b>Am nevoie de un website</b></span></label><label><input type="radio" name="objective" value="seo"><span>' . icon('seo') . '<b>Vreau să apar mai bine în Google</b></span></label><label><input type="radio" name="objective" value="reclame"><span>' . icon('ads') . '<b>Vreau reclame</b></span></label><label><input type="radio" name="objective" value="automatizare"><span>' . icon('ai') . '<b>Vreau o automatizare AI</b></span></label><label><input type="radio" name="objective" value="nesigur"><span>' . icon('audit') . '<b>Nu știu încă</b></span></label></div></fieldset><div class="conversation-fields"><label>Nume și prenume<input type="text" name="name" autocomplete="name" placeholder="Cum te numești?" required></label><label>Email<input type="email" name="email" autocomplete="email" placeholder="nume@companie.ro" required></label><label>Telefon<input type="tel" name="phone" autocomplete="tel" placeholder="+40 7xx xxx xxx"></label><label>Companie <small>(opțional)</small><input type="text" name="company" autocomplete="organization" placeholder="Numele companiei"></label><label class="full">Pe scurt, ce vrei să obții?<textarea name="message" rows="5" placeholder="Obiectiv, problemă sau idee..." required></textarea></label></div><button class="button button-primary" type="submit">Trimite pe WhatsApp <span>→</span></button><p class="form-note">Se deschide conversația WhatsApp cu mesajul pregătit; îl poți verifica înainte de trimitere.</p></form>';
-$contactMain = '
-<section class="cabit-page-header cabit-contact-hero"><div class="container"><div><span class="cabit-eyebrow">Contact CAB-IT Expert</span><h1>Spune-ne ce vrei să construim.</h1><p>Răspundem cu pași clari și o recomandare potrivită obiectivului tău. Poți trimite formularul direct în WhatsApp.</p><div class="cabit-contact-cards"><a href="tel:+40771532949"><b>Telefon</b><span>+40 771 532 949</span></a><a href="mailto:contact@cab-it.ro"><b>Email</b><span>contact@cab-it.ro</span></a><a href="#locatie"><b>Adresă</b><span>Intrarea Humulești 6A, București</span></a></div></div>' . $contactForm . '</div></section>
-<section class="cabit-content-section" id="locatie"><div class="container cabit-location-layout"><div><span class="cabit-eyebrow">Ne găsești în București</span><h2>Intrarea Humulești 6A</h2><p>Lucrăm cu afaceri din București, Ilfov și din întreaga Românie. Întâlnirile pot fi organizate online sau la sediu, cu programare.</p><a class="button button-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Intrarea+Humule%C8%99ti+6A%2C+Bucure%C8%99ti" target="_blank" rel="noopener">Deschide în Google Maps</a></div><div class="cabit-map-card"><iframe src="https://www.google.com/maps?q=Intrarea%20Humule%C8%99ti%206A%2C%20052034%20Bucure%C8%99ti%2C%20Rom%C3%A2nia&amp;output=embed" title="Harta sediului CAB-IT Expert, Intrarea Humulești 6A" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div></section>';
-writePage('contact', shell('Contact Agenție Marketing București | Cab-IT Expert', 'Contactează Cab-IT Expert pentru website, SEO și promovare online. Intrarea Humulești 6A, București. Trimite cererea direct pe WhatsApp.', 'contact/', 'cabit-page-contact', $contactMain));
+$contactMain = breadcrumbNav('Contact') . '
+<section class="cabit-page-header cabit-contact-hero"><div class="container"><div><span class="cabit-eyebrow">Contact CAB-IT Expert</span><h1>Spune-ne ce vrei să construim.</h1><p>Răspundem cu pași clari și o recomandare potrivită obiectivului tău. Poți trimite formularul direct în WhatsApp.</p><div class="cabit-contact-cards"><a href="tel:+40771532949"><b>Telefon</b><span>+40 771 532 949</span></a><a href="mailto:contact@cab-it.ro"><b>Email</b><span>contact@cab-it.ro</span></a><a href="#locatie"><b>Întâlniri</b><span>Online, cu programare</span></a></div></div>' . $contactForm . '</div></section>
+<section class="cabit-content-section" id="locatie"><div class="container cabit-location-layout"><div><span class="cabit-eyebrow">Punct de întâlnire</span><h2>Online, cu programare</h2><p>Lucrăm cu afaceri din București, Ilfov și din întreaga Românie. Întâlnirile au loc online, pe platforma stabilită împreună, astfel încât putem discuta rapid indiferent de localitate.</p><p class="cabit-legal-location"><strong>Sediu social:</strong> Intrarea Humulești 6A, 052034 București, România.</p><a class="button button-ghost" href="https://wa.me/40771532949?text=Bun%C4%83%2C%20doresc%20s%C4%83%20programez%20o%20%C3%AEnt%C3%A2lnire%20online." target="_blank" rel="noopener">Programează pe WhatsApp</a></div><div class="cabit-online-card" aria-label="Întâlnirile CAB-IT Expert au loc online"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 10 5-3v10l-5-3z"/><path d="M7 9h5M7 13h3"/></svg><span>Punct de întâlnire</span><strong>Online</strong><p>Google Meet, Microsoft Teams sau platforma stabilită împreună.</p></div></div></section>';
+$contactDescription = 'Contactează CAB-IT Expert pentru website, SEO și promovare online. Întâlnirile au loc online, cu programare.';
+writePage('contact', shell('Contact Agenție Marketing București | CAB-IT Expert', $contactDescription, 'contact/', 'cabit-page-contact', $contactMain, hubSchema('ContactPage', 'contact', 'Contact CAB-IT Expert', $contactDescription)));
 
-$pricingMain = '
+$pricingMain = breadcrumbNav('Prețuri') . '
 <section class="cabit-page-header cabit-split-hero"><div class="container"><div><span class="cabit-eyebrow">Puncte de pornire transparente</span><h1>Planuri flexibile pentru creșterea afacerii tale.</h1><p>Prețurile afișate nu includ TVA. Oferta finală se stabilește după obiective, funcționalități și complexitate.</p><div class="cabit-service-hero-actions"><a class="cabit-service-primary" href="/contact/">Cere ofertă personalizată</a><a class="cabit-service-secondary" href="/servicii/">Compară serviciile</a></div></div><div class="cabit-price-orbit"><strong>999 lei</strong><span>website</span><i>+</i><strong>649 lei</strong><span>promovare</span></div></div></section>
 <section class="cabit-content-section"><div class="container"><div class="pricing-grid cabit-pricing-page"><article class="price-card"><span>Creare website · livrare rapidă</span><h2>Website de prezentare</h2><strong>de la 999 lei</strong><ul><li>Lansare chiar în 24 de ore*</li><li>Design responsive modern</li><li>Până la 5 pagini</li><li>Structură SEO de bază</li><li>Formular și administrare</li></ul><a class="button button-ghost" href="/contact/?serviciu=website">Cere ofertă</a></article><article class="price-card is-featured"><span>E-commerce · 3–7 zile</span><h2>Magazin online</h2><strong>de la 1.799 lei</strong><ul><li>Lansare în maximum 3–7 zile*</li><li>Până la 100 de produse</li><li>Plată, livrare și administrare</li><li>Experiență de cumpărare clară</li><li>Bază SEO și analytics</li></ul><a class="button button-primary" href="/contact/?serviciu=magazin-online">Cere ofertă</a></article><article class="price-card"><span>Promovare online</span><h2>Google / Meta / TikTok Ads</h2><strong>de la 649 lei / lună</strong><ul><li>Strategie și configurare</li><li>Tracking și obiective</li><li>Optimizare continuă</li><li>Rapoarte clare</li><li>Recomandări pentru landing page</li></ul><a class="button button-ghost" href="/contact/?serviciu=promovare">Cere ofertă</a></article></div><p class="cabit-pricing-note">*Termenele depind de complexitate și de disponibilitatea materialelor. Bugetele media și serviciile terțe nu sunt incluse.</p></div></section>
 <section class="cabit-inner-cta section-shell"><span>Nu știi ce să alegi?</span><h2>Începem cu un audit gratuit.</h2><p>Primești o evaluare clară a website-ului și a oportunităților de creștere.</p><a class="button button-primary" href="/#audit">Cere auditul gratuit →</a></section>';
-writePage('preturi', shell('Prețuri Website și Promovare Online | Cab-IT Expert', 'Prețuri pentru creare website, magazin online și promovare Google, Meta sau TikTok Ads. Pachete clare și ofertă adaptată obiectivului tău.', 'preturi/', 'cabit-page-pricing', $pricingMain));
+$pricingDescription = 'Prețuri pentru creare website, magazin online și promovare Google, Meta sau TikTok Ads. Pachete clare și ofertă adaptată obiectivului tău.';
+writePage('preturi', shell('Prețuri Website și Promovare Online | CAB-IT Expert', $pricingDescription, 'preturi/', 'cabit-page-pricing', $pricingMain, hubSchema('CollectionPage', 'preturi', 'Prețuri CAB-IT Expert', $pricingDescription)));
 
 $portfolioFilters = marker(PUBLIC_ROOT . '/portofoliu/index.html', '<!-- CMS_PORTFOLIO_FILTERS_START -->', '<!-- CMS_PORTFOLIO_FILTERS_END -->', '<button class="active" data-filter="*"><span>Toate</span></button>');
 $portfolioCards = marker(PUBLIC_ROOT . '/portofoliu/index.html', '<!-- CMS_PORTFOLIO_CARDS_START -->', '<!-- CMS_PORTFOLIO_CARDS_END -->');
-$portfolioMain = '
+$portfolioMain = breadcrumbNav('Portofoliu') . '
 <section class="cabit-page-header cabit-split-hero"><div class="container"><div><span class="cabit-eyebrow">Proiecte CAB-IT</span><h1>Probleme reale. Soluții construite clar.</h1><p>Website-uri, magazine online, SEO și campanii digitale construite pentru obiective concrete. Publicăm rezultate cantitative numai când sunt validate.</p><div class="cabit-service-hero-actions"><a class="cabit-service-primary" href="/contact/">Vreau un proiect similar</a><a class="cabit-service-secondary" href="/servicii/">Vezi serviciile</a></div></div><div class="cabit-project-stack"><img src="../assets/img/case-studies/maison-bebe.png" alt="Proiect Maison Bébé" width="800" height="520"><span>200+ proiecte finalizate</span></div></div></section>
 <section class="cabit-content-section"><div class="container"><div class="cabit-section-heading"><span class="cabit-eyebrow">Portofoliu</span><h2>Studii de caz și proiecte recente</h2><p>Filtrează proiectele după tipul de intervenție.</p></div><div class="cabit-portfolio-filters" data-portfolio-filters><!-- CMS_PORTFOLIO_FILTERS_START -->' . $portfolioFilters . '<!-- CMS_PORTFOLIO_FILTERS_END --></div><div class="cabit-portfolio-grid" data-portfolio-grid><!-- CMS_PORTFOLIO_CARDS_START -->' . $portfolioCards . '<!-- CMS_PORTFOLIO_CARDS_END --></div></div></section>
 <section class="cabit-inner-cta section-shell"><span>Următorul proiect poate fi al tău</span><h2>Spune-ne obiectivul și îți propunem soluția.</h2><a class="button button-primary" href="/contact/">Hai să discutăm →</a></section>';
-writePage('portofoliu', shell('Portofoliu Website, SEO și Promovare | Cab-IT Expert', 'Descoperă proiecte Cab-IT Expert: website-uri, magazine online, SEO și promovare online pentru afaceri din București și România.', 'portofoliu/', 'cabit-page-portfolio', $portfolioMain));
+$portfolioDescription = 'Descoperă proiecte CAB-IT Expert: website-uri, magazine online, SEO și promovare online pentru afaceri din București și România.';
+writePage('portofoliu', shell('Portofoliu Website, SEO și Promovare | CAB-IT Expert', $portfolioDescription, 'portofoliu/', 'cabit-page-portfolio', $portfolioMain, hubSchema('CollectionPage', 'portofoliu', 'Portofoliu CAB-IT Expert', $portfolioDescription)));
 
 $blogSchema = marker(PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_SCHEMA_START -->', '<!-- CMS_BLOG_SCHEMA_END -->');
 $blogCards = marker(PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_CARDS_START -->', '<!-- CMS_BLOG_CARDS_END -->');
-$blogMain = '
+$blogMain = breadcrumbNav('Blog') . '
 <section class="cabit-page-header cabit-split-hero"><div class="container"><div><span class="cabit-eyebrow">Resurse CAB-IT</span><h1>Marketing digital explicat pentru decizii mai bune.</h1><p>Ghiduri clare despre SEO, promovare online, website-uri și măsurarea rezultatelor. Fără jargon inutil, cu exemple și pași aplicabili.</p><div class="cabit-topic-pills"><a href="/servicii/seo/">SEO</a><a href="/servicii/reclame-platite/">Google Ads</a><a href="/servicii/creare-site-web/">Website</a><a href="/glosar-seo/">Glosar</a></div></div><div class="cabit-editorial-visual"><span>Ghid nou</span><strong>Idei clare.<br>Decizii mai bune.</strong><i>↗</i></div></div></section>
 <section class="cabit-content-section"><div class="container"><div class="cabit-section-heading"><span class="cabit-eyebrow">Publicate recent</span><h2>Toate articolele</h2><p>Articolele sunt afișate de la cea mai recentă dată de publicare.</p></div><div class="cabit-blog-grid"><!-- CMS_BLOG_CARDS_START -->' . $blogCards . '<!-- CMS_BLOG_CARDS_END --></div></div></section>
 <section class="cabit-inner-cta section-shell"><span>Ai o întrebare concretă?</span><h2>Transformăm informația într-un plan pentru afacerea ta.</h2><a class="button button-primary" href="/contact/">Hai să discutăm →</a></section>';
 $blogSchemaTag = trim($blogSchema);
-writePage('blog', shell('Blog Marketing Digital, SEO și Website | Cab-IT Expert', 'Ghiduri practice despre SEO, Google Ads, social media, creare website și măsurarea rezultatelor pentru afaceri din București și România.', 'blog/', 'cabit-page-blog', '<!-- CMS_BLOG_SCHEMA_START -->' . $blogSchemaTag . '<!-- CMS_BLOG_SCHEMA_END -->' . $blogMain));
+$blogDescription = 'Ghiduri practice despre SEO, Google Ads, social media, creare website și măsurarea rezultatelor pentru afaceri din București și România.';
+writePage('blog', shell('Blog Marketing Digital, SEO și Website | CAB-IT Expert', $blogDescription, 'blog/', 'cabit-page-blog', '<!-- CMS_BLOG_SCHEMA_START -->' . $blogSchemaTag . '<!-- CMS_BLOG_SCHEMA_END -->' . $blogMain, hubSchema('CollectionPage', 'blog', 'Blog CAB-IT Expert', $blogDescription)));
 
-$termsMain = '
+$termsMain = breadcrumbNav('Termeni și condiții') . '
 <section class="cabit-page-header"><div class="container"><span class="cabit-eyebrow">Informații legale</span><h1>Termeni și condiții</h1><p>Condițiile generale pentru utilizarea website-ului cab-it.ro și pentru transmiterea solicitărilor către CAB IT EXPERT SRL.</p></div></section>
 <section class="cabit-content-section"><div class="container cabit-legal-layout"><nav><strong>Cuprins</strong><a href="#operator">Operator</a><a href="#utilizare">Utilizarea site-ului</a><a href="#formulare">Formulare și date</a><a href="#continut">Conținut și proprietate</a><a href="#raspundere">Limitarea răspunderii</a><a href="#contact-legal">Contact</a></nav><article class="cabit-content-card cabit-article-content"><h2 id="operator">1. Operatorul website-ului</h2><p>Website-ul cab-it.ro este operat de CAB IT EXPERT SRL, cu sediul în Intrarea Humulești 6A, București. Ne poți contacta la contact@cab-it.ro sau +40 771 532 949.</p><h2 id="utilizare">2. Utilizarea website-ului</h2><p>Informațiile sunt oferite pentru prezentarea serviciilor de dezvoltare web, SEO, promovare online și automatizare. Utilizatorii trebuie să folosească site-ul legal și să nu încerce afectarea funcționării sau securității lui.</p><h2 id="formulare">3. Formulare și date</h2><p>Datele transmise prin formulare sunt folosite pentru a răspunde solicitării, a pregăti auditul cerut sau a furniza resursele la care utilizatorul s-a abonat. Câmpurile opționale sunt marcate corespunzător.</p><h2 id="continut">4. Conținut și proprietate intelectuală</h2><p>Textele, elementele vizuale, identitatea și structura website-ului nu pot fi copiate sau redistribuite în scop comercial fără acord scris.</p><h2 id="raspundere">5. Limitarea răspunderii</h2><p>Rezultatele SEO, media sau comerciale depind de piață, concurență, buget, ofertă și implementare. Nu garantăm poziții fixe sau rezultate care depind de platforme terțe.</p><h2 id="contact-legal">6. Contact</h2><p>Pentru întrebări legate de acești termeni: <a href="mailto:contact@cab-it.ro">contact@cab-it.ro</a>.</p><p><small>Ultima actualizare: 19 iulie 2026.</small></p></article></div></section>';
-writePage('termeni-si-conditii', shell('Termeni și Condiții | Cab-IT Expert SRL', 'Termenii și condițiile pentru utilizarea website-ului Cab-IT Expert și transmiterea solicitărilor pentru servicii digitale.', 'termeni-si-conditii/', 'cabit-page-legal', $termsMain));
+$termsDescription = 'Termenii și condițiile pentru utilizarea website-ului CAB-IT Expert și transmiterea solicitărilor pentru servicii digitale.';
+writePage('termeni-si-conditii', shell('Termeni și Condiții | CAB-IT Expert', $termsDescription, 'termeni-si-conditii/', 'cabit-page-legal', $termsMain, hubSchema('WebPage', 'termeni-si-conditii', 'Termeni și condiții CAB-IT Expert', $termsDescription)));
 
 echo "Static pages rebuilt.\n";
