@@ -315,8 +315,26 @@ function cms_write_file(string $path, string $content): void
     if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
         throw new RuntimeException('Nu pot crea directorul pentru fișier.');
     }
-    if (file_put_contents($path, $content, LOCK_EX) === false) {
-        throw new RuntimeException('Nu pot scrie fișierul: ' . $path);
+    $handle = fopen($path, 'c+b');
+    if ($handle === false) {
+        throw new RuntimeException('Nu pot deschide fișierul pentru scriere: ' . $path);
+    }
+    try {
+        if (!flock($handle, LOCK_EX) || !ftruncate($handle, 0) || !rewind($handle)) {
+            throw new RuntimeException('Nu pot pregăti fișierul pentru scriere: ' . $path);
+        }
+        $remaining = $content;
+        while ($remaining !== '') {
+            $written = fwrite($handle, $remaining);
+            if ($written === false || $written === 0) {
+                throw new RuntimeException('Nu pot scrie fișierul: ' . $path);
+            }
+            $remaining = (string) substr($remaining, $written);
+        }
+        fflush($handle);
+    } finally {
+        flock($handle, LOCK_UN);
+        fclose($handle);
     }
     cms_gzip_file($path);
 }
