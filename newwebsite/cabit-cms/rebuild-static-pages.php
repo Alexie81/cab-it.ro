@@ -4,7 +4,7 @@ declare(strict_types=1);
 const PUBLIC_ROOT = __DIR__ . '/..';
 const SITE_ASSET_VERSION = '20260819-4';
 const THEME_CSS_VERSION = '20260819-16';
-const THEME_JS_VERSION = '20260820-22';
+const THEME_JS_VERSION = '20260820-23';
 const BLOG_EXPLORER_VERSION = '20260820-29';
 
 function marker(string $path, string $start, string $end, string $fallback = ''): string
