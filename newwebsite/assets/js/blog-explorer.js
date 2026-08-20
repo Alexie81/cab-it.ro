@@ -185,6 +185,8 @@
   function articleScore(prepared, query, queryTokens) {
     if (!query) return 1;
     var score = 0;
+    var exactCoverage = 0;
+    var exactTitleCoverage = 0;
 
     if (prepared.title === query) score += 260;
     if (prepared.title.indexOf(query) === 0) score += 150;
@@ -199,39 +201,56 @@
 
     queryTokens.forEach(function (token) {
       var variants = expandToken(token);
-      var matched = false;
-      variants.forEach(function (variant) {
-        if (prepared.titleWords.some(function (word) { return word === variant || word.indexOf(variant) === 0; })) {
-          score += variant === token ? 34 : 18;
-          matched = true;
-        } else if (prepared.keywords.indexOf(variant) !== -1) {
-          score += variant === token ? 24 : 13;
-          matched = true;
-        } else if (prepared.queries.indexOf(variant) !== -1 || prepared.boostTerms.indexOf(variant) !== -1) {
-          score += variant === token ? 27 : 16;
-          matched = true;
-        } else if (prepared.localContext.indexOf(variant) !== -1) {
-          score += 20;
-          matched = true;
-        } else if (prepared.entities.indexOf(variant) !== -1 || prepared.semanticTerms.indexOf(variant) !== -1) {
-          score += 14;
-          matched = true;
-        } else if (prepared.cluster.indexOf(variant) !== -1) {
-          score += 15;
-          matched = true;
-        } else if (prepared.excerpt.indexOf(variant) !== -1) {
-          score += 10;
-          matched = true;
-        } else if (prepared.searchText.indexOf(variant) !== -1) {
-          score += 5;
-          matched = true;
-        } else if (prepared.directAnswer.indexOf(variant) !== -1) {
-          score += 7;
-          matched = true;
-        }
+      var bestTokenScore = 0;
+      var exactTitleMatch = prepared.titleWords.some(function (word) {
+        return word === token || word.indexOf(token) === 0;
       });
-      if (!matched) score += fuzzyTokenScore(token, prepared.allWords);
+      var exactStrongMatch = exactTitleMatch ||
+        prepared.keywords.indexOf(token) !== -1 ||
+        prepared.queries.indexOf(token) !== -1 ||
+        prepared.boostTerms.indexOf(token) !== -1 ||
+        prepared.cluster.indexOf(token) !== -1 ||
+        prepared.entities.indexOf(token) !== -1;
+
+      if (exactTitleMatch) exactTitleCoverage += 1;
+      if (exactStrongMatch) exactCoverage += 1;
+
+      variants.forEach(function (variant) {
+        var variantScore = 0;
+        if (prepared.titleWords.some(function (word) { return word === variant || word.indexOf(variant) === 0; })) {
+          variantScore = variant === token ? 38 : 16;
+        } else if (prepared.keywords.indexOf(variant) !== -1) {
+          variantScore = variant === token ? 27 : 11;
+        } else if (prepared.queries.indexOf(variant) !== -1 || prepared.boostTerms.indexOf(variant) !== -1) {
+          variantScore = variant === token ? 30 : 13;
+        } else if (prepared.localContext.indexOf(variant) !== -1) {
+          variantScore = variant === token ? 23 : 9;
+        } else if (prepared.entities.indexOf(variant) !== -1 || prepared.semanticTerms.indexOf(variant) !== -1) {
+          variantScore = variant === token ? 17 : 8;
+        } else if (prepared.cluster.indexOf(variant) !== -1) {
+          variantScore = variant === token ? 18 : 8;
+        } else if (prepared.excerpt.indexOf(variant) !== -1) {
+          variantScore = variant === token ? 12 : 6;
+        } else if (prepared.searchText.indexOf(variant) !== -1) {
+          variantScore = variant === token ? 7 : 3;
+        } else if (prepared.directAnswer.indexOf(variant) !== -1) {
+          variantScore = variant === token ? 9 : 4;
+        }
+        bestTokenScore = Math.max(bestTokenScore, variantScore);
+      });
+      if (!bestTokenScore) bestTokenScore = fuzzyTokenScore(token, prepared.allWords);
+      score += bestTokenScore;
     });
+
+    if (queryTokens.length) {
+      if (exactTitleCoverage === queryTokens.length) score += 190;
+      else if (exactTitleCoverage >= Math.ceil(queryTokens.length * .66)) score += 85;
+      else score += exactTitleCoverage * 16;
+
+      if (exactCoverage === queryTokens.length) score += 120;
+      else if (exactCoverage >= Math.ceil(queryTokens.length * .66)) score += 48;
+      else score += exactCoverage * 8;
+    }
 
     var minimum = queryTokens.length <= 1 ? 12 : 45 + Math.max(0, queryTokens.length - 2) * 13;
     return score >= minimum ? score : 0;

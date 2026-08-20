@@ -46,7 +46,7 @@
 .cabit-blog-search__indicator {
   position: absolute;
   z-index: 1;
-  left: 18px;
+  left: 14px !important;
   width: 22px;
   height: 22px;
   display: grid;
@@ -56,6 +56,8 @@
 }
 
 .cabit-blog-search__indicator svg {
+  position: static !important;
+  inset: auto !important;
   width: 21px;
   height: 21px;
   fill: none;
@@ -66,7 +68,7 @@
 .cabit-blog-search input {
   width: 100%;
   min-height: 58px;
-  padding: 14px 112px 14px 54px;
+  padding: 14px 112px 14px 48px;
   border: 1px solid #dce4e8;
   border-radius: 22px;
   outline: none;
@@ -146,6 +148,18 @@
   box-shadow: 0 7px 16px rgba(15, 118, 110, .26);
 }
 
+.cabit-blog-search__submit svg {
+  position: static !important;
+  inset: auto !important;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .cabit-blog-search__clear[hidden] {
   display: none;
 }
@@ -195,6 +209,62 @@
   height: 42px;
   border-radius: 10px;
   object-fit: cover;
+}
+
+.cabit-blog-suggestion__fallback {
+  position: relative;
+  width: 48px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(145deg, #075e59, #12b8aa);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 5px 14px rgba(15, 118, 110, .14);
+}
+
+.cabit-blog-suggestion__fallback::before,
+.cabit-blog-suggestion__fallback::after {
+  position: absolute;
+  content: "";
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 50%;
+}
+
+.cabit-blog-suggestion__fallback::before {
+  width: 34px;
+  height: 34px;
+  right: -13px;
+  bottom: -17px;
+}
+
+.cabit-blog-suggestion__fallback::after {
+  width: 17px;
+  height: 17px;
+  right: -4px;
+  bottom: -8px;
+}
+
+.cabit-blog-suggestion__fallback.is-theme-ads { background: linear-gradient(145deg, #0e7490, #14b8a6); }
+.cabit-blog-suggestion__fallback.is-theme-ai { background: linear-gradient(145deg, #4338ca, #0891b2); }
+.cabit-blog-suggestion__fallback.is-theme-commerce { background: linear-gradient(145deg, #0369a1, #0d9488); }
+.cabit-blog-suggestion__fallback.is-theme-analytics { background: linear-gradient(145deg, #1d4ed8, #0891b2); }
+.cabit-blog-suggestion__fallback.is-theme-seo { background: linear-gradient(145deg, #047857, #14b8a6); }
+.cabit-blog-suggestion__fallback.is-theme-web { background: linear-gradient(145deg, #075985, #0f9f94); }
+.cabit-blog-suggestion__fallback.is-theme-strategy { background: linear-gradient(145deg, #334155, #0f766e); }
+
+.cabit-blog-suggestion__fallback svg {
+  position: relative;
+  z-index: 1;
+  width: 27px;
+  height: 23px;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .cabit-blog-suggestion strong,
@@ -300,6 +370,107 @@
   object-fit: cover;
 }
 
+.cabit-page-blog .cabit-article-visual {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 40 / 21;
+  overflow: hidden;
+}
+
+.cabit-page-blog .cabit-article-visual.has-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.cabit-page-blog .cabit-article-visual.is-fallback {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  overflow: hidden;
+  color: #fff;
+  background: radial-gradient(circle at 84% 14%, rgba(255, 255, 255, .2), transparent 22%), linear-gradient(140deg, #064742, #00a99d);
+}
+
+.cabit-page-blog .cabit-article-visual.is-fallback::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 10px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 20px;
+}
+
+.cabit-page-blog .cabit-article-visual.is-fallback::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -13%;
+  bottom: -52%;
+  width: 68%;
+  aspect-ratio: 1;
+  border: 34px solid rgba(255, 255, 255, .1);
+  border-radius: 50%;
+}
+
+.cabit-page-blog .cabit-article-visual.is-fallback > span,
+.cabit-page-blog .cabit-article-visual.is-fallback > strong {
+  position: absolute;
+  left: 26px;
+  color: #fff;
+  font-family: Manrope, Inter, sans-serif;
+  font-weight: 800;
+}
+
+.cabit-page-blog .cabit-article-visual.is-fallback > span {
+  top: 24px;
+  font-size: 10px;
+  letter-spacing: .12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.cabit-page-blog .cabit-article-visual.is-fallback > strong {
+  bottom: 23px;
+  max-width: 62%;
+  font-size: clamp(18px, 2vw, 27px);
+  line-height: 1.05;
+}
+
+.cabit-page-blog .cabit-article-visual.is-fallback > svg {
+  width: clamp(76px, 28%, 116px);
+  height: auto;
+  margin-left: 28%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 12px 25px rgba(0, 0, 0, .16));
+}
+
+.cabit-page-blog .cabit-article-visual.is-fallback > i,
+.cabit-page-blog .cabit-article-visual.is-fallback > b {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .1);
+}
+
+.cabit-page-blog .cabit-article-visual.is-fallback > i { width: 54px; height: 54px; top: 14%; right: 15%; }
+.cabit-page-blog .cabit-article-visual.is-fallback > b { width: 16px; height: 16px; top: 43%; right: 11%; }
+.cabit-page-blog .cabit-article-visual.is-theme-commerce { background: radial-gradient(circle at 82% 12%, rgba(255,255,255,.2), transparent 23%), linear-gradient(140deg, #164e63, #0ea5a4); }
+.cabit-page-blog .cabit-article-visual.is-theme-local { background: radial-gradient(circle at 82% 12%, rgba(255,255,255,.18), transparent 23%), linear-gradient(140deg, #075985, #14b8a6); }
+.cabit-page-blog .cabit-article-visual.is-theme-ads { background: radial-gradient(circle at 82% 12%, rgba(255,255,255,.18), transparent 23%), linear-gradient(140deg, #7c2d12, #ea7c2b); }
+.cabit-page-blog .cabit-article-visual.is-theme-ai { background: radial-gradient(circle at 82% 12%, rgba(255,255,255,.18), transparent 23%), linear-gradient(140deg, #312e81, #06b6d4); }
+.cabit-page-blog .cabit-article-visual.is-theme-analytics { background: radial-gradient(circle at 82% 12%, rgba(255,255,255,.18), transparent 23%), linear-gradient(140deg, #164e63, #3b82f6); }
+.cabit-page-blog .cabit-article-visual.is-theme-seo { background: radial-gradient(circle at 82% 12%, rgba(255,255,255,.18), transparent 23%), linear-gradient(140deg, #064e3b, #10b981); }
+.cabit-page-blog .cabit-article-visual.is-theme-web { background: radial-gradient(circle at 82% 12%, rgba(255,255,255,.18), transparent 23%), linear-gradient(140deg, #0f3d56, #00a99d); }
+.cabit-page-blog .cabit-article-visual.is-theme-strategy { background: radial-gradient(circle at 82% 12%, rgba(255,255,255,.18), transparent 23%), linear-gradient(140deg, #374151, #0f766e); }
+
 .cabit-page-blog .cabit-blog-card__body {
   display: flex;
   flex: 1;
@@ -309,6 +480,25 @@
 .cabit-page-blog .cabit-blog-card .cabit-text-link {
   margin-top: auto;
   padding-top: 18px;
+}
+
+@media (min-width: 921px) {
+  .cabit-page-blog .cabit-blog-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .cabit-page-blog .cabit-blog-card {
+    grid-column: span 2;
+  }
+
+  .cabit-page-blog .cabit-blog-grid:has(> .cabit-blog-card:last-child:nth-child(3n + 1)) > .cabit-blog-card:nth-last-child(-n + 4),
+  .cabit-page-blog .cabit-blog-grid:has(> .cabit-blog-card:last-child:nth-child(3n + 2)) > .cabit-blog-card:nth-last-child(-n + 2) {
+    grid-column: span 3;
+  }
+
+  .cabit-page-blog .cabit-blog-grid > .cabit-blog-card:only-child {
+    grid-column: 1 / -1;
+  }
 }
 
 .cabit-blog-empty {

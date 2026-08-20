@@ -821,6 +821,21 @@ function cms_replace_marked_content(string $path, string $startMarker, string $e
 function cms_update_blog_index(PDO $pdo): void
 {
     $articles = $pdo->query('SELECT * FROM articles ORDER BY date_published DESC, created_at DESC, id DESC')->fetchAll();
+    $pinnedBlogSlug = 'site-custom-vs-wordpress-in-2026-avantaje-si-riscuri';
+    $displayArticles = $articles;
+    usort($displayArticles, static function (array $left, array $right) use ($pinnedBlogSlug): int {
+        $leftPinned = (string) $left['slug'] === $pinnedBlogSlug ? 1 : 0;
+        $rightPinned = (string) $right['slug'] === $pinnedBlogSlug ? 1 : 0;
+        if ($leftPinned !== $rightPinned) {
+            return $rightPinned <=> $leftPinned;
+        }
+        $leftImage = cms_article_has_cover_image($left) ? 1 : 0;
+        $rightImage = cms_article_has_cover_image($right) ? 1 : 0;
+        if ($leftImage !== $rightImage) {
+            return $rightImage <=> $leftImage;
+        }
+        return strcmp((string) $right['created_at'], (string) $left['created_at']);
+    });
     $blogSchema = [
         '@context' => 'https://schema.org',
         '@type' => 'Blog',
@@ -842,18 +857,18 @@ function cms_update_blog_index(PDO $pdo): void
                 $post['image'] = $image;
             }
             return $post;
-        }, array_slice($articles, 0, 10)),
+        }, array_slice($displayArticles, 0, 10)),
     ];
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_SCHEMA_START -->', '<!-- CMS_BLOG_SCHEMA_END -->', '<script type="application/ld+json">' . cms_json($blogSchema) . '</script>');
     $cards = [];
-    foreach (array_slice($articles, 0, 10) as $article) {
+    foreach (array_slice($displayArticles, 0, 10) as $article) {
         $cards[] = cms_article_card_markup($article, 1);
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_CARDS_START -->', '<!-- CMS_BLOG_CARDS_END -->', implode("\n", $cards));
 
     $searchEntries = [];
     $knowledgeEntries = [];
-    foreach ($articles as $article) {
+    foreach ($displayArticles as $article) {
         $metadata = cms_article_metadata($article);
         $coverImage = trim((string) ($article['cover_image'] ?? ''));
         $image = cms_article_has_cover_image($article)
