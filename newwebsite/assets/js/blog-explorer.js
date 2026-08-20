@@ -34,20 +34,25 @@
   var rankCacheKeys = [];
 
   var synonymGroups = [
-    ["site", "website", "web", "pagina"],
+    ["site", "website", "web", "pagina", "siteul", "siteuri", "websiteul", "websiteuri"],
     ["magazin", "ecommerce", "comert", "shop"],
     ["promovare", "marketing", "reclame", "ads", "publicitate"],
     ["seo", "organic", "google", "cautare", "vizibilitate"],
     ["agentie", "firma", "echipa", "specialist"],
-    ["cost", "pret", "buget", "tarif"],
+    ["cost", "costul", "costuri", "costurile", "costa", "pret", "pretul", "preturi", "buget", "tarif"],
     ["ai", "inteligenta", "artificiala", "automatizare"],
     ["client", "lead", "cerere", "conversie"],
     ["social", "facebook", "instagram", "tiktok", "meta"],
-    ["masurare", "tracking", "analytics", "ga4", "raportare"]
+    ["masurare", "tracking", "analytics", "ga4", "raportare"],
+    ["prezentare", "prezentari", "prezentarii"]
   ];
   var synonymMap = Object.create(null);
   synonymGroups.forEach(function (group) {
     group.forEach(function (token) { synonymMap[token] = group; });
+  });
+  var stopWords = Object.create(null);
+  "a ai al ale ca care cat cand ce cel cea cele cu cum daca de despre din e este fara fi fie in imi la mai o pe pentru pot poate prin sa sau se si sunt un unei unui unde vreau".split(" ").forEach(function (token) {
+    stopWords[token] = true;
   });
 
   var mobileHead = document.createElement("div");
@@ -187,6 +192,8 @@
     var score = 0;
     var exactCoverage = 0;
     var exactTitleCoverage = 0;
+    var semanticCoverage = 0;
+    var semanticTitleCoverage = 0;
 
     if (prepared.title === query) score += 260;
     if (prepared.title.indexOf(query) === 0) score += 150;
@@ -198,6 +205,17 @@
     if (prepared.entities.indexOf(query) !== -1) score += 42;
     if (prepared.cluster.indexOf(query) !== -1) score += 35;
     if (prepared.excerpt.indexOf(query) !== -1) score += 28;
+
+    for (var phraseSize = Math.min(3, queryTokens.length); phraseSize >= 2; phraseSize--) {
+      for (var phraseStart = 0; phraseStart <= queryTokens.length - phraseSize; phraseStart++) {
+        var phrase = queryTokens.slice(phraseStart, phraseStart + phraseSize).join(" ");
+        if (prepared.title.indexOf(phrase) !== -1) {
+          score += phraseSize === 3 ? 120 : 48;
+        } else if (prepared.queries.indexOf(phrase) !== -1 || prepared.boostTerms.indexOf(phrase) !== -1) {
+          score += phraseSize === 3 ? 64 : 28;
+        }
+      }
+    }
 
     queryTokens.forEach(function (token) {
       var variants = expandToken(token);
@@ -211,9 +229,23 @@
         prepared.boostTerms.indexOf(token) !== -1 ||
         prepared.cluster.indexOf(token) !== -1 ||
         prepared.entities.indexOf(token) !== -1;
+      var semanticTitleMatch = variants.some(function (variant) {
+        return prepared.titleWords.some(function (word) {
+          return word === variant || word.indexOf(variant) === 0;
+        });
+      });
+      var semanticStrongMatch = semanticTitleMatch || variants.some(function (variant) {
+        return prepared.keywords.indexOf(variant) !== -1 ||
+          prepared.queries.indexOf(variant) !== -1 ||
+          prepared.boostTerms.indexOf(variant) !== -1 ||
+          prepared.cluster.indexOf(variant) !== -1 ||
+          prepared.entities.indexOf(variant) !== -1;
+      });
 
       if (exactTitleMatch) exactTitleCoverage += 1;
       if (exactStrongMatch) exactCoverage += 1;
+      if (semanticTitleMatch) semanticTitleCoverage += 1;
+      if (semanticStrongMatch) semanticCoverage += 1;
 
       variants.forEach(function (variant) {
         var variantScore = 0;
@@ -250,6 +282,14 @@
       if (exactCoverage === queryTokens.length) score += 120;
       else if (exactCoverage >= Math.ceil(queryTokens.length * .66)) score += 48;
       else score += exactCoverage * 8;
+
+      if (semanticTitleCoverage === queryTokens.length) score += 170;
+      else if (semanticTitleCoverage >= Math.ceil(queryTokens.length * .66)) score += 72;
+      else score += semanticTitleCoverage * 12;
+
+      if (semanticCoverage === queryTokens.length) score += 95;
+      else if (semanticCoverage >= Math.ceil(queryTokens.length * .66)) score += 38;
+      else score += semanticCoverage * 6;
     }
 
     var minimum = queryTokens.length <= 1 ? 12 : 45 + Math.max(0, queryTokens.length - 2) * 13;
@@ -260,7 +300,9 @@
     var normalizedQuery = normalize(query);
     if (!normalizedQuery) return articles.slice();
     if (rankCache[normalizedQuery]) return rankCache[normalizedQuery];
-    var queryTokens = normalizedQuery.split(/\s+/).filter(function (token) { return token.length > 1; });
+    var queryTokens = normalizedQuery.split(/\s+/).filter(function (token) {
+      return token.length > 1 && !stopWords[token];
+    });
     var rankedArticles = articleSearchIndex.map(function (prepared) {
       return { article: prepared.article, score: articleScore(prepared, normalizedQuery, queryTokens), index: prepared.index };
     }).filter(function (item) {

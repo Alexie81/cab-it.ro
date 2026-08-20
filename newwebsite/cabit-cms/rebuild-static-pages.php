@@ -5,7 +5,7 @@ const PUBLIC_ROOT = __DIR__ . '/..';
 const SITE_ASSET_VERSION = '20260819-4';
 const THEME_CSS_VERSION = '20260819-16';
 const THEME_JS_VERSION = '20260819-20';
-const BLOG_EXPLORER_VERSION = '20260820-18';
+const BLOG_EXPLORER_VERSION = '20260820-20';
 
 function marker(string $path, string $start, string $end, string $fallback = ''): string
 {
@@ -92,6 +92,7 @@ function writePage(string $directory, string $html): void
         mkdir(dirname($path), 0775, true);
     }
     file_put_contents($path, $html);
+    file_put_contents($path . '.gz', gzencode($html, 9));
 }
 
 function icon(string $type): string
