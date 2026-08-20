@@ -796,6 +796,8 @@ body.cabit-theme-2026 .cabit-content-card p,
 body.cabit-theme-2026 .cabit-content-card li { color: var(--ink-soft); }
 body.cabit-theme-2026 .cabit-content-card a { color: var(--teal-dark); }
 body.cabit-theme-2026 .cabit-content-card table { width: 100%; margin: 24px 0; border-collapse: collapse; }
+body.cabit-theme-2026 .cabit-article-table { overflow-x: auto; margin: 24px 0; border: 1px solid var(--line); border-radius: 16px; scrollbar-width: thin; }
+body.cabit-theme-2026 .cabit-article-table table { min-width: 620px; margin: 0; }
 body.cabit-theme-2026 .cabit-content-card th,
 body.cabit-theme-2026 .cabit-content-card td { padding: 12px 14px; border: 1px solid var(--line); text-align: left; }
 body.cabit-theme-2026 .cabit-content-card th { background: var(--surface-teal); }
@@ -804,6 +806,9 @@ body.cabit-theme-2026 .cabit-content-card figure { margin: 28px 0; }
 body.cabit-theme-2026 .cabit-content-card figure img { display: block; border-radius: 18px; }
 body.cabit-theme-2026 .cabit-content-card figcaption { margin-top: 8px; color: var(--muted); font-size: 12px; text-align: center; }
 body.cabit-theme-2026 .cabit-rich-note { margin: 22px 0; padding: 20px; border-left: 4px solid var(--teal); border-radius: 0 14px 14px 0; background: var(--surface-teal); }
+body.cabit-theme-2026 .cabit-local-transparency { margin: 20px 0 26px; padding: 18px 20px; border: 1px solid rgba(15,118,110,.22); border-radius: 16px; background: linear-gradient(135deg,#f5fbfa,#eef8f7); }
+body.cabit-theme-2026 .cabit-local-transparency span { display: block; margin-bottom: 6px; color: var(--teal-dark); font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+body.cabit-theme-2026 .cabit-local-transparency p { margin: 0; color: var(--ink-soft); font-size: 15px; line-height: 1.65; }
 body.cabit-theme-2026 .cabit-rich-cta { margin: 26px 0; padding: 25px; border-radius: 18px; color: #fff; background: linear-gradient(135deg,var(--teal-deep),var(--teal)); }
 body.cabit-theme-2026 .cabit-rich-cta h2,
 body.cabit-theme-2026 .cabit-rich-cta h3,
@@ -3682,6 +3687,145 @@ body.cabit-page-article .cabit-article-content p a {
 }
 @media (prefers-reduced-motion: reduce) {
   .cabit-article-final-cta__visual i,.cabit-article-final-cta__visual strong,.cabit-article-final-cta__visual b,.cabit-smart-related-card img { animation: none; transition: none; }
+}
+
+/* Intentional visual system for articles that do not have individual artwork. */
+.cabit-article-visual {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: 40 / 21;
+  overflow: hidden;
+}
+.cabit-article-visual.has-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.cabit-article-visual.is-fallback {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% 14%,rgba(255,255,255,.2),transparent 22%),
+    linear-gradient(140deg,#064742,#00a99d);
+}
+.cabit-article-visual.is-fallback::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 10px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 20px;
+}
+.cabit-article-visual.is-fallback::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -13%;
+  bottom: -52%;
+  width: 68%;
+  aspect-ratio: 1;
+  border: 34px solid rgba(255,255,255,.1);
+  border-radius: 50%;
+}
+.cabit-article-visual.is-fallback > span {
+  position: absolute;
+  top: 24px;
+  left: 26px;
+  font: 800 10px/1 Manrope,Inter,sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.cabit-article-visual.is-fallback > strong {
+  position: absolute;
+  left: 26px;
+  bottom: 23px;
+  max-width: 62%;
+  color: #fff;
+  font: 800 clamp(18px,2vw,27px)/1.05 Manrope,Inter,sans-serif;
+}
+.cabit-article-visual.is-fallback > svg {
+  width: clamp(76px,28%,116px);
+  height: auto;
+  margin-left: 28%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 12px 25px rgba(0,0,0,.16));
+}
+.cabit-article-visual.is-fallback > i,
+.cabit-article-visual.is-fallback > b {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+}
+.cabit-article-visual.is-fallback > i { width: 54px; height: 54px; right: 15%; top: 14%; }
+.cabit-article-visual.is-fallback > b { width: 16px; height: 16px; right: 11%; top: 43%; }
+.cabit-article-visual.is-theme-commerce { background: radial-gradient(circle at 82% 12%,rgba(255,255,255,.2),transparent 23%),linear-gradient(140deg,#164e63,#0ea5a4); }
+.cabit-article-visual.is-theme-local { background: radial-gradient(circle at 82% 12%,rgba(255,255,255,.18),transparent 23%),linear-gradient(140deg,#075985,#14b8a6); }
+.cabit-article-visual.is-theme-ads { background: radial-gradient(circle at 82% 12%,rgba(255,255,255,.18),transparent 23%),linear-gradient(140deg,#7c2d12,#ea7c2b); }
+.cabit-article-visual.is-theme-ai { background: radial-gradient(circle at 82% 12%,rgba(255,255,255,.18),transparent 23%),linear-gradient(140deg,#312e81,#06b6d4); }
+.cabit-article-visual.is-theme-analytics { background: radial-gradient(circle at 82% 12%,rgba(255,255,255,.18),transparent 23%),linear-gradient(140deg,#164e63,#3b82f6); }
+.cabit-article-visual.is-theme-seo { background: radial-gradient(circle at 82% 12%,rgba(255,255,255,.18),transparent 23%),linear-gradient(140deg,#064e3b,#10b981); }
+.cabit-article-visual.is-theme-web { background: radial-gradient(circle at 82% 12%,rgba(255,255,255,.18),transparent 23%),linear-gradient(140deg,#0f3d56,#00a99d); }
+.cabit-article-visual.is-theme-strategy { background: radial-gradient(circle at 82% 12%,rgba(255,255,255,.18),transparent 23%),linear-gradient(140deg,#374151,#0f766e); }
+.cabit-blog-card > .cabit-blog-card__link { height: 100%; margin-top: 0; }
+.cabit-blog-card__body { display: flex; flex: 1; flex-direction: column; }
+.cabit-blog-card__body .cabit-text-link { margin-top: auto; padding-top: 18px; }
+.cabit-blog-card__priority {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  margin: -3px 0 14px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(135deg,#075e59,#00a99d);
+  font: 800 9px/1 Manrope,Inter,sans-serif;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 18px rgba(0,169,157,.2);
+}
+.cabit-blog-card.is-home-priority { border-color: rgba(0,169,157,.48); box-shadow: 0 19px 42px rgba(0,91,85,.15); }
+.cabit-blog-card.is-home-priority .cabit-article-visual::after { content: "Alegerea CAB-IT"; position: absolute; right: 15px; bottom: 15px; padding: 8px 11px; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; color: #fff; background: rgba(3,43,41,.72); backdrop-filter: blur(9px); font: 800 9px/1 Manrope,Inter,sans-serif; letter-spacing: .05em; text-transform: uppercase; }
+.cabit-editorial-hero figure .cabit-article-visual--hero { min-height: 430px; height: 430px; aspect-ratio: auto; }
+.cabit-editorial-hero figure.has-fallback-visual { border-color: rgba(0,169,157,.16); }
+.cabit-editorial-hero .cabit-article-visual--hero.is-fallback { padding: 48px; }
+.cabit-editorial-hero .cabit-article-visual--hero.is-fallback > span { top: 45px; left: 48px; font-size: 12px; }
+.cabit-editorial-hero .cabit-article-visual--hero.is-fallback > strong { left: 48px; bottom: 44px; font-size: clamp(30px,4vw,52px); }
+.cabit-editorial-hero .cabit-article-visual--hero.is-fallback > svg { width: clamp(140px,32%,220px); }
+.cabit-smart-related-card figure .cabit-article-visual { height: 100%; aspect-ratio: auto; }
+.cabit-smart-related-card.has-fallback-visual figure { border-bottom: 1px solid rgba(0,169,157,.16); }
+.cabit-blog-suggestion__fallback {
+  width: 48px;
+  height: 42px;
+  flex: 0 0 48px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 11px;
+  color: #fff;
+  background: linear-gradient(140deg,#075e59,#00a99d);
+}
+.cabit-blog-suggestion__fallback.is-theme-ads { background: linear-gradient(140deg,#7c2d12,#ea7c2b); }
+.cabit-blog-suggestion__fallback.is-theme-ai { background: linear-gradient(140deg,#312e81,#06b6d4); }
+.cabit-blog-suggestion__fallback.is-theme-commerce { background: linear-gradient(140deg,#164e63,#0ea5a4); }
+.cabit-blog-suggestion__fallback.is-theme-analytics { background: linear-gradient(140deg,#164e63,#3b82f6); }
+.cabit-blog-suggestion__fallback svg { width: 29px; height: 24px; fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (max-width: 760px) {
+  .cabit-article-visual.is-fallback > span { top: 18px; left: 20px; }
+  .cabit-article-visual.is-fallback > strong { left: 20px; bottom: 18px; }
+  .cabit-editorial-hero figure .cabit-article-visual--hero { min-height: 300px; height: 300px; }
+  .cabit-editorial-hero .cabit-article-visual--hero.is-fallback > span { top: 28px; left: 28px; }
+  .cabit-editorial-hero .cabit-article-visual--hero.is-fallback > strong { left: 28px; bottom: 28px; }
 }
 
 @media (min-width: 961px) and (max-width: 1120px) {

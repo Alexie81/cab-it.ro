@@ -323,7 +323,7 @@ function cms_write_file(string $path, string $content): void
 
 function cms_gzip_file(string $path): void
 {
-    if (!is_file($path) || !preg_match('/\.(?:html|xml)$/', $path)) {
+    if (!is_file($path) || !preg_match('/\.(?:html|xml|json|css|js)$/', $path)) {
         return;
     }
     $content = file_get_contents($path);
@@ -346,6 +346,22 @@ function cms_relative_asset(?string $path, int $depth = 2): string
 function cms_json(array $data): string
 {
     return (string) json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+}
+
+function cms_article_datetime(string $value): DateTimeImmutable
+{
+    $timezone = new DateTimeZone('Europe/Bucharest');
+    try {
+        return (new DateTimeImmutable($value, $timezone))->setTimezone($timezone);
+    } catch (Throwable) {
+        return new DateTimeImmutable('now', $timezone);
+    }
+}
+
+function cms_article_date_label(string $value): string
+{
+    $format = preg_match('/T\d{2}:\d{2}/', $value) ? 'd.m.Y, H:i' : 'd.m.Y';
+    return cms_article_datetime($value)->format($format);
 }
 
 function cms_google_tag_head(): string
@@ -422,6 +438,101 @@ function cms_article_metadata(array $article): array
     return is_array($metadata) ? $metadata : [];
 }
 
+function cms_article_has_cover_image(array $article): bool
+{
+    $path = trim((string) ($article['cover_image'] ?? ''));
+    if ($path === '') {
+        return false;
+    }
+    if (preg_match('~^https?://~i', $path)) {
+        return true;
+    }
+    return is_file(CABIT_PUBLIC_ROOT . '/' . ltrim($path, '/'));
+}
+
+function cms_article_image_url(array $article): string
+{
+    if (!cms_article_has_cover_image($article)) {
+        return '';
+    }
+    $path = (string) $article['cover_image'];
+    return preg_match('~^https?://~i', $path) ? $path : CABIT_SITE_URL . '/' . ltrim($path, '/');
+}
+
+function cms_article_visual_theme(array $article, array $metadata = []): string
+{
+    $parts = [
+        (string) ($article['title'] ?? ''),
+        (string) ($metadata['cluster'] ?? ''),
+        (string) ($metadata['pillar'] ?? ''),
+        (string) ($metadata['primary_keyword'] ?? ''),
+        implode(' ', array_map('strval', is_array($metadata['secondary_keywords'] ?? null) ? $metadata['secondary_keywords'] : [])),
+    ];
+    $text = mb_strtolower(implode(' ', $parts), 'UTF-8');
+    if (preg_match('/magazin|e[ -]?commerce|shopify|woocommerce|shopping|checkout|produs/u', $text)) {
+        return 'commerce';
+    }
+    if (preg_match('/seo local|google business|google maps|căutări locale|cautari locale|recenzii locale/u', $text)) {
+        return 'local';
+    }
+    if (preg_match('/google ads|meta ads|facebook ads|tiktok|reclame|promovare online|paid media|performance max/u', $text)) {
+        return 'ads';
+    }
+    if (preg_match('/inteligen|\bai\b|chatbot|automatizare|agent ai|machine learning/u', $text)) {
+        return 'ai';
+    }
+    if (preg_match('/analytics|tracking|măsur|masur|conversi|crm|lead|atribuire|tag manager/u', $text)) {
+        return 'analytics';
+    }
+    if (preg_match('/\bseo\b|search|indexare|cuvinte.cheie|link building|organic/u', $text)) {
+        return 'seo';
+    }
+    if (preg_match('/website|site web|wordpress|web design|ux|ui|landing page|redesign/u', $text)) {
+        return 'web';
+    }
+    return 'strategy';
+}
+
+function cms_article_visual_icon(string $theme): string
+{
+    return match ($theme) {
+        'commerce' => '<svg viewBox="0 0 96 72" aria-hidden="true"><path d="M25 24h48l-4 37H29z"/><path d="M36 27c0-11 5-17 12-17s12 6 12 17"/><path d="M37 43h22M48 34v18"/></svg>',
+        'local' => '<svg viewBox="0 0 96 72" aria-hidden="true"><path d="M18 58h60M24 58V31l24-13 24 13v27"/><path d="M34 39h8m12 0h8M34 49h8m12 0h8"/><circle cx="69" cy="18" r="9"/><path d="m76 25 8 8"/></svg>',
+        'ads' => '<svg viewBox="0 0 96 72" aria-hidden="true"><circle cx="43" cy="36" r="24"/><circle cx="43" cy="36" r="14"/><circle cx="43" cy="36" r="4"/><path d="m61 20 18-10-7 20-11-10Z"/></svg>',
+        'ai' => '<svg viewBox="0 0 96 72" aria-hidden="true"><rect x="24" y="15" width="48" height="42" rx="12"/><circle cx="39" cy="35" r="4"/><circle cx="57" cy="35" r="4"/><path d="M37 47h22M48 15V7M18 28h6m48 0h6M18 45h6m48 0h6"/></svg>',
+        'analytics' => '<svg viewBox="0 0 96 72" aria-hidden="true"><path d="M18 58h62M24 54V41h12v13m8 0V29h12v25m8 0V17h12v37"/><path d="m24 33 15-10 14 4 22-17"/></svg>',
+        'seo' => '<svg viewBox="0 0 96 72" aria-hidden="true"><circle cx="39" cy="32" r="20"/><path d="m54 47 21 17M29 36l8-8 7 6 12-14"/></svg>',
+        'web' => '<svg viewBox="0 0 96 72" aria-hidden="true"><rect x="12" y="12" width="62" height="43" rx="7"/><path d="M12 23h62M22 18h1m7 0h1m7 0h1M31 62h24M43 55v7"/><rect x="63" y="31" width="22" height="35" rx="5"/></svg>',
+        default => '<svg viewBox="0 0 96 72" aria-hidden="true"><circle cx="24" cy="36" r="8"/><circle cx="48" cy="18" r="8"/><circle cx="72" cy="36" r="8"/><circle cx="48" cy="56" r="8"/><path d="m30 31 12-9m12 0 12 9m0 10-12 11m-12 0L30 41"/></svg>',
+    };
+}
+
+function cms_article_visual_markup(array $article, array $metadata, int $depth, string $context = 'card'): string
+{
+    $imageAlt = trim((string) ($metadata['image_alt'] ?? $article['title'] ?? 'Articol CAB-IT'));
+    if (cms_article_has_cover_image($article)) {
+        return '<div class="cabit-article-visual cabit-article-visual--' . cms_e($context) . ' has-image"><img src="' . cms_e(cms_relative_asset((string) $article['cover_image'], $depth)) . '" alt="' . cms_e($imageAlt) . '" width="1200" height="630" loading="' . ($context === 'hero' ? 'eager' : 'lazy') . '" decoding="async"></div>';
+    }
+    $theme = cms_article_visual_theme($article, $metadata);
+    $labels = ['commerce' => 'E-commerce', 'local' => 'SEO local', 'ads' => 'Promovare', 'ai' => 'AI & automatizare', 'analytics' => 'Date & conversii', 'seo' => 'SEO', 'web' => 'Web design', 'strategy' => 'Strategie digitală'];
+    $label = $labels[$theme] ?? $labels['strategy'];
+    return '<div class="cabit-article-visual cabit-article-visual--' . cms_e($context) . ' is-fallback is-theme-' . cms_e($theme) . '" role="img" aria-label="Reprezentare vizuală CAB-IT pentru ' . cms_e((string) ($article['title'] ?? $label)) . '"><span>Ghid CAB-IT</span>' . cms_article_visual_icon($theme) . '<strong>' . cms_e($label) . '</strong><i aria-hidden="true"></i><b aria-hidden="true"></b></div>';
+}
+
+function cms_article_card_markup(array $article, int $depth = 1, bool $priority = false): string
+{
+    $metadata = cms_article_metadata($article);
+    $label = trim((string) ($metadata['cluster'] ?? 'Articol'));
+    $city = trim((string) ($metadata['city'] ?? ''));
+    if ($city !== '' && mb_stripos($label, $city, 0, 'UTF-8') === false) {
+        $label .= ' · ' . $city;
+    }
+    $date = cms_article_date_label((string) $article['date_published']);
+    $classes = 'cabit-blog-card' . ($priority ? ' is-home-priority' : '') . (cms_article_has_cover_image($article) ? ' has-cover-image' : ' has-fallback-visual');
+    $priorityBadge = $priority ? '<span class="cabit-blog-card__priority">Recomandat CAB-IT</span>' : '';
+    return '<article class="' . $classes . '"><a class="cabit-blog-card__link" href="/blog/' . cms_e($article['slug']) . '/">' . cms_article_visual_markup($article, $metadata, $depth, 'card') . '<div class="cabit-blog-card__body">' . $priorityBadge . '<div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><span class="cabit-text-link">Citește articolul <span aria-hidden="true">→</span></span></div></a></article>';
+}
+
 function cms_article_metadata_related(array $metadata): string
 {
     $items = [];
@@ -478,7 +589,9 @@ function cms_smart_article_recommendations(array $article, array $metadata): str
     $cluster = trim((string) ($metadata['cluster'] ?? ''));
     $sourceKeywords = array_values(array_filter(array_merge(
         [(string) ($metadata['primary_keyword'] ?? '')],
-        array_map('strval', is_array($metadata['secondary_keywords'] ?? null) ? $metadata['secondary_keywords'] : [])
+        array_map('strval', is_array($metadata['secondary_keywords'] ?? null) ? $metadata['secondary_keywords'] : []),
+        array_map('strval', is_array($metadata['queries'] ?? null) ? $metadata['queries'] : []),
+        array_map('strval', is_array($metadata['entities'] ?? null) ? $metadata['entities'] : [])
     )));
     $sourceTokens = cms_recommendation_tokens((string) $article['title'] . ' ' . implode(' ', $sourceKeywords));
     $curatedUrls = [];
@@ -494,11 +607,22 @@ function cms_smart_article_recommendations(array $article, array $metadata): str
         $candidateCluster = trim((string) ($candidateMetadata['cluster'] ?? ''));
         $candidateKeywords = array_values(array_filter(array_merge(
             [(string) ($candidateMetadata['primary_keyword'] ?? '')],
-            array_map('strval', is_array($candidateMetadata['secondary_keywords'] ?? null) ? $candidateMetadata['secondary_keywords'] : [])
+            array_map('strval', is_array($candidateMetadata['secondary_keywords'] ?? null) ? $candidateMetadata['secondary_keywords'] : []),
+            array_map('strval', is_array($candidateMetadata['queries'] ?? null) ? $candidateMetadata['queries'] : []),
+            array_map('strval', is_array($candidateMetadata['entities'] ?? null) ? $candidateMetadata['entities'] : [])
         )));
         $candidateTokens = cms_recommendation_tokens((string) $candidate['title'] . ' ' . implode(' ', $candidateKeywords));
         $candidateUrl = '/blog/' . $candidate['slug'] . '/';
-        $score = ($cluster !== '' && $cluster === $candidateCluster) ? 90 : 0;
+        $score = ($cluster !== '' && $cluster === $candidateCluster) ? 60 : 0;
+        if (($metadata['city'] ?? '') !== '' && ($metadata['city'] ?? '') === ($candidateMetadata['city'] ?? '')) {
+            $score += 120;
+        }
+        if (($metadata['industry'] ?? '') !== '' && ($metadata['industry'] ?? '') === ($candidateMetadata['industry'] ?? '')) {
+            $score += 70;
+        }
+        if (($metadata['angle'] ?? '') !== '' && ($metadata['angle'] ?? '') === ($candidateMetadata['angle'] ?? '')) {
+            $score += 35;
+        }
         $score += count(array_intersect($sourceTokens, $candidateTokens)) * 14;
         if (isset($curatedUrls[$candidateUrl])) {
             $score += 180 + ($curatedUrls[$candidateUrl] * 10);
@@ -519,10 +643,8 @@ function cms_smart_article_recommendations(array $article, array $metadata): str
     foreach (array_slice($ranked, 0, 3) as $recommendation) {
         $candidate = $recommendation['article'];
         $candidateMetadata = $recommendation['metadata'];
-        $image = cms_relative_asset((string) $candidate['cover_image'], 2);
-        $imageAlt = (string) ($candidateMetadata['image_alt'] ?? $candidate['title']);
         $candidateCluster = (string) ($candidateMetadata['cluster'] ?? 'Ghid CAB-IT');
-        $cards .= '<a class="cabit-smart-related-card" href="/blog/' . cms_e($candidate['slug']) . '/"><figure><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"></figure><span>' . cms_e($candidateCluster) . '</span><strong>' . cms_e($candidate['title']) . '</strong><small>Citește ghidul <b aria-hidden="true">→</b></small></a>';
+        $cards .= '<a class="cabit-smart-related-card' . (cms_article_has_cover_image($candidate) ? ' has-cover-image' : ' has-fallback-visual') . '" href="/blog/' . cms_e($candidate['slug']) . '/"><figure>' . cms_article_visual_markup($candidate, $candidateMetadata, 2, 'related') . '</figure><span>' . cms_e($candidateCluster) . '</span><strong>' . cms_e($candidate['title']) . '</strong><small>Citește ghidul <b aria-hidden="true">→</b></small></a>';
     }
 
     if ($cards === '') {
@@ -540,13 +662,15 @@ function cms_article_page(array $article): string
     $seoTitle = cms_e($article['seo_title']);
     $description = cms_e($article['meta_description']);
     $slug = cms_e($article['slug']);
-    $image = cms_relative_asset($article['cover_image'], 2);
-    $imageUrl = str_starts_with((string) $article['cover_image'], 'http') ? (string) $article['cover_image'] : CABIT_SITE_URL . '/' . ltrim((string) $article['cover_image'], '/');
+    $hasImage = cms_article_has_cover_image($article);
+    $imageUrl = cms_article_image_url($article);
     $imageAlt = (string) ($metadata['image_alt'] ?? $article['title']);
     $cluster = trim((string) ($metadata['cluster'] ?? 'Ghid CAB-IT Expert'));
     $articleUrl = CABIT_SITE_URL . '/blog/' . $article['slug'] . '/';
-    $publishedDate = date('d.m.Y', strtotime((string) $article['date_published']));
-    $modifiedIso = max(substr((string) $article['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE);
+    $publishedDate = cms_article_date_label((string) $article['date_published']);
+    $modifiedIso = substr((string) $article['updated_at'], 0, 10) >= CABIT_SEO_RELEASE_DATE
+        ? (string) $article['updated_at']
+        : CABIT_SEO_RELEASE_DATE;
     $modifiedDate = date('d.m.Y', strtotime($modifiedIso));
     $keywords = array_values(array_unique(array_filter(array_merge(
         [(string) ($metadata['primary_keyword'] ?? '')],
@@ -566,7 +690,6 @@ function cms_article_page(array $article): string
         '@type' => 'BlogPosting', '@id' => $articleUrl . '#article', 'headline' => $article['title'],
         'description' => $article['meta_description'], 'url' => $articleUrl,
         'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $articleUrl],
-        'image' => ['@type' => 'ImageObject', '@id' => $articleUrl . '#primaryimage', 'url' => $imageUrl, 'contentUrl' => $imageUrl, 'width' => 1200, 'height' => 630, 'caption' => $imageAlt],
         'datePublished' => $article['date_published'], 'dateModified' => $modifiedIso,
         'author' => $authorSchema,
         'publisher' => ['@type' => 'Organization', '@id' => CABIT_SITE_URL . '/#organization', 'name' => 'CAB-IT Expert', 'url' => CABIT_SITE_URL . '/', 'logo' => ['@type' => 'ImageObject', 'url' => CABIT_SITE_URL . '/assets/img/brand/cab-it-c-symbol-app-v7.png', 'width' => 192, 'height' => 192]],
@@ -575,9 +698,18 @@ function cms_article_page(array $article): string
         'wordCount' => count($wordMatches[0]),
         'inLanguage' => 'ro-RO',
     ];
+    if ($hasImage) {
+        $articleSchema['image'] = ['@type' => 'ImageObject', '@id' => $articleUrl . '#primaryimage', 'url' => $imageUrl, 'contentUrl' => $imageUrl, 'width' => 1200, 'height' => 630, 'caption' => $imageAlt];
+    }
     if ($keywords) {
         $articleSchema['keywords'] = $keywords;
         $articleSchema['about'] = array_map(static fn(string $keyword): array => ['@type' => 'Thing', 'name' => $keyword], array_slice($keywords, 0, 6));
+    }
+    if (trim((string) ($metadata['city'] ?? '')) !== '') {
+        $articleSchema['spatialCoverage'] = [
+            '@type' => 'Place',
+            'name' => trim((string) $metadata['city']) . ', România',
+        ];
     }
     $schemaGraph = [
         $articleSchema,
@@ -606,11 +738,14 @@ function cms_article_page(array $article): string
         ? '<section class="cabit-author-card" id="autor"><span class="cabit-author-card__avatar" aria-hidden="true">AP</span><div><span>Autor și revizie editorială</span><h2>' . cms_e($authorName) . '</h2><p><strong>' . cms_e($authorRole) . '.</strong> ' . cms_e($authorBio) . '</p><a href="/despre-noi/#alexie-popescu">Despre autor și metodologia editorială →</a></div></section>'
         : '';
     $related = cms_smart_article_recommendations($article, $metadata);
+    $socialImageMeta = $hasImage
+        ? '<meta property="og:image" content="' . cms_e($imageUrl) . '"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="' . cms_e($imageAlt) . '"><meta name="twitter:card" content="summary_large_image">'
+        : '<meta name="twitter:card" content="summary">';
     return '<!doctype html><html lang="ro-RO"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' .
         '<title>' . $seoTitle . '</title><meta name="description" content="' . $description . '"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">' .
-        '<link rel="canonical" href="' . $articleUrl . '">' . cms_agent_discovery_head() . '<meta property="og:type" content="article"><meta property="og:title" content="' . $seoTitle . '"><meta property="og:description" content="' . $description . '"><meta property="og:url" content="' . $articleUrl . '"><meta property="og:image" content="' . cms_e($imageUrl) . '"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="' . cms_e($imageAlt) . '"><meta property="article:published_time" content="' . cms_e($article['date_published']) . '"><meta property="article:modified_time" content="' . cms_e($modifiedIso) . '"><meta name="twitter:card" content="summary_large_image">' .
-        '<link rel="shortcut icon" type="image/png" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../../site.webmanifest"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260819-4"><link rel="stylesheet" href="../../assets/css/cabit-next.min.css?v=20260819-15"><script type="application/ld+json">' . $schema . '</script>' . cms_google_tag_head() . '</head><body class="cabit-theme-2026 cabit-page-article cabit-inner-page">' . cms_google_tag_body() .
-        '<main><article><nav class="cabit-article-breadcrumb" aria-label="Breadcrumb"><a href="/">Acasă</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>' . $title . '</span></nav><header class="cabit-page-header cabit-editorial-hero"><div class="container"><div><span class="cabit-eyebrow">' . cms_e($cluster) . '</span><h1>' . $title . '</h1><p>' . cms_e($article['excerpt']) . '</p><p class="cabit-article-date">Publicat la <time datetime="' . cms_e($article['date_published']) . '">' . cms_e($publishedDate) . '</time> · actualizat la <time datetime="' . cms_e($modifiedIso) . '">' . cms_e($modifiedDate) . '</time> · scris și revizuit de <a href="' . cms_e(parse_url($authorUrl, PHP_URL_PATH) . (parse_url($authorUrl, PHP_URL_FRAGMENT) ? '#' . parse_url($authorUrl, PHP_URL_FRAGMENT) : '')) . '">' . cms_e($authorName) . '</a></p></div><figure><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="1200" height="630" fetchpriority="high" decoding="async"></figure></div></header>' .
+        '<link rel="canonical" href="' . $articleUrl . '"><link rel="alternate" type="application/rss+xml" title="Blog CAB-IT Expert" href="' . CABIT_SITE_URL . '/feed.xml">' . cms_agent_discovery_head() . '<meta property="og:type" content="article"><meta property="og:title" content="' . $seoTitle . '"><meta property="og:description" content="' . $description . '"><meta property="og:url" content="' . $articleUrl . '">' . $socialImageMeta . '<meta property="article:published_time" content="' . cms_e($article['date_published']) . '"><meta property="article:modified_time" content="' . cms_e($modifiedIso) . '">' .
+        '<link rel="shortcut icon" type="image/png" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="48x48" href="../../assets/img/brand/cab-it-c-symbol-tab-v7.png"><link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="apple-touch-icon" sizes="192x192" href="../../assets/img/brand/cab-it-c-symbol-app-v7.png"><link rel="manifest" href="../../site.webmanifest"><link rel="stylesheet" href="../../assets/css/site.min.css?v=20260819-4"><link rel="stylesheet" href="../../assets/css/cabit-next.min.css?v=20260820-1"><script type="application/ld+json">' . $schema . '</script>' . cms_google_tag_head() . '</head><body class="cabit-theme-2026 cabit-page-article cabit-inner-page">' . cms_google_tag_body() .
+        '<main><article><nav class="cabit-article-breadcrumb" aria-label="Breadcrumb"><a href="/">Acasă</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>' . $title . '</span></nav><header class="cabit-page-header cabit-editorial-hero"><div class="container"><div><span class="cabit-eyebrow">' . cms_e($cluster) . '</span><h1>' . $title . '</h1><p>' . cms_e($article['excerpt']) . '</p><p class="cabit-article-date">Publicat la <time datetime="' . cms_e($article['date_published']) . '">' . cms_e($publishedDate) . '</time> · actualizat la <time datetime="' . cms_e($modifiedIso) . '">' . cms_e($modifiedDate) . '</time> · scris și revizuit de <a href="' . cms_e(parse_url($authorUrl, PHP_URL_PATH) . (parse_url($authorUrl, PHP_URL_FRAGMENT) ? '#' . parse_url($authorUrl, PHP_URL_FRAGMENT) : '')) . '">' . cms_e($authorName) . '</a></p></div><figure class="' . ($hasImage ? 'has-cover-image' : 'has-fallback-visual') . '">' . cms_article_visual_markup($article, $metadata, 2, 'hero') . '</figure></div></header>' .
         '<section class="cabit-content-section"><div class="container cabit-case-layout"><div><div class="cabit-content-card cabit-article-content">' . $article['content'] . '</div>' . $authorCard . '</div><aside class="cabit-sticky-aside"><div class="cabit-note"><strong>Ai nevoie de o strategie aplicată?</strong><p>Analizăm obiectivul, website-ul și canalele potrivite afacerii tale.</p><a class="button button-primary" href="/contact/">Hai să discutăm</a></div><a class="cabit-text-link" href="/blog/">← Toate articolele</a></aside></div></section>' . $related . '<section class="cabit-inner-cta section-shell cabit-article-final-cta"><div class="cabit-article-final-cta__copy"><span>Ai găsit răspunsul?</span><h2>Transformă ideea într-un plan clar.</h2><p>Discutăm obiectivul, alegem pașii potriviți și stabilim ce merită măsurat.</p><a class="button button-primary" href="/contact/">Hai să construim planul <b aria-hidden="true">→</b></a></div><div class="cabit-article-final-cta__visual" aria-hidden="true"><i></i><i></i><i></i><strong>?</strong><b>✓</b></div></section></article></main>' .
         '<script src="../../assets/js/site-enhancements.js?v=20260819-4"></script><script defer src="../../assets/js/cabit-next.min.js?v=20260819-20"></script></body></html>';
 }
@@ -685,7 +820,7 @@ function cms_replace_marked_content(string $path, string $startMarker, string $e
 
 function cms_update_blog_index(PDO $pdo): void
 {
-    $articles = $pdo->query('SELECT * FROM articles ORDER BY created_at DESC, id DESC')->fetchAll();
+    $articles = $pdo->query('SELECT * FROM articles ORDER BY date_published DESC, created_at DESC, id DESC')->fetchAll();
     $blogSchema = [
         '@context' => 'https://schema.org',
         '@type' => 'Blog',
@@ -695,26 +830,24 @@ function cms_update_blog_index(PDO $pdo): void
         'publisher' => ['@id' => CABIT_SITE_URL . '/#organization'],
         'inLanguage' => 'ro-RO',
         'blogPost' => array_map(static function (array $article): array {
-            $image = str_starts_with((string) $article['cover_image'], 'http') ? (string) $article['cover_image'] : CABIT_SITE_URL . '/' . ltrim((string) $article['cover_image'], '/');
-            return [
+            $post = [
                 '@type' => 'BlogPosting',
                 'headline' => $article['title'],
                 'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
                 'datePublished' => $article['date_published'],
                 'dateModified' => max(substr((string) $article['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE),
-                'image' => $image,
             ];
+            $image = cms_article_image_url($article);
+            if ($image !== '') {
+                $post['image'] = $image;
+            }
+            return $post;
         }, array_slice($articles, 0, 10)),
     ];
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_SCHEMA_START -->', '<!-- CMS_BLOG_SCHEMA_END -->', '<script type="application/ld+json">' . cms_json($blogSchema) . '</script>');
     $cards = [];
     foreach (array_slice($articles, 0, 10) as $article) {
-        $metadata = cms_article_metadata($article);
-        $image = cms_relative_asset($article['cover_image'], 1);
-        $imageAlt = (string) ($metadata['image_alt'] ?? $article['title']);
-        $label = (string) ($metadata['cluster'] ?? 'Articol');
-        $date = date('d.m.Y', strtotime((string) $article['date_published']));
-        $cards[] = '<article class="cabit-blog-card"><a class="cabit-blog-card__link" href="/blog/' . cms_e($article['slug']) . '/"><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><span class="cabit-text-link">Citește articolul <span aria-hidden="true">→</span></span></div></a></article>';
+        $cards[] = cms_article_card_markup($article, 1);
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/blog/index.html', '<!-- CMS_BLOG_CARDS_START -->', '<!-- CMS_BLOG_CARDS_END -->', implode("\n", $cards));
 
@@ -722,14 +855,20 @@ function cms_update_blog_index(PDO $pdo): void
     $knowledgeEntries = [];
     foreach ($articles as $article) {
         $metadata = cms_article_metadata($article);
-        $coverImage = (string) ($article['cover_image'] ?? '');
-        $image = preg_match('~^https?://~i', $coverImage) ? $coverImage : '/' . ltrim($coverImage, '/');
+        $coverImage = trim((string) ($article['cover_image'] ?? ''));
+        $image = cms_article_has_cover_image($article)
+            ? (preg_match('~^https?://~i', $coverImage) ? $coverImage : '/' . ltrim($coverImage, '/'))
+            : '';
         $contentText = html_entity_decode(strip_tags((string) ($article['content'] ?? '')), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $contentText = trim((string) preg_replace('/\s+/u', ' ', $contentText));
         $searchText = function_exists('mb_substr') ? mb_substr($contentText, 0, 1600, 'UTF-8') : substr($contentText, 0, 1600);
         $secondaryKeywords = is_array($metadata['secondary_keywords'] ?? null) ? array_values(array_map('strval', $metadata['secondary_keywords'])) : [];
         $primaryKeyword = trim((string) ($metadata['primary_keyword'] ?? ''));
         $keywords = array_values(array_filter(array_merge([$primaryKeyword], $secondaryKeywords)));
+        $queries = is_array($metadata['queries'] ?? null) ? array_values(array_map('strval', $metadata['queries'])) : [];
+        $entities = is_array($metadata['entities'] ?? null) ? array_values(array_map('strval', $metadata['entities'])) : [];
+        $semanticTerms = is_array($metadata['semantic_terms'] ?? null) ? array_values(array_map('strval', $metadata['semantic_terms'])) : [];
+        $boostTerms = is_array($metadata['boost_terms'] ?? null) ? array_values(array_map('strval', $metadata['boost_terms'])) : [];
         $entry = [
             'title' => (string) $article['title'],
             'slug' => (string) $article['slug'],
@@ -737,10 +876,21 @@ function cms_update_blog_index(PDO $pdo): void
             'excerpt' => (string) $article['excerpt'],
             'cluster' => (string) ($metadata['cluster'] ?? 'Articol'),
             'keywords' => $keywords,
+            'queries' => $queries,
+            'entities' => $entities,
+            'semantic_terms' => $semanticTerms,
+            'boost_terms' => $boostTerms,
+            'city' => (string) ($metadata['city'] ?? ''),
+            'county' => (string) ($metadata['county'] ?? ''),
+            'region' => (string) ($metadata['region'] ?? ''),
+            'industry' => (string) ($metadata['industry'] ?? ''),
+            'angle' => (string) ($metadata['angle'] ?? ''),
+            'direct_answer' => (string) ($metadata['direct_answer'] ?? ''),
             'date' => (string) $article['date_published'],
             'date_label' => date('d.m.Y', strtotime((string) $article['date_published'])),
             'image' => $image,
             'image_alt' => (string) ($metadata['image_alt'] ?? $article['title']),
+            'topic' => cms_article_visual_theme($article, $metadata),
             'search_text' => $searchText,
         ];
         $searchEntries[] = $entry;
@@ -751,6 +901,13 @@ function cms_update_blog_index(PDO $pdo): void
             'summary' => (string) $article['excerpt'],
             'cluster' => $entry['cluster'],
             'keywords' => $keywords,
+            'queries' => $queries,
+            'entities' => $entities,
+            'city' => $entry['city'],
+            'county' => $entry['county'],
+            'region' => $entry['region'],
+            'industry' => $entry['industry'],
+            'direct_answer' => $entry['direct_answer'],
             'published' => (string) $article['date_published'],
             'updated' => max(substr((string) $article['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE),
             'content' => $contentText,
@@ -777,14 +934,61 @@ function cms_update_blog_index(PDO $pdo): void
         'documents' => $knowledgeEntries,
     ]));
 
+    $rssItems = '';
+    foreach (array_slice($articles, 0, 50) as $article) {
+        $url = CABIT_SITE_URL . '/blog/' . rawurlencode((string) $article['slug']) . '/';
+        $published = cms_article_datetime((string) $article['date_published'])->format(DATE_RSS);
+        $rssItems .= "    <item>\n"
+            . '      <title>' . htmlspecialchars((string) $article['title'], ENT_XML1, 'UTF-8') . "</title>\n"
+            . '      <link>' . htmlspecialchars($url, ENT_XML1, 'UTF-8') . "</link>\n"
+            . '      <guid isPermaLink="true">' . htmlspecialchars($url, ENT_XML1, 'UTF-8') . "</guid>\n"
+            . '      <pubDate>' . htmlspecialchars($published, ENT_XML1, 'UTF-8') . "</pubDate>\n"
+            . '      <description>' . htmlspecialchars((string) $article['excerpt'], ENT_XML1, 'UTF-8') . "</description>\n"
+            . "    </item>\n";
+    }
+    $rss = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rss version=\"2.0\"><channel>\n"
+        . "    <title>Blog CAB-IT Expert</title>\n"
+        . '    <link>' . CABIT_SITE_URL . "/blog/</link>\n"
+        . "    <description>Ghiduri CAB-IT despre website, SEO și promovare online.</description>\n"
+        . "    <language>ro-RO</language>\n"
+        . '    <lastBuildDate>' . (new DateTimeImmutable('now', new DateTimeZone('Europe/Bucharest')))->format(DATE_RSS) . "</lastBuildDate>\n"
+        . $rssItems . "</channel></rss>\n";
+    cms_write_file(CABIT_PUBLIC_ROOT . '/feed.xml', $rss);
+
+    $pinnedHomeSlug = 'site-custom-vs-wordpress-in-2026-avantaje-si-riscuri';
+    $homeSelection = [];
+    $selectedSlugs = [];
+    $selectedThemes = [];
+    foreach ($articles as $article) {
+        if ((string) $article['slug'] === $pinnedHomeSlug && cms_article_has_cover_image($article)) {
+            $homeSelection[] = $article;
+            $selectedSlugs[$pinnedHomeSlug] = true;
+            $selectedThemes[cms_article_visual_theme($article, cms_article_metadata($article))] = true;
+            break;
+        }
+    }
+    foreach ($articles as $article) {
+        if (count($homeSelection) >= 8 || isset($selectedSlugs[(string) $article['slug']]) || !cms_article_has_cover_image($article)) {
+            continue;
+        }
+        $theme = cms_article_visual_theme($article, cms_article_metadata($article));
+        if (isset($selectedThemes[$theme])) {
+            continue;
+        }
+        $homeSelection[] = $article;
+        $selectedSlugs[(string) $article['slug']] = true;
+        $selectedThemes[$theme] = true;
+    }
+    foreach ($articles as $article) {
+        if (count($homeSelection) >= 8 || isset($selectedSlugs[(string) $article['slug']]) || !cms_article_has_cover_image($article)) {
+            continue;
+        }
+        $homeSelection[] = $article;
+        $selectedSlugs[(string) $article['slug']] = true;
+    }
     $homeCards = [];
-    foreach (array_slice($articles, 0, 6) as $article) {
-        $metadata = cms_article_metadata($article);
-        $image = cms_relative_asset($article['cover_image'], 0);
-        $imageAlt = (string) ($metadata['image_alt'] ?? $article['title']);
-        $label = (string) ($metadata['cluster'] ?? 'Articol');
-        $date = date('d.m.Y', strtotime((string) $article['date_published']));
-        $homeCards[] = '<article class="cabit-blog-card"><a class="cabit-blog-card__link" href="/blog/' . cms_e($article['slug']) . '/"><img src="' . cms_e($image) . '" alt="' . cms_e($imageAlt) . '" width="600" height="315" loading="lazy" decoding="async"><div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' . cms_e($label) . '</span><time datetime="' . cms_e($article['date_published']) . '">' . cms_e($date) . '</time></div><h3>' . cms_e($article['title']) . '</h3><p>' . cms_e($article['excerpt']) . '</p><span class="cabit-text-link">Citește articolul <span aria-hidden="true">→</span></span></div></a></article>';
+    foreach ($homeSelection as $article) {
+        $homeCards[] = cms_article_card_markup($article, 0, (string) $article['slug'] === $pinnedHomeSlug);
     }
     cms_replace_marked_content(CABIT_PUBLIC_ROOT . '/index.html', '<!-- CMS_HOME_ARTICLES_START -->', '<!-- CMS_HOME_ARTICLES_END -->', implode("\n", $homeCards));
 }
@@ -843,7 +1047,7 @@ function cms_update_sitemap(PDO $pdo): void
     }
     ksort($staticUrls);
 
-    $articles = $pdo->query('SELECT title, slug, excerpt, created_at, updated_at FROM articles ORDER BY created_at DESC, id DESC')->fetchAll();
+    $articles = $pdo->query('SELECT title, slug, excerpt, cover_image, date_published, created_at, updated_at FROM articles ORDER BY created_at DESC, id DESC')->fetchAll();
     $works = $pdo->query('SELECT title, slug, meta_description, date_added, updated_at FROM works ORDER BY date_added DESC, id DESC')->fetchAll();
     $today = date('Y-m-d');
     $orderedUrls = [];
@@ -879,10 +1083,18 @@ function cms_update_sitemap(PDO $pdo): void
 
     $buildUrlset = static function (array $urls): string {
         $items = '';
+        $hasImages = false;
         foreach ($urls as $item) {
-            $items .= "  <url>\n    <loc>" . htmlspecialchars((string) $item['url'], ENT_XML1, 'UTF-8') . "</loc>\n    <lastmod>" . htmlspecialchars((string) $item['lastmod'], ENT_XML1, 'UTF-8') . "</lastmod>\n  </url>\n";
+            $image = trim((string) ($item['image'] ?? ''));
+            $hasImages = $hasImages || $image !== '';
+            $items .= "  <url>\n    <loc>" . htmlspecialchars((string) $item['url'], ENT_XML1, 'UTF-8') . "</loc>\n    <lastmod>" . htmlspecialchars((string) $item['lastmod'], ENT_XML1, 'UTF-8') . "</lastmod>\n";
+            if ($image !== '') {
+                $items .= "    <image:image>\n      <image:loc>" . htmlspecialchars($image, ENT_XML1, 'UTF-8') . "</image:loc>\n      <image:title>" . htmlspecialchars((string) ($item['image_title'] ?? ''), ENT_XML1, 'UTF-8') . "</image:title>\n    </image:image>\n";
+            }
+            $items .= "  </url>\n";
         }
-        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n{$items}</urlset>\n";
+        $namespace = $hasImages ? ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' : '';
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"{$namespace}>\n{$items}</urlset>\n";
     };
 
     $pageUrls = array_values(array_filter(
@@ -892,6 +1104,8 @@ function cms_update_sitemap(PDO $pdo): void
     $articleUrls = array_map(static fn(array $article): array => [
         'url' => CABIT_SITE_URL . '/blog/' . $article['slug'] . '/',
         'lastmod' => max(substr((string) $article['updated_at'], 0, 10), CABIT_SEO_RELEASE_DATE),
+        'image' => cms_article_image_url($article),
+        'image_title' => (string) $article['title'],
     ], $articles);
     $projectUrls = array_map(static fn(array $work): array => [
         'url' => CABIT_SITE_URL . '/portofoliu/' . $work['slug'] . '/',
