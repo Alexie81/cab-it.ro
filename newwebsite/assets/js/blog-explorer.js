@@ -14,6 +14,15 @@
   var resultContext = root.querySelector("[data-blog-result-context]");
   var pagination = root.querySelector("[data-blog-pagination]");
   var indexUrl = root.getAttribute("data-index-url") || "../blog-search-index.json";
+  var currentScript = document.currentScript;
+  if (currentScript && currentScript.src) {
+    var assetVersion = new URL(currentScript.src, window.location.href).searchParams.get("v");
+    if (assetVersion) {
+      var versionedIndexUrl = new URL(indexUrl, window.location.href);
+      versionedIndexUrl.searchParams.set("v", assetVersion);
+      indexUrl = versionedIndexUrl.href;
+    }
+  }
   var articles = [];
   var articleSearchIndex = [];
   var filtered = [];
