@@ -79,7 +79,7 @@
       '<path class="cabi-smart-button__smile" d="M27 37.5c2.8 2.1 7.2 2.1 10 0"/>' +
     '</svg>';
     var tooltip = '<span class="mobile-contact__tooltip" role="tooltip"><span class="mobile-contact__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hai să discutăm</span></span>';
-    var common = 'type="button" aria-label="Asistent inteligent pentru navigarea pe site — în curând" aria-disabled="true" data-cabi-smart-button';
+    var common = 'type="button" aria-label="Deschide asistentul inteligent" aria-controls="cabi-ai-panel" aria-expanded="false" data-cabi-smart-button';
 
     body.insertAdjacentHTML("beforeend", '<button class="cabi-smart-button cabi-smart-button--desktop" ' + common + '>' + icon + tooltip + '</button>');
 
@@ -87,6 +87,53 @@
     if (toggle) {
       toggle.insertAdjacentHTML("beforebegin", '<button class="cabi-smart-button cabi-smart-button--mobile" ' + common + '>' + icon + '<span class="cabi-smart-button__status" aria-hidden="true"></span></button>');
     }
+
+    var recentItems = [
+      "Am un salon și vreau un site",
+      "Cât costă un magazin online?",
+      "SEO local în București",
+      "Vreau reclame Google Ads",
+      "Automatizări AI pentru firme"
+    ].map(function (item, index) {
+      return '<button type="button" aria-disabled="true"' + (index === 0 ? ' class="is-current"' : '') + '><span aria-hidden="true">' + (index + 1) + '</span>' + item + '</button>';
+    }).join("");
+    var navItems = [
+      ["Servicii", "/servicii/", "M4 7h16M4 12h16M4 17h10"],
+      ["Prețuri", "/preturi/", "M12 3v18M8 7h6.5a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6H16"],
+      ["Portofoliu", "/portofoliu/", "M4 7h16v12H4zM8 7V5h8v2"],
+      ["Blog", "/blog/", "M5 4h14v16H5zM9 8h6M9 12h6M9 16h4"],
+      ["Contact", "/contact/", "M4 6h16v12H4zM4 7l8 6 8-6"]
+    ].map(function (item) {
+      return '<a href="' + item[1] + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + item[2] + '"/></svg><span>' + item[0] + '</span></a>';
+    }).join("");
+    var panelMarkup = '<div class="cabi-ai-panel" id="cabi-ai-panel" data-cabi-panel aria-hidden="true" hidden>' +
+      '<div class="cabi-ai-panel__surface" role="dialog" aria-modal="true" aria-labelledby="cabi-ai-title" tabindex="-1">' +
+        '<aside class="cabi-ai-sidebar">' +
+          '<div class="cabi-ai-sidebar__brand"><span>' + icon + '</span><div><strong>Asistent CAB-IT</strong><small><i></i> Design demonstrativ</small></div></div>' +
+          '<button class="cabi-ai-new" type="button" aria-disabled="true"><span aria-hidden="true">＋</span> Conversație nouă <kbd>Ctrl K</kbd></button>' +
+          '<p class="cabi-ai-kicker">CONVERSAȚII RECENTE</p><div class="cabi-ai-recents">' + recentItems + '</div>' +
+          '<nav class="cabi-ai-nav" aria-label="Scurtături CAB-IT">' + navItems + '</nav>' +
+          '<div class="cabi-ai-sidebar__foot"><span>' + icon + '</span><div><strong>Asistent CAB-IT</strong><small><i></i> Pregătit pentru etapa AI</small></div></div>' +
+        '</aside>' +
+        '<section class="cabi-ai-main">' +
+          '<header class="cabi-ai-topbar"><div class="cabi-ai-topbar__title"><span class="cabi-ai-topbar__mobile-icon">' + icon + '</span><div><h2 id="cabi-ai-title">Asistent AI CAB-IT <em>PREVIEW</em></h2><p>Ghid inteligent pentru servicii web și marketing digital</p></div></div><button class="cabi-ai-close" type="button" data-cabi-close aria-label="Închide asistentul"><span></span><span></span></button></header>' +
+          '<div class="cabi-ai-canvas">' +
+            '<div class="cabi-ai-welcome"><div class="cabi-ai-orbit" aria-hidden="true"><i></i><i></i><span>' + icon + '</span></div><p class="cabi-ai-eyebrow">ORICE ÎNTREBARE. UN SINGUR PUNCT DE PORNIRE.</p><h3>Cum te pot ajuta astăzi?</h3><p>Pe viitor vei putea întreba despre servicii, prețuri, proiecte sau orice informație din website.</p></div>' +
+            '<div class="cabi-ai-demo" aria-label="Exemplu vizual de conversație"><div class="cabi-ai-message cabi-ai-message--user"><p>Am un salon și vreau un website care să aducă programări.</p><small>10:42 <b>✓✓</b></small></div><div class="cabi-ai-message-row"><span class="cabi-ai-avatar">' + icon + '</span><div class="cabi-ai-message cabi-ai-message--assistant"><p>Îți voi putea recomanda serviciul potrivit, exemple relevante și pașii următori direct din informațiile CAB-IT.</p><div><small>10:42</small><span aria-hidden="true">⧉　♡</span></div></div></div></div>' +
+            '<div class="cabi-ai-next"><div class="cabi-ai-section-title"><div><small>RUTE INTELIGENTE</small><h3>Unde vrei să ajungi?</h3></div><span>Design interactiv</span></div><div class="cabi-ai-actions">' +
+              '<a href="/servicii/creare-site-web/"><span>◎</span><div><strong>Website nou</strong><small>Servicii și beneficii</small></div><b>↗</b></a>' +
+              '<a href="/preturi/"><span>◇</span><div><strong>Prețuri</strong><small>Pachete și repere</small></div><b>↗</b></a>' +
+              '<a href="/portofoliu/"><span>▧</span><div><strong>Proiecte</strong><small>Rezultate reale</small></div><b>↗</b></a>' +
+              '<a href="https://wa.me/40771532949" target="_blank" rel="noopener"><span>◉</span><div><strong>WhatsApp</strong><small>Discuție rapidă</small></div><b>↗</b></a>' +
+            '</div></div>' +
+          '</div>' +
+          '<footer class="cabi-ai-composer"><div class="cabi-ai-composer__box"><textarea rows="1" readonly aria-label="Mesaj demonstrativ" placeholder="Scrie întrebarea ta..."></textarea><div><span class="cabi-ai-composer__tools" aria-hidden="true">＋　⌁</span><button type="button" aria-disabled="true" aria-label="Trimiterea va fi disponibilă în curând">↑</button></div></div><p>Momentan lucrăm doar la design. Funcția AI va fi conectată în etapa următoare.</p></footer>' +
+        '</section>' +
+      '</div>' +
+    '</div>';
+    body.insertAdjacentHTML("beforeend", panelMarkup);
+    var panel = doc.querySelector("[data-cabi-panel]");
+    localizeRootPaths(panel);
 
     if (!doc.getElementById("cabi-smart-button-styles")) {
       var styles = doc.createElement("style");
@@ -107,11 +154,101 @@
         '.cabi-smart-button--mobile{position:relative;width:45px;height:45px;display:none;flex:0 0 45px;padding:0;border-radius:13px}' +
         '.cabi-smart-button--mobile .cabi-smart-button__icon{width:30px;height:30px}' +
         '.cabi-smart-button__status{position:absolute;right:4px;top:4px;width:7px;height:7px;border:2px solid #fff;border-radius:50%;background:#8df5e8;box-shadow:0 0 0 2px rgba(141,245,232,.16)}' +
+        'body.cabi-panel-open{overflow:hidden}' +
+        '.cabi-ai-panel[hidden]{display:none!important}' +
+        '.cabi-ai-panel{--cabi-origin-x:calc(100vw - 47px);--cabi-origin-y:calc(100vh - 117px);--cabi-clip-top:calc(100vh - 146px);--cabi-clip-right:18px;--cabi-clip-bottom:88px;--cabi-clip-left:calc(100vw - 76px);--cabi-clip-radius:19px;position:fixed;z-index:4000;inset:0;color:#102033;background:#f7fbfb;clip-path:inset(var(--cabi-clip-top) var(--cabi-clip-right) var(--cabi-clip-bottom) var(--cabi-clip-left) round var(--cabi-clip-radius));opacity:.76;visibility:hidden;pointer-events:none;transition:clip-path 1.1s cubic-bezier(.65,0,.2,1),opacity .3s ease,visibility 0s linear 1.1s}' +
+        '.cabi-ai-panel::before{position:absolute;content:"";inset:0;background:radial-gradient(circle at 76% 10%,rgba(24,202,187,.13),transparent 26%),radial-gradient(circle at 42% 92%,rgba(0,109,103,.08),transparent 32%),linear-gradient(rgba(0,110,104,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,110,104,.025) 1px,transparent 1px);background-size:auto,auto,32px 32px,32px 32px;pointer-events:none}' +
+        '.cabi-ai-panel::after{position:absolute;z-index:8;content:"";left:var(--cabi-origin-x);top:var(--cabi-origin-y);width:58px;height:58px;border:2px solid rgba(139,255,242,.95);border-radius:50%;box-shadow:0 0 0 1px rgba(0,112,105,.35),0 0 34px rgba(8,196,182,.65);opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.7)}' +
+        '.cabi-ai-panel.is-opening::after{animation:cabi-portal-open 1.18s cubic-bezier(.16,.78,.2,1)}.cabi-ai-panel.is-closing::after{animation:cabi-portal-close .78s ease-out}' +
+        '.cabi-ai-panel.is-open{clip-path:inset(0 0 0 0 round 0);opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}' +
+        '.cabi-ai-panel__surface{position:relative;width:100%;height:100%;display:grid;grid-template-columns:294px minmax(0,1fr);opacity:0;transform:translate(24px,24px) scale(.955);transform-origin:var(--cabi-origin-x) var(--cabi-origin-y);transition:opacity .38s ease .48s,transform .62s cubic-bezier(.16,.82,.22,1) .42s}' +
+        '.cabi-ai-panel.is-open .cabi-ai-panel__surface{opacity:1;transform:none}' +
+        '.cabi-ai-panel.is-closing .cabi-ai-panel__surface{opacity:0;transform:translate(18px,18px) scale(.975);transition-delay:0s;transition-duration:.24s}' +
+        '.cabi-ai-sidebar{position:relative;z-index:2;display:flex;flex-direction:column;min-height:0;padding:22px 18px;border-right:1px solid rgba(202,220,225,.9);background:rgba(255,255,255,.86);box-shadow:16px 0 60px rgba(15,48,57,.05);backdrop-filter:blur(22px)}' +
+        '.cabi-ai-sidebar__brand,.cabi-ai-sidebar__foot{display:flex;align-items:center;gap:11px}' +
+        '.cabi-ai-sidebar__brand>span,.cabi-ai-sidebar__foot>span,.cabi-ai-topbar__mobile-icon,.cabi-ai-avatar{display:grid;place-items:center;flex:0 0 auto;color:#fff;background:linear-gradient(145deg,#063c43,#08a99e);box-shadow:0 9px 24px rgba(0,111,104,.2)}' +
+        '.cabi-ai-sidebar__brand>span{width:44px;height:44px;border-radius:14px}.cabi-ai-sidebar__brand svg{width:30px;height:30px}' +
+        '.cabi-ai-sidebar__brand strong,.cabi-ai-sidebar__foot strong{display:block;font-size:13px}.cabi-ai-sidebar__brand small,.cabi-ai-sidebar__foot small{display:flex;align-items:center;gap:6px;margin-top:3px;color:#68788d;font-size:10px}.cabi-ai-sidebar__brand small i,.cabi-ai-sidebar__foot small i{width:7px;height:7px;border-radius:50%;background:#19c981;box-shadow:0 0 0 3px rgba(25,201,129,.12)}' +
+        '.cabi-ai-new{width:100%;min-height:49px;display:flex;align-items:center;gap:10px;margin-top:22px;padding:9px 11px;border:0;border-radius:14px;color:#fff;background:linear-gradient(135deg,#006d67,#09aa9f);box-shadow:0 12px 24px rgba(0,112,105,.18);font:700 13px/1 Inter,Arial,sans-serif;text-align:left;cursor:default}.cabi-ai-new>span{font-size:21px;font-weight:300}.cabi-ai-new kbd{margin-left:auto;padding:5px 7px;border:1px solid rgba(255,255,255,.28);border-radius:7px;background:rgba(255,255,255,.14);font:600 10px Inter,Arial,sans-serif}' +
+        '.cabi-ai-kicker{margin:24px 8px 10px;color:#7a899a;font-size:10px;font-weight:800;letter-spacing:.12em}' +
+        '.cabi-ai-recents{display:grid;gap:3px}.cabi-ai-recents button{min-height:38px;display:flex;align-items:center;gap:9px;padding:7px 9px;border:0;border-radius:10px;color:#263649;background:transparent;font:600 11px/1.3 Inter,Arial,sans-serif;text-align:left;cursor:default}.cabi-ai-recents button.is-current{color:#005f5a;background:#e5f8f5}.cabi-ai-recents button span{width:21px;height:21px;display:grid;place-items:center;flex:0 0 21px;border:1px solid #cddce1;border-radius:7px;color:#00877f;font-size:9px;background:#fff}' +
+        '.cabi-ai-nav{display:grid;gap:2px;margin-top:20px;padding-top:16px;border-top:1px solid #e1eaed}.cabi-ai-nav a{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:9px;color:#3e4e61;font-size:11px;font-weight:650;transition:color .18s ease,background .18s ease}.cabi-ai-nav a:hover{color:#006d67;background:#edf9f7}.cabi-ai-nav svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}' +
+        '.cabi-ai-sidebar__foot{margin-top:auto;padding:16px 7px 2px;border-top:1px solid #e1eaed}.cabi-ai-sidebar__foot>span{width:36px;height:36px;border-radius:12px}.cabi-ai-sidebar__foot svg{width:25px;height:25px}' +
+        '.cabi-ai-main{position:relative;z-index:1;min-width:0;height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden}' +
+        '.cabi-ai-topbar{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px clamp(22px,4vw,58px);border-bottom:1px solid rgba(215,227,231,.82);background:rgba(255,255,255,.62);backdrop-filter:blur(18px)}' +
+        '.cabi-ai-topbar__title{display:flex;align-items:center;gap:12px}.cabi-ai-topbar__title h2{margin:0;color:#102033;font:750 16px/1.2 Inter,Arial,sans-serif}.cabi-ai-topbar__title h2 em{display:inline-flex;margin-left:7px;padding:4px 6px;border-radius:6px;color:#00766f;background:#dcf8f4;font-size:8px;font-style:normal;letter-spacing:.08em;vertical-align:2px}.cabi-ai-topbar__title p{margin:5px 0 0;color:#6b7a8f;font-size:11px}.cabi-ai-topbar__mobile-icon{display:none;width:40px;height:40px;border-radius:13px}.cabi-ai-topbar__mobile-icon svg{width:28px;height:28px}' +
+        '.cabi-ai-close{position:relative;width:46px;height:46px;display:grid;place-items:center;flex:0 0 46px;border:1px solid #d4e1e5;border-radius:15px;background:rgba(255,255,255,.88);box-shadow:0 8px 24px rgba(17,45,55,.07);cursor:pointer;transition:transform .2s ease,background .2s ease}.cabi-ai-close:hover{background:#e9f9f7;transform:rotate(3deg)}.cabi-ai-close span{position:absolute;width:18px;height:2px;border-radius:2px;background:#183047;transform:rotate(45deg)}.cabi-ai-close span+span{transform:rotate(-45deg)}' +
+        '.cabi-ai-canvas{min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:none;padding:clamp(24px,3.5vh,46px) clamp(22px,5vw,78px) 28px}.cabi-ai-canvas::-webkit-scrollbar{display:none}' +
+        '.cabi-ai-welcome{max-width:760px;margin:0 auto;text-align:center}.cabi-ai-orbit{position:relative;width:88px;height:88px;display:grid;place-items:center;margin:0 auto 13px}.cabi-ai-orbit::before,.cabi-ai-orbit::after{position:absolute;content:"";inset:5px;border:1px solid rgba(0,145,136,.22);border-radius:50%}.cabi-ai-orbit::after{inset:14px;border-style:dashed;animation:cabi-orbit-spin 10s linear infinite}.cabi-ai-orbit>span{width:54px;height:54px;display:grid;place-items:center;border-radius:18px;color:#fff;background:linear-gradient(145deg,#063c43,#08a99e);box-shadow:0 14px 34px rgba(0,111,104,.25)}.cabi-ai-orbit svg{width:38px;height:38px}.cabi-ai-orbit i{position:absolute;width:9px;height:9px;border:2px solid #fff;border-radius:50%;background:#15cbbd;box-shadow:0 0 0 4px rgba(21,203,189,.14)}.cabi-ai-orbit i:first-child{top:8px;right:10px}.cabi-ai-orbit i:nth-child(2){bottom:9px;left:8px;background:#004d49}' +
+        '.cabi-ai-eyebrow{margin:0 0 8px!important;color:#008078!important;font-size:9px!important;font-weight:850!important;letter-spacing:.16em}.cabi-ai-welcome h3{margin:0;color:#102033;font:800 clamp(25px,3vw,39px)/1.08 Inter,Arial,sans-serif;letter-spacing:-.035em}.cabi-ai-welcome>p:last-child{max-width:650px;margin:11px auto 0;color:#65758a;font-size:13px;line-height:1.6}' +
+        '.cabi-ai-demo{max-width:920px;display:grid;gap:18px;margin:28px auto 0}.cabi-ai-message{border:1px solid #d8e4e8;border-radius:20px;padding:16px 18px;background:rgba(255,255,255,.92);box-shadow:0 12px 34px rgba(22,58,67,.055)}.cabi-ai-message p{margin:0;color:#243448;font-size:13px;line-height:1.55}.cabi-ai-message small{color:#77869a;font-size:10px}.cabi-ai-message--user{max-width:430px;justify-self:end;border-color:#c9ebe6;background:linear-gradient(145deg,#f4fffd,#e6f8f5)}.cabi-ai-message--user small{display:block;margin-top:8px;text-align:right}.cabi-ai-message--user b{color:#049d92}.cabi-ai-message-row{display:flex;align-items:flex-end;gap:11px}.cabi-ai-avatar{width:39px;height:39px;border-radius:13px}.cabi-ai-avatar svg{width:27px;height:27px}.cabi-ai-message--assistant{max-width:650px;text-align:left}.cabi-ai-message--assistant>div{display:flex;align-items:center;justify-content:space-between;margin-top:10px;color:#77869a;font-size:12px}' +
+        '.cabi-ai-next{max-width:1040px;margin:30px auto 0}.cabi-ai-section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:12px}.cabi-ai-section-title small{color:#008078;font-size:9px;font-weight:850;letter-spacing:.14em}.cabi-ai-section-title h3{margin:4px 0 0;color:#14263a;font:750 17px Inter,Arial,sans-serif}.cabi-ai-section-title>span{padding:6px 9px;border-radius:999px;color:#637489;background:#edf3f5;font-size:9px;font-weight:750}.cabi-ai-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.cabi-ai-actions a{min-width:0;display:flex;align-items:center;gap:10px;padding:13px;border:1px solid #d9e5e8;border-radius:16px;color:#25364a;background:rgba(255,255,255,.88);box-shadow:0 9px 24px rgba(20,55,65,.045);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}.cabi-ai-actions a:hover{border-color:#7bd6cd;box-shadow:0 13px 28px rgba(0,111,104,.1);transform:translateY(-3px)}.cabi-ai-actions a>span{width:34px;height:34px;display:grid;place-items:center;flex:0 0 34px;border-radius:11px;color:#007c75;background:#e2f8f5;font-size:18px}.cabi-ai-actions a div{min-width:0}.cabi-ai-actions strong,.cabi-ai-actions small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cabi-ai-actions strong{font-size:11px}.cabi-ai-actions small{margin-top:4px;color:#7a899a;font-size:9px}.cabi-ai-actions b{margin-left:auto;color:#03988e;font-size:13px}' +
+        '.cabi-ai-composer{padding:12px clamp(22px,5vw,78px) 14px;background:linear-gradient(180deg,rgba(247,251,251,0),#f7fbfb 24%)}.cabi-ai-composer__box{max-width:1040px;margin:0 auto;padding:11px 13px;border:1.5px solid #30afa5;border-radius:19px;background:rgba(255,255,255,.96);box-shadow:0 15px 35px rgba(0,104,98,.09)}.cabi-ai-composer textarea{width:100%;height:28px!important;min-height:28px!important;padding:3px 0!important;resize:none;border:0;outline:0;color:#344559;background:transparent;font:500 13px/1.5 Inter,Arial,sans-serif}.cabi-ai-composer textarea::placeholder{color:#8795a6}.cabi-ai-composer__box>div{display:flex;align-items:center;justify-content:space-between}.cabi-ai-composer__tools{color:#687a8d;font-size:17px}.cabi-ai-composer button{width:38px;height:38px;border:0;border-radius:13px;color:#fff;background:linear-gradient(145deg,#006d67,#08aaa0);font-size:20px;cursor:default}.cabi-ai-composer>p{margin:8px 0 0;color:#8390a0;font-size:9px;text-align:center}' +
+        '@keyframes cabi-orbit-spin{to{transform:rotate(360deg)}}@keyframes cabi-portal-open{0%{opacity:1;transform:translate(-50%,-50%) scale(.65)}32%{opacity:.95;box-shadow:0 0 0 18px rgba(7,188,175,.22),0 0 50px rgba(8,196,182,.7);transform:translate(-50%,-50%) scale(1.5)}100%{opacity:0;box-shadow:0 0 0 84px rgba(7,188,175,0),0 0 90px rgba(8,196,182,0);transform:translate(-50%,-50%) scale(4.6)}}@keyframes cabi-portal-close{0%{opacity:0;transform:translate(-50%,-50%) scale(4)}65%{opacity:.75;transform:translate(-50%,-50%) scale(1.35)}100%{opacity:0;transform:translate(-50%,-50%) scale(.72)}}' +
         '@media(max-width:1020px){.next-nav-wrap{gap:0}.cabi-smart-button--desktop{display:none}.cabi-smart-button--mobile{display:grid;margin-left:auto;margin-right:8px}.cabi-smart-button--mobile+.next-menu-toggle{margin-left:0}}' +
-        '@media(prefers-reduced-motion:reduce){.cabi-smart-button{transition:none}}' +
+        '@media(max-width:820px){.cabi-ai-panel{--cabi-origin-x:calc(100vw - 85px);--cabi-origin-y:43px;background:#f7fbfb}.cabi-ai-panel__surface{display:block}.cabi-ai-sidebar{display:none}.cabi-ai-main{height:100%;grid-template-rows:auto minmax(0,1fr) auto}.cabi-ai-topbar{min-height:72px;padding:11px 13px 11px 14px}.cabi-ai-topbar__mobile-icon{display:grid}.cabi-ai-topbar__title h2{font-size:14px}.cabi-ai-topbar__title p{max-width:225px;margin-top:3px;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cabi-ai-close{width:44px;height:44px;flex-basis:44px;border-radius:14px}.cabi-ai-canvas{padding:21px 14px 22px}.cabi-ai-orbit{width:72px;height:72px;margin-bottom:10px}.cabi-ai-orbit>span{width:47px;height:47px;border-radius:15px}.cabi-ai-orbit svg{width:33px;height:33px}.cabi-ai-welcome h3{font-size:27px}.cabi-ai-welcome>p:last-child{font-size:12px}.cabi-ai-demo{gap:12px;margin-top:22px}.cabi-ai-message{padding:13px 14px;border-radius:17px}.cabi-ai-message p{font-size:12px}.cabi-ai-message--user{max-width:88%}.cabi-ai-message-row{gap:8px}.cabi-ai-avatar{width:34px;height:34px;border-radius:11px}.cabi-ai-avatar svg{width:23px;height:23px}.cabi-ai-section-title>span{display:none}.cabi-ai-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cabi-ai-actions a{padding:11px}.cabi-ai-composer{padding:9px 10px max(10px,env(safe-area-inset-bottom))}.cabi-ai-composer__box{padding:9px 10px;border-radius:17px}.cabi-ai-composer>p{font-size:8px}}' +
+        '@media(max-width:420px){.cabi-ai-topbar__title h2 em{display:none}.cabi-ai-topbar__title p{max-width:190px}.cabi-ai-eyebrow{font-size:8px!important}.cabi-ai-message--assistant{max-width:calc(100% - 42px)}.cabi-ai-actions a>span{width:31px;height:31px;flex-basis:31px}.cabi-ai-actions strong{font-size:10px}}' +
+        '@media(prefers-reduced-motion:reduce){.cabi-smart-button,.cabi-ai-panel,.cabi-ai-panel__surface{transition:none}.cabi-ai-orbit::after{animation:none}}' +
         '@media print{.cabi-smart-button{display:none!important}}';
       doc.head.appendChild(styles);
     }
+
+    var launchers = Array.prototype.slice.call(doc.querySelectorAll("[data-cabi-smart-button]"));
+    var closeButton = panel.querySelector("[data-cabi-close]");
+    var lastLauncher = null;
+    var panelTimer = null;
+    var effectTimer = null;
+
+    function setPanel(open, launcher) {
+      window.clearTimeout(panelTimer);
+      window.clearTimeout(effectTimer);
+      if (open) {
+        lastLauncher = launcher;
+        var rect = launcher.getBoundingClientRect();
+        panel.style.setProperty("--cabi-origin-x", (rect.left + rect.width / 2) + "px");
+        panel.style.setProperty("--cabi-origin-y", (rect.top + rect.height / 2) + "px");
+        panel.style.setProperty("--cabi-clip-top", Math.max(0, rect.top) + "px");
+        panel.style.setProperty("--cabi-clip-right", Math.max(0, window.innerWidth - rect.right) + "px");
+        panel.style.setProperty("--cabi-clip-bottom", Math.max(0, window.innerHeight - rect.bottom) + "px");
+        panel.style.setProperty("--cabi-clip-left", Math.max(0, rect.left) + "px");
+        panel.style.setProperty("--cabi-clip-radius", window.getComputedStyle(launcher).borderRadius || "18px");
+        var openMenu = doc.querySelector('.next-menu-toggle[aria-expanded="true"]');
+        if (openMenu) openMenu.click();
+        panel.classList.remove("is-closing");
+        panel.classList.add("is-opening");
+        panel.hidden = false;
+        panel.setAttribute("aria-hidden", "false");
+        launchers.forEach(function (button) { button.setAttribute("aria-expanded", "true"); });
+        body.classList.add("cabi-panel-open");
+        panel.offsetWidth;
+        window.requestAnimationFrame(function () {
+          panel.classList.add("is-open");
+          panelTimer = window.setTimeout(function () { closeButton.focus({ preventScroll: true }); }, 650);
+          effectTimer = window.setTimeout(function () { panel.classList.remove("is-opening"); }, 1220);
+        });
+        return;
+      }
+
+      panel.classList.remove("is-opening");
+      panel.classList.add("is-closing");
+      panel.classList.remove("is-open");
+      panel.setAttribute("aria-hidden", "true");
+      launchers.forEach(function (button) { button.setAttribute("aria-expanded", "false"); });
+      panelTimer = window.setTimeout(function () {
+        panel.hidden = true;
+        panel.classList.remove("is-closing");
+        body.classList.remove("cabi-panel-open");
+        if (lastLauncher) lastLauncher.focus({ preventScroll: true });
+      }, 1140);
+    }
+
+    launchers.forEach(function (launcher) {
+      launcher.addEventListener("click", function () { setPanel(true, launcher); });
+    });
+    closeButton.addEventListener("click", function () { setPanel(false); });
+    doc.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && panel.classList.contains("is-open")) setPanel(false);
+    });
   }
 
   mountCabiButton();
