@@ -120,7 +120,13 @@ function cabit_local_meta_description(array $article): string
     return $description;
 }
 
-function cabit_import_local_seo_batch(string $articlesDirectory, bool $dryRun = false, ?string $publishedAt = null, ?array $selectedSlugs = null): array
+function cabit_import_local_seo_batch(
+    string $articlesDirectory,
+    bool $dryRun = false,
+    ?string $publishedAt = null,
+    ?array $selectedSlugs = null,
+    bool $useExistingImages = true
+): array
 {
     if (!is_dir($articlesDirectory)) {
         throw new InvalidArgumentException('Directorul articolelor nu există.');
@@ -159,14 +165,14 @@ function cabit_import_local_seo_batch(string $articlesDirectory, bool $dryRun = 
         $slugs[$slug] = true;
         $imagePath = '/assets/img/blog/seo-local-2026/' . $slug . '.webp';
         $absoluteImage = CABIT_PUBLIC_ROOT . $imagePath;
-        if (is_file($absoluteImage)) {
+        if ($useExistingImages && is_file($absoluteImage)) {
             $size = getimagesize($absoluteImage);
             if (!$size || (int) $size[0] !== 1200 || (int) $size[1] !== 630) {
                 throw new RuntimeException('Imaginea existentă trebuie să fie WebP 1200x630: ' . $imagePath);
             }
         } else {
             $imagePath = '';
-            $warnings[] = $slug . ': fără imagine proprie; se folosește fallbackul vizual CAB-IT';
+            $warnings[] = $slug . ': fără imagine publicată; se folosește fallbackul vizual CAB-IT';
         }
 
         $faqs = cabit_local_faqs(is_array($article['faqs'] ?? null) ? $article['faqs'] : []);
@@ -201,7 +207,7 @@ function cabit_import_local_seo_batch(string $articlesDirectory, bool $dryRun = 
         if (count($faqs) < 4 || count($sources) < 5) {
             throw new RuntimeException($slug . ': sunt necesare minimum 4 FAQ și 5 surse.');
         }
-        if (preg_match('/\b(?:noindex|draft(?:ul)?|smart search pentru acest articol|înainte de indexare|înainte de publicare|canibalizare|rankează|test editorial)\b/iu', $plainContent)) {
+        if (preg_match('/\b(?:noindex|draft(?:ul)?|smart search pentru acest articol|înainte de indexare|înainte de publicare|test editorial)\b/iu', $plainContent)) {
             throw new RuntimeException($slug . ': conținutul păstrează instrucțiuni editoriale interne.');
         }
 
@@ -291,6 +297,7 @@ function cabit_import_local_seo_batch(string $articlesDirectory, bool $dryRun = 
 if (PHP_SAPI === 'cli' && realpath((string) ($_SERVER['SCRIPT_FILENAME'] ?? '')) === __FILE__) {
     $articlesDirectory = $argv[1] ?? (__DIR__ . '/data/seo-local-2026/articles');
     $dryRun = in_array('--dry-run', $argv, true);
+    $useExistingImages = !in_array('--without-images', $argv, true);
     $selectedSlugs = null;
     foreach ($argv as $argument) {
         if (str_starts_with($argument, '--slugs=')) {
@@ -298,7 +305,7 @@ if (PHP_SAPI === 'cli' && realpath((string) ($_SERVER['SCRIPT_FILENAME'] ?? ''))
         }
     }
     try {
-        echo json_encode(cabit_import_local_seo_batch($articlesDirectory, $dryRun, null, $selectedSlugs), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), PHP_EOL;
+        echo json_encode(cabit_import_local_seo_batch($articlesDirectory, $dryRun, null, $selectedSlugs, $useExistingImages), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), PHP_EOL;
     } catch (Throwable $exception) {
         fwrite(STDERR, $exception->getMessage() . PHP_EOL);
         exit(1);

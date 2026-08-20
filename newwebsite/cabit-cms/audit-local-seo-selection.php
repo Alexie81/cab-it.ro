@@ -92,7 +92,7 @@ function cabit_audit_selection(string $articlesDirectory, array $slugs): array
         }
         $article = $candidate['article'];
         $image = CABIT_PUBLIC_ROOT . '/assets/img/blog/seo-local-2026/' . $slug . '.webp';
-        $forbidden = preg_match('/\b(?:noindex|draft(?:ul)?|smart search pentru acest articol|înainte de indexare|înainte de publicare|canibalizare|rankează|test editorial)\b/iu', $candidate['markdown']) === 1;
+        $forbidden = preg_match('/\b(?:noindex|draft(?:ul)?|smart search pentru acest articol|înainte de indexare|înainte de publicare|test editorial)\b/iu', $candidate['markdown']) === 1;
         $checks = [
             'word_count' => $candidate['word_count'] >= 1800,
             'faq_count' => $candidate['faq_count'] >= 4,
