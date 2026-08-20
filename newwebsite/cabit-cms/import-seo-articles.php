@@ -31,6 +31,13 @@ function cabit_heading_id(string $heading): string
     return trim($heading, '-') ?: 'sectiune';
 }
 
+function cabit_markdown_table_cells(string $line): array
+{
+    $line = trim($line);
+    $line = trim($line, '|');
+    return array_map('trim', explode('|', $line));
+}
+
 function cabit_markdown_to_article_html(string $markdown): array
 {
     $markdown = str_replace(["\r\n", "\r"], "\n", trim($markdown));
@@ -70,6 +77,33 @@ function cabit_markdown_to_article_html(string $markdown): array
         if (trim($line) === '') {
             $flushParagraph();
             $flushList();
+            continue;
+        }
+        if (
+            str_starts_with(trim($line), '|')
+            && $index + 1 < $count
+            && preg_match('/^\s*\|?(?:\s*:?-{3,}:?\s*\|)+\s*$/u', trim($lines[$index + 1]))
+        ) {
+            $flushParagraph();
+            $flushList();
+            $headers = cabit_markdown_table_cells($line);
+            $index += 2;
+            $rows = [];
+            while ($index < $count && str_starts_with(trim($lines[$index]), '|')) {
+                $rows[] = cabit_markdown_table_cells($lines[$index]);
+                $index++;
+            }
+            $index--;
+            $head = implode('', array_map(static fn(string $cell): string => '<th scope="col">' . cabit_markdown_inline($cell) . '</th>', $headers));
+            $bodyRows = '';
+            foreach ($rows as $row) {
+                $cells = '';
+                foreach ($headers as $cellIndex => $_header) {
+                    $cells .= '<td>' . cabit_markdown_inline((string) ($row[$cellIndex] ?? '')) . '</td>';
+                }
+                $bodyRows .= '<tr>' . $cells . '</tr>';
+            }
+            $html[] = '<div class="cabit-article-table" role="region" aria-label="Tabel comparativ" tabindex="0"><table><thead><tr>' . $head . '</tr></thead><tbody>' . $bodyRows . '</tbody></table></div>';
             continue;
         }
         if (preg_match('/^>\s?(.*)$/u', $line, $match)) {
@@ -153,7 +187,7 @@ function cabit_article_sources_html(array $sources, string $verifiedDate): strin
     $seen = [];
     $items = '';
     foreach ($sources as $source) {
-        $name = trim((string) ($source['name'] ?? ''));
+        $name = trim((string) ($source['name'] ?? $source['title'] ?? ''));
         $url = trim((string) ($source['url'] ?? ''));
         if ($name === '' || !preg_match('~^https://~i', $url) || isset($seen[$url])) {
             continue;
@@ -215,7 +249,7 @@ function cabit_import_seo_articles(string $jsonPath, string $publishDate = '', b
         $slugs[$slug] = true;
         $imagePath = '/assets/img/blog/seo-2026/' . $slug . '.webp';
         if (!is_file(CABIT_PUBLIC_ROOT . $imagePath)) {
-            throw new RuntimeException('Imagine lipsă pentru ' . $slug . ': ' . $imagePath);
+            $imagePath = '';
         }
         $converted = cabit_markdown_to_article_html((string) ($article['content_markdown'] ?? ''));
         $faqs = is_array($article['faqs'] ?? null) ? $article['faqs'] : [];
@@ -228,7 +262,7 @@ function cabit_import_seo_articles(string $jsonPath, string $publishDate = '', b
             'secondary_keywords' => array_values(array_map('strval', is_array($article['secondary_keywords'] ?? null) ? $article['secondary_keywords'] : [])),
             'cluster' => (string) ($article['cluster'] ?? ''),
             'search_intent' => (string) ($article['search_intent'] ?? ''),
-            'image_alt' => (string) ($article['hero_image_alt'] ?? $article['title'] ?? ''),
+            'image_alt' => $imagePath !== '' ? (string) ($article['hero_image_alt'] ?? $article['title'] ?? '') : '',
             'faqs' => $faqs,
             'sources' => $sources,
             'publication_order' => (int) ($article['publication_order'] ?? ($index + 1)),
