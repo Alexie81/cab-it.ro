@@ -12,7 +12,15 @@
   var results = root.querySelector("[data-blog-results]");
   var resultCount = root.querySelector("[data-blog-result-count]");
   var resultContext = root.querySelector("[data-blog-result-context]");
+  var priceAnswer = root.querySelector("[data-blog-price-answer]");
   var pagination = root.querySelector("[data-blog-pagination]");
+  if (!priceAnswer && results && results.parentNode) {
+    priceAnswer = document.createElement("div");
+    priceAnswer.className = "cabit-blog-price-answer";
+    priceAnswer.setAttribute("data-blog-price-answer", "");
+    priceAnswer.hidden = true;
+    results.parentNode.insertBefore(priceAnswer, results);
+  }
   var indexUrl = root.getAttribute("data-index-url") || "../blog-search-index.json";
   var currentScript = document.currentScript;
   if (currentScript && currentScript.src) {
@@ -32,6 +40,8 @@
   var recentSearches = [];
   var rankCache = Object.create(null);
   var rankCacheKeys = [];
+  var locationNames = [];
+  var hasAnimatedArticleTotal = false;
 
   var synonymGroups = [
     ["site", "website", "web", "pagina", "siteul", "siteuri", "websiteul", "websiteuri"],
@@ -123,6 +133,70 @@
     return synonymMap[token] || [token];
   }
 
+  function pricingOffer(query) {
+    var normalized = normalize(query);
+    if (!/(^| )(cost|costul|costuri|costurile|costa|pret|pretul|preturi|buget|tarif)( |$)/.test(normalized)) return null;
+    if (/(^| )(magazin|ecommerce|comert|shop)( |$)/.test(normalized)) {
+      return {
+        label: "Magazin online CAB-IT",
+        price: "de la 1.799 lei",
+        detail: "Platformă administrabilă, plăți și livrare, bază SEO și configurare pentru măsurare. Integrările speciale se estimează separat."
+      };
+    }
+    if (/(^| )(promovare|promovarea|marketing|marketingul|reclame|reclamele|ads|publicitate|publicitatea|google|meta|facebook|instagram|tiktok)( |$)/.test(normalized)) {
+      return {
+        label: "Promovare online CAB-IT",
+        price: "de la 649 lei/lună",
+        detail: "Administrare pentru Google, Meta sau TikTok Ads. Bugetul media și serviciile terțe nu sunt incluse."
+      };
+    }
+    if (/(^| )(site|siteul|siteuri|website|websiteul|websiteuri|web|prezentare)( |$)/.test(normalized)) {
+      return {
+        label: "Site de prezentare CAB-IT",
+        price: "de la 999 lei",
+        detail: "Design responsive, până la 5 pagini, structură SEO de bază, formular și administrare."
+      };
+    }
+    return null;
+  }
+
+  function pricingAnswerHtml(query, compact) {
+    var offer = pricingOffer(query);
+    if (!offer) return "";
+    return '<a class="cabit-blog-price-result' + (compact ? ' is-compact' : '') + '" href="/preturi/"><span><small>Preț de pornire CAB-IT</small><strong>' + escapeHtml(offer.label) + '</strong></span><b>' + escapeHtml(offer.price) + '</b><p>' + escapeHtml(offer.detail) + '</p><em>Tarife accesibile și transparente · peste 200 de proiecte · soluții orientate spre conversii măsurabile</em><i aria-hidden="true">→</i></a>';
+  }
+
+  function finalCountMarkup(total) {
+    return String(total).split("").map(function (digit, index) {
+      return '<span class="cabit-count-digit" style="--digit-delay:' + (index * 70) + 'ms">' + digit + '</span>';
+    }).join("");
+  }
+
+  function updateResultCount(total, label, animate) {
+    var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!animate || reducedMotion) {
+      resultCount.innerHTML = '<strong aria-label="' + total + '">' + finalCountMarkup(total) + '</strong> ' + label;
+      return;
+    }
+    hasAnimatedArticleTotal = true;
+    resultCount.innerHTML = '<strong class="cabit-count-up" aria-label="' + total + '">0</strong> ' + label;
+    var number = resultCount.querySelector("strong");
+    var startedAt = 0;
+    var duration = 1800;
+    function step(timestamp) {
+      if (!startedAt) startedAt = timestamp;
+      var progress = Math.min(1, (timestamp - startedAt) / duration);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      number.textContent = String(Math.round(total * eased));
+      if (progress < 1) window.requestAnimationFrame(step);
+      else {
+        number.classList.remove("cabit-count-up");
+        number.innerHTML = finalCountMarkup(total);
+      }
+    }
+    window.requestAnimationFrame(step);
+  }
+
   function prepareArticle(article, index) {
     var title = normalize(article.title);
     var keywords = normalize((article.keywords || []).join(" "));
@@ -155,6 +229,14 @@
 
   function buildSearchIndex() {
     articleSearchIndex = articles.map(prepareArticle);
+    var locations = Object.create(null);
+    articles.forEach(function (article) {
+      [article.city, article.county, article.region].forEach(function (value) {
+        var location = normalize(value);
+        if (location.length > 2) locations[location] = true;
+      });
+    });
+    locationNames = Object.keys(locations).sort(function (left, right) { return right.length - left.length; });
     rankCache = Object.create(null);
     rankCacheKeys = [];
   }
@@ -187,7 +269,7 @@
     return best <= threshold ? 28 - (best * 4) : 0;
   }
 
-  function articleScore(prepared, query, queryTokens) {
+  function articleScore(prepared, query, queryTokens, hasLocationIntent) {
     if (!query) return 1;
     var score = 0;
     var exactCoverage = 0;
@@ -205,6 +287,17 @@
     if (prepared.entities.indexOf(query) !== -1) score += 42;
     if (prepared.cluster.indexOf(query) !== -1) score += 35;
     if (prepared.excerpt.indexOf(query) !== -1) score += 28;
+
+    var hasCostIntent = queryTokens.some(function (token) {
+      return expandToken(token).indexOf("cost") !== -1;
+    });
+    if (hasCostIntent) {
+      if (prepared.title.indexOf("cat costa") !== -1) score += 220;
+      else if (prepared.titleWords.some(function (word) {
+        return ["cost", "costul", "costuri", "costurile", "costa", "pret", "pretul", "preturi", "buget", "tarif"].indexOf(word) !== -1;
+      })) score += 72;
+    }
+    if (!hasLocationIntent && !normalize(prepared.article.city)) score += hasCostIntent ? 340 : 58;
 
     for (var phraseSize = Math.min(3, queryTokens.length); phraseSize >= 2; phraseSize--) {
       for (var phraseStart = 0; phraseStart <= queryTokens.length - phraseSize; phraseStart++) {
@@ -303,8 +396,12 @@
     var queryTokens = normalizedQuery.split(/\s+/).filter(function (token) {
       return token.length > 1 && !stopWords[token];
     });
+    var paddedQuery = " " + normalizedQuery + " ";
+    var hasLocationIntent = locationNames.some(function (location) {
+      return paddedQuery.indexOf(" " + location + " ") !== -1;
+    });
     var rankedArticles = articleSearchIndex.map(function (prepared) {
-      return { article: prepared.article, score: articleScore(prepared, normalizedQuery, queryTokens), index: prepared.index };
+      return { article: prepared.article, score: articleScore(prepared, normalizedQuery, queryTokens, hasLocationIntent), index: prepared.index };
     }).filter(function (item) {
       return item.score > 0;
     }).sort(function (left, right) {
@@ -392,8 +489,13 @@
       results.innerHTML = '<div class="cabit-blog-empty"><h3>Nu am găsit un articol exact pentru această căutare.</h3><p>Încearcă o formulare mai scurtă, de exemplu „cost site”, „SEO local”, „Google Ads” sau „automatizare AI”.</p></div>';
     }
 
-    resultCount.innerHTML = '<strong>' + filtered.length + '</strong> ' + (filtered.length === 1 ? "articol relevant" : "articole relevante");
+    updateResultCount(filtered.length, filtered.length === 1 ? "articol relevant" : "articole relevante", !state.query && !hasAnimatedArticleTotal);
     resultContext.textContent = state.query ? 'pentru „' + state.query.trim() + '”' : "ordonate de la cele mai recente";
+    if (priceAnswer) {
+      var pricingMarkup = pricingAnswerHtml(state.query, false);
+      priceAnswer.innerHTML = pricingMarkup;
+      priceAnswer.hidden = pricingMarkup === "";
+    }
 
     if (totalPages <= 1) {
       pagination.hidden = true;
@@ -475,7 +577,7 @@
       closeSuggestions();
       return;
     }
-    suggestions.innerHTML = matches.map(suggestionHtml).join("");
+    suggestions.innerHTML = pricingAnswerHtml(query, true) + matches.map(suggestionHtml).join("");
     suggestions.hidden = false;
     input.setAttribute("aria-expanded", "true");
     activeSuggestion = -1;
