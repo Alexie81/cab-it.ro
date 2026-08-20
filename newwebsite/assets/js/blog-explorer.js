@@ -16,6 +16,7 @@
   var indexUrl = root.getAttribute("data-index-url") || "../blog-search-index.json";
   var articles = [];
   var filtered = [];
+  var appliedQuery = "";
   var activeSuggestion = -1;
   var inputTimer = 0;
   var recentSearches = [];
@@ -142,13 +143,23 @@
     var cluster = normalize(article.cluster);
     var excerpt = normalize(article.excerpt);
     var searchText = normalize(article.search_text);
-    var allWords = (title + " " + keywords + " " + cluster + " " + excerpt).split(/\s+/);
+    var queries = normalize((article.queries || []).join(" "));
+    var entities = normalize((article.entities || []).join(" "));
+    var semanticTerms = normalize((article.semantic_terms || []).join(" "));
+    var boostTerms = normalize((article.boost_terms || []).join(" "));
+    var localContext = normalize([article.city, article.county, article.region, article.industry].join(" "));
+    var directAnswer = normalize(article.direct_answer);
+    var allWords = (title + " " + keywords + " " + cluster + " " + excerpt + " " + queries + " " + entities + " " + localContext).split(/\s+/);
     var score = 0;
 
     if (title === query) score += 260;
     if (title.indexOf(query) === 0) score += 150;
     else if (title.indexOf(query) !== -1) score += 110;
     if (keywords.indexOf(query) !== -1) score += 80;
+    if (queries.indexOf(query) !== -1) score += 95;
+    if (boostTerms.indexOf(query) !== -1) score += 105;
+    if (localContext.indexOf(query) !== -1) score += 60;
+    if (entities.indexOf(query) !== -1) score += 42;
     if (cluster.indexOf(query) !== -1) score += 35;
     if (excerpt.indexOf(query) !== -1) score += 28;
 
@@ -162,6 +173,15 @@
         } else if (keywords.indexOf(variant) !== -1) {
           score += variant === token ? 24 : 13;
           matched = true;
+        } else if (queries.indexOf(variant) !== -1 || boostTerms.indexOf(variant) !== -1) {
+          score += variant === token ? 27 : 16;
+          matched = true;
+        } else if (localContext.indexOf(variant) !== -1) {
+          score += 20;
+          matched = true;
+        } else if (entities.indexOf(variant) !== -1 || semanticTerms.indexOf(variant) !== -1) {
+          score += 14;
+          matched = true;
         } else if (cluster.indexOf(variant) !== -1) {
           score += 15;
           matched = true;
@@ -170,6 +190,9 @@
           matched = true;
         } else if (searchText.indexOf(variant) !== -1) {
           score += 5;
+          matched = true;
+        } else if (directAnswer.indexOf(variant) !== -1) {
+          score += 7;
           matched = true;
         }
       });
@@ -192,11 +215,34 @@
   }
 
   function cardHtml(article) {
+    var cardLabel = article.cluster || "Articol";
+    if (article.city && normalize(cardLabel).indexOf(normalize(article.city)) === -1) {
+      cardLabel += " · " + article.city;
+    }
+    var topic = article.topic || "strategy";
+    var topicLabels = { commerce: "E-commerce", local: "SEO local", ads: "Promovare", ai: "AI & automatizare", analytics: "Date & conversii", seo: "SEO", web: "Web design", strategy: "Strategie digitală" };
+    var media = article.image
+      ? '<div class="cabit-article-visual cabit-article-visual--card has-image"><img src="' + escapeHtml(article.image) + '" alt="' + escapeHtml(article.image_alt || article.title) + '" width="1200" height="630" loading="lazy" decoding="async"></div>'
+      : '<div class="cabit-article-visual cabit-article-visual--card is-fallback is-theme-' + escapeHtml(topic) + '" role="img" aria-label="Reprezentare vizuală CAB-IT pentru ' + escapeHtml(article.title) + '"><span>Ghid CAB-IT</span>' + topicIcon(topic) + '<strong>' + escapeHtml(topicLabels[topic] || topicLabels.strategy) + '</strong><i aria-hidden="true"></i><b aria-hidden="true"></b></div>';
     return '<article class="cabit-blog-card">' +
-      '<a class="cabit-blog-card__link" href="' + escapeHtml(article.url) + '"><img src="' + escapeHtml(article.image) + '" alt="' + escapeHtml(article.image_alt || article.title) + '" width="600" height="315" loading="lazy" decoding="async">' +
-      '<div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' + escapeHtml(article.cluster || "Articol") + '</span><time datetime="' + escapeHtml(article.date) + '">' + escapeHtml(article.date_label) + '</time></div>' +
+      '<a class="cabit-blog-card__link" href="' + escapeHtml(article.url) + '">' + media +
+      '<div class="cabit-blog-card__body"><div class="cabit-blog-card__meta"><span>' + escapeHtml(cardLabel) + '</span><time datetime="' + escapeHtml(article.date) + '">' + escapeHtml(article.date_label) + '</time></div>' +
       '<h3>' + escapeHtml(article.title) + '</h3><p>' + escapeHtml(article.excerpt) + '</p>' +
       '<span class="cabit-text-link">Citește articolul <span aria-hidden="true">→</span></span></div></a></article>';
+  }
+
+  function topicIcon(topic) {
+    var icons = {
+      commerce: '<svg viewBox="0 0 96 72" aria-hidden="true"><path d="M25 24h48l-4 37H29zM36 27c0-11 5-17 12-17s12 6 12 17M37 43h22M48 34v18"/></svg>',
+      local: '<svg viewBox="0 0 96 72" aria-hidden="true"><path d="M18 58h60M24 58V31l24-13 24 13v27M34 39h8m12 0h8M34 49h8m12 0h8"/><circle cx="69" cy="18" r="9"/><path d="m76 25 8 8"/></svg>',
+      ads: '<svg viewBox="0 0 96 72" aria-hidden="true"><circle cx="43" cy="36" r="24"/><circle cx="43" cy="36" r="14"/><circle cx="43" cy="36" r="4"/><path d="m61 20 18-10-7 20-11-10Z"/></svg>',
+      ai: '<svg viewBox="0 0 96 72" aria-hidden="true"><rect x="24" y="15" width="48" height="42" rx="12"/><circle cx="39" cy="35" r="4"/><circle cx="57" cy="35" r="4"/><path d="M37 47h22M48 15V7M18 28h6m48 0h6M18 45h6m48 0h6"/></svg>',
+      analytics: '<svg viewBox="0 0 96 72" aria-hidden="true"><path d="M18 58h62M24 54V41h12v13m8 0V29h12v25m8 0V17h12v37m-52-21 15-10 14 4 22-17"/></svg>',
+      seo: '<svg viewBox="0 0 96 72" aria-hidden="true"><circle cx="39" cy="32" r="20"/><path d="m54 47 21 17M29 36l8-8 7 6 12-14"/></svg>',
+      web: '<svg viewBox="0 0 96 72" aria-hidden="true"><rect x="12" y="12" width="62" height="43" rx="7"/><path d="M12 23h62M22 18h1m7 0h1m7 0h1M31 62h24M43 55v7"/><rect x="63" y="31" width="22" height="35" rx="5"/></svg>',
+      strategy: '<svg viewBox="0 0 96 72" aria-hidden="true"><circle cx="24" cy="36" r="8"/><circle cx="48" cy="18" r="8"/><circle cx="72" cy="36" r="8"/><circle cx="48" cy="56" r="8"/><path d="m30 31 12-9m12 0 12 9m0 10-12 11m-12 0L30 41"/></svg>'
+    };
+    return icons[topic] || icons.strategy;
   }
 
   function currentState() {
@@ -204,7 +250,7 @@
     var requestedSize = parameters.get("per_page") || pageSize.value || "10";
     var perPage = requestedSize === "all" ? Math.max(1, filtered.length) : Math.max(1, Number(requestedSize) || 10);
     var page = Math.max(1, Number(parameters.get("page")) || 1);
-    return { query: parameters.get("q") || input.value || "", requestedSize: requestedSize, perPage: perPage, page: page };
+    return { query: parameters.get("q") || appliedQuery, requestedSize: requestedSize, perPage: perPage, page: page };
   }
 
   function pageHref(page, query, requestedSize) {
@@ -289,8 +335,11 @@
       return;
     }
     suggestions.innerHTML = matches.map(function (article, index) {
+      var suggestionMedia = article.image
+        ? '<img src="' + escapeHtml(article.image) + '" alt="" width="48" height="42" loading="lazy">'
+        : '<span class="cabit-blog-suggestion__fallback is-theme-' + escapeHtml(article.topic || "strategy") + '" aria-hidden="true">' + topicIcon(article.topic || "strategy") + '</span>';
       return '<button class="cabit-blog-suggestion" type="button" role="option" aria-selected="false" data-suggestion="' + index + '" data-url="' + escapeHtml(article.url) + '">' +
-        '<img src="' + escapeHtml(article.image) + '" alt="" width="48" height="42" loading="lazy"><span><strong>' + escapeHtml(article.title) + '</strong><small>' + escapeHtml(article.cluster || "Articol") + '</small></span><span class="cabit-blog-suggestion__arrow" aria-hidden="true">→</span></button>';
+        suggestionMedia + '<span><strong>' + escapeHtml(article.title) + '</strong><small>' + escapeHtml(article.cluster || "Articol") + '</small></span><span class="cabit-blog-suggestion__arrow" aria-hidden="true">→</span></button>';
     }).join("");
     suggestions.hidden = false;
     input.setAttribute("aria-expanded", "true");
@@ -303,7 +352,7 @@
       return;
     }
     suggestions.innerHTML = '<div class="cabit-blog-recent-heading"><span>Căutări recente</span><button type="button" data-clear-recents>Șterge toate</button></div>' + recentSearches.map(function (query, index) {
-      return '<div class="cabit-blog-suggestion cabit-blog-recent" role="option"><span class="cabit-blog-recent__icon" aria-hidden="true">↺</span><button class="cabit-blog-recent__query" type="button" data-recent-query="' + index + '">' + escapeHtml(query) + '</button><button class="cabit-blog-recent__remove" type="button" aria-label="Șterge căutarea ' + escapeHtml(query) + '" data-remove-recent="' + index + '">×</button></div>';
+      return '<div class="cabit-blog-suggestion cabit-blog-recent" role="option" data-recent-query="' + index + '"><span class="cabit-blog-recent__icon" aria-hidden="true">↺</span><button class="cabit-blog-recent__query" type="button">' + escapeHtml(query) + '</button><button class="cabit-blog-recent__remove" type="button" aria-label="Șterge căutarea ' + escapeHtml(query) + '" data-remove-recent="' + index + '">×</button></div>';
     }).join("");
     suggestions.hidden = false;
     input.setAttribute("aria-expanded", "true");
@@ -323,22 +372,21 @@
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
+    appliedQuery = input.value.trim();
     saveRecentSearch(input.value);
     if (isMobileSearch()) closeMobileSearch();
     else closeSuggestions();
-    setUrl(input.value, 1, pageSize.value, false);
-    render({ scroll: true });
+    setUrl(appliedQuery, 1, pageSize.value, false);
+    render({ query: appliedQuery, scroll: true });
   });
 
   input.addEventListener("input", function () {
     window.clearTimeout(inputTimer);
     clearButton.hidden = !normalize(input.value);
     inputTimer = window.setTimeout(function () {
-      setUrl(input.value, 1, pageSize.value, true);
-      render({ query: input.value });
       if (normalize(input.value).length >= 2) renderSuggestions();
       else renderRecentSearches();
-    }, 180);
+    }, 120);
   });
 
   input.addEventListener("focus", function () {
@@ -361,6 +409,9 @@
       event.preventDefault();
       var active = suggestions.querySelectorAll("[data-suggestion]")[activeSuggestion];
       if (active) window.location.href = active.getAttribute("data-url");
+    } else if (event.key === "Enter") {
+      event.preventDefault();
+      form.requestSubmit();
     } else if (event.key === "Escape") {
       closeSuggestions();
     }
@@ -369,6 +420,7 @@
   clearButton.addEventListener("click", function () {
     var mobileWasOpen = document.body.classList.contains("cabit-blog-search-open");
     input.value = "";
+    appliedQuery = "";
     closeSuggestions();
     setUrl("", 1, pageSize.value, false);
     render();
@@ -387,15 +439,6 @@
       window.location.href = suggestion.getAttribute("data-url");
       return;
     }
-    var recent = event.target.closest("[data-recent-query]");
-    if (recent) {
-      input.value = recentSearches[Number(recent.getAttribute("data-recent-query"))] || "";
-      setUrl(input.value, 1, pageSize.value, true);
-      render();
-      renderSuggestions();
-      input.focus();
-      return;
-    }
     var remove = event.target.closest("[data-remove-recent]");
     if (remove) {
       recentSearches.splice(Number(remove.getAttribute("data-remove-recent")), 1);
@@ -407,13 +450,24 @@
       recentSearches = [];
       try { window.localStorage.removeItem("cabit-blog-recent-searches"); } catch (error) {}
       closeSuggestions();
+      return;
+    }
+    var recent = event.target.closest("[data-recent-query]");
+    if (recent) {
+      input.value = recentSearches[Number(recent.getAttribute("data-recent-query"))] || "";
+      clearButton.hidden = !normalize(input.value);
+      appliedQuery = input.value.trim();
+      saveRecentSearch(appliedQuery);
+      closeMobileSearch();
+      setUrl(appliedQuery, 1, pageSize.value, false);
+      render({ query: appliedQuery, scroll: true });
     }
   });
 
   mobileClose.addEventListener("click", closeMobileSearch);
 
   pageSize.addEventListener("change", function () {
-    setUrl(input.value, 1, pageSize.value, false);
+    setUrl(appliedQuery, 1, pageSize.value, false);
     render({ scroll: true });
   });
 
@@ -421,14 +475,18 @@
     var link = event.target.closest("[data-blog-page]");
     if (!link) return;
     event.preventDefault();
-    setUrl(input.value, Number(link.getAttribute("data-blog-page")), pageSize.value, false);
+    setUrl(appliedQuery, Number(link.getAttribute("data-blog-page")), pageSize.value, false);
     render({ scroll: true });
   });
 
   document.addEventListener("click", function (event) {
     if (!form.contains(event.target)) closeSuggestions();
   });
-  window.addEventListener("popstate", function () { render(); });
+  window.addEventListener("popstate", function () {
+    appliedQuery = new URLSearchParams(window.location.search).get("q") || "";
+    input.value = appliedQuery;
+    render();
+  });
   window.addEventListener("resize", function () {
     if (!isMobileSearch()) {
       document.documentElement.classList.remove("cabit-blog-search-open");
@@ -446,7 +504,8 @@
     .then(function (payload) {
       articles = Array.isArray(payload.articles) ? payload.articles : [];
       var parameters = new URLSearchParams(window.location.search);
-      input.value = parameters.get("q") || "";
+      appliedQuery = parameters.get("q") || "";
+      input.value = appliedQuery;
       pageSize.value = parameters.get("per_page") || "10";
       render();
     })
