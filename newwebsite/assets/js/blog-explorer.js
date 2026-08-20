@@ -52,7 +52,7 @@
 
   var mobileHead = document.createElement("div");
   mobileHead.className = "cabit-blog-search__mobile-head";
-  mobileHead.innerHTML = '<button class="cabit-blog-search__mobile-close" type="button" aria-label="Închide căutarea">←</button><span>Găsește răspunsul potrivit</span>';
+  mobileHead.innerHTML = '<button class="cabit-blog-search__mobile-close" type="button" aria-label="Înapoi la blog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg></button><span>Găsește răspunsul potrivit</span>';
   form.insertBefore(mobileHead, form.firstChild);
   var mobileClose = mobileHead.querySelector("button");
 
@@ -383,6 +383,45 @@
     input.setAttribute("aria-expanded", "false");
   }
 
+  function suggestionHtml(article, index) {
+    var suggestionMedia = article.image
+      ? '<img src="' + escapeHtml(article.image) + '" alt="" width="48" height="42" loading="lazy">'
+      : '<span class="cabit-blog-suggestion__fallback is-theme-' + escapeHtml(article.topic || "strategy") + '" aria-hidden="true">' + topicIcon(article.topic || "strategy") + '</span>';
+    return '<button class="cabit-blog-suggestion" type="button" role="option" aria-selected="false" data-suggestion="' + index + '" data-url="' + escapeHtml(article.url) + '">' +
+      suggestionMedia + '<span><strong>' + escapeHtml(article.title) + '</strong><small>' + escapeHtml(article.cluster || "Articol") + '</small></span><span class="cabit-blog-suggestion__arrow" aria-hidden="true">→</span></button>';
+  }
+
+  function recentRecommendations(limit) {
+    var pools = recentSearches.map(function (query) {
+      return ranked(query).slice(0, 12);
+    }).filter(function (pool) { return pool.length; });
+    var selected = [];
+    var seen = Object.create(null);
+    var depth = 0;
+
+    while (selected.length < limit && depth < 12) {
+      pools.forEach(function (pool) {
+        var candidate = pool[depth];
+        if (candidate && !seen[candidate.slug] && selected.length < limit) {
+          seen[candidate.slug] = true;
+          selected.push(candidate);
+        }
+      });
+      depth++;
+    }
+
+    if (selected.length < limit) {
+      articles.some(function (article) {
+        if (!seen[article.slug]) {
+          seen[article.slug] = true;
+          selected.push(article);
+        }
+        return selected.length >= limit;
+      });
+    }
+    return selected;
+  }
+
   function renderSuggestions() {
     var query = input.value.trim();
     if (normalize(query).length < 2) {
@@ -394,26 +433,24 @@
       closeSuggestions();
       return;
     }
-    suggestions.innerHTML = matches.map(function (article, index) {
-      var suggestionMedia = article.image
-        ? '<img src="' + escapeHtml(article.image) + '" alt="" width="48" height="42" loading="lazy">'
-        : '<span class="cabit-blog-suggestion__fallback is-theme-' + escapeHtml(article.topic || "strategy") + '" aria-hidden="true">' + topicIcon(article.topic || "strategy") + '</span>';
-      return '<button class="cabit-blog-suggestion" type="button" role="option" aria-selected="false" data-suggestion="' + index + '" data-url="' + escapeHtml(article.url) + '">' +
-        suggestionMedia + '<span><strong>' + escapeHtml(article.title) + '</strong><small>' + escapeHtml(article.cluster || "Articol") + '</small></span><span class="cabit-blog-suggestion__arrow" aria-hidden="true">→</span></button>';
-    }).join("");
+    suggestions.innerHTML = matches.map(suggestionHtml).join("");
     suggestions.hidden = false;
     input.setAttribute("aria-expanded", "true");
     activeSuggestion = -1;
   }
 
   function renderRecentSearches() {
-    if (!isMobileSearch() || !recentSearches.length) {
+    if (!articles.length) {
       closeSuggestions();
       return;
     }
-    suggestions.innerHTML = '<div class="cabit-blog-recent-heading"><span>Căutări recente</span><button type="button" data-clear-recents>Șterge toate</button></div>' + recentSearches.map(function (query, index) {
-      return '<div class="cabit-blog-suggestion cabit-blog-recent" role="option" data-recent-query="' + index + '"><span class="cabit-blog-recent__icon" aria-hidden="true">↺</span><button class="cabit-blog-recent__query" type="button">' + escapeHtml(query) + '</button><button class="cabit-blog-recent__remove" type="button" aria-label="Șterge căutarea ' + escapeHtml(query) + '" data-remove-recent="' + index + '">×</button></div>';
-    }).join("");
+    var recentMarkup = recentSearches.length
+      ? '<div class="cabit-blog-recent-heading"><span>Căutări recente</span><button type="button" data-clear-recents>Șterge toate</button></div>' + recentSearches.map(function (query, index) {
+        return '<div class="cabit-blog-suggestion cabit-blog-recent" role="option" data-recent-query="' + index + '"><span class="cabit-blog-recent__icon" aria-hidden="true">↺</span><button class="cabit-blog-recent__query" type="button">' + escapeHtml(query) + '</button><button class="cabit-blog-recent__remove" type="button" aria-label="Șterge căutarea ' + escapeHtml(query) + '" data-remove-recent="' + index + '">×</button></div>';
+      }).join("")
+      : '';
+    var recommended = recentRecommendations(5);
+    suggestions.innerHTML = recentMarkup + '<div class="cabit-blog-recent-heading cabit-blog-suggestion-heading"><span>Sugestii</span></div>' + recommended.map(suggestionHtml).join("");
     suggestions.hidden = false;
     input.setAttribute("aria-expanded", "true");
   }
@@ -488,7 +525,8 @@
       input.focus();
       renderRecentSearches();
     } else {
-      input.blur();
+      input.focus({ preventScroll: true });
+      renderRecentSearches();
     }
   });
 
@@ -509,7 +547,7 @@
     if (event.target.closest("[data-clear-recents]")) {
       recentSearches = [];
       try { window.localStorage.removeItem("cabit-blog-recent-searches"); } catch (error) {}
-      closeSuggestions();
+      renderRecentSearches();
       return;
     }
     var recent = event.target.closest("[data-recent-query]");
@@ -518,9 +556,11 @@
       clearButton.hidden = !normalize(input.value);
       appliedQuery = input.value.trim();
       saveRecentSearch(appliedQuery);
-      closeMobileSearch();
       setUrl(appliedQuery, 1, pageSize.value, false);
-      render({ query: appliedQuery, scroll: true });
+      openMobileSearch();
+      renderSuggestions();
+      input.focus({ preventScroll: true });
+      window.requestAnimationFrame(renderSuggestions);
     }
   });
 
@@ -569,6 +609,10 @@
       input.value = appliedQuery;
       pageSize.value = parameters.get("per_page") || "10";
       render();
+      if (document.activeElement === input) {
+        if (normalize(input.value).length >= 2) renderSuggestions();
+        else renderRecentSearches();
+      }
     })
     .catch(function () {
       resultContext.textContent = "căutarea inteligentă este temporar indisponibilă; primele articole rămân accesibile";
