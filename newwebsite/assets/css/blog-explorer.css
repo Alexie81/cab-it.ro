@@ -391,9 +391,35 @@
   font-size: 13px;
 }
 
+.cabit-blog-result-bar > span:first-child {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px 7px 10px;
+  border: 1px solid rgba(8, 145, 134, .2);
+  border-radius: 999px;
+  color: #486174;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .96), rgba(226, 250, 247, .9));
+  box-shadow: 0 8px 22px rgba(7, 111, 103, .09), inset 0 1px 0 rgba(255, 255, 255, .9);
+  font-weight: 750;
+}
+
+.cabit-blog-result-bar > span:first-child::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: #08a597;
+  box-shadow: 0 0 0 4px rgba(8, 165, 151, .12);
+}
+
 .cabit-blog-result-bar strong {
   display: inline-flex;
-  color: #101828;
+  color: #057b72;
+  font-size: 15px;
+  font-weight: 900;
   font-variant-numeric: tabular-nums;
 }
 
