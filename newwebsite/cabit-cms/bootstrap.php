@@ -575,7 +575,7 @@ function cms_article_pillar(array $metadata): array
     if (preg_match('/automatiz|agent ai|crm|tracking|analytics|consent/u', $context)) {
         return ['/servicii/integrari-digitale/', 'Vezi automatizările și integrările digitale'];
     }
-    if (preg_match('/website|web design|e-commerce|magazin|shopify|woocommerce|cms|landing/u', $context)) {
+    if (preg_match('/website|web design|e-commerce|magazin|shopify|woocommerce|cms|landing|merchant|shopping|catalog|produs|furnizor/u', $context)) {
         return ['/servicii/creare-site-web/', 'Vezi serviciile de web design și creare website'];
     }
     return ['/servicii/', 'Vezi serviciile agenției de marketing online'];
