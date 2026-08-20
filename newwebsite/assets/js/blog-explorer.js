@@ -42,6 +42,8 @@
   var rankCacheKeys = [];
   var locationNames = [];
   var hasAnimatedArticleTotal = false;
+  var pendingArticleTotal = null;
+  var resultCountObserver = null;
 
   var synonymGroups = [
     ["site", "website", "web", "pagina", "siteul", "siteuri", "websiteul", "websiteuri"],
@@ -172,13 +174,13 @@
     }).join("");
   }
 
-  function updateResultCount(total, label, animate) {
-    var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!animate || reducedMotion) {
-      resultCount.innerHTML = '<strong aria-label="' + total + '">' + finalCountMarkup(total) + '</strong> ' + label;
-      return;
-    }
+  function animateResultCount(total, label) {
     hasAnimatedArticleTotal = true;
+    pendingArticleTotal = null;
+    if (resultCountObserver) {
+      resultCountObserver.disconnect();
+      resultCountObserver = null;
+    }
     resultCount.innerHTML = '<strong class="cabit-count-up" aria-label="' + total + '">0</strong> ' + label;
     var number = resultCount.querySelector("strong");
     var startedAt = 0;
@@ -195,6 +197,32 @@
       }
     }
     window.requestAnimationFrame(step);
+  }
+
+  function updateResultCount(total, label, animate) {
+    var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!animate || reducedMotion || !("IntersectionObserver" in window)) {
+      if (resultCountObserver) {
+        resultCountObserver.disconnect();
+        resultCountObserver = null;
+      }
+      pendingArticleTotal = null;
+      if (animate && !reducedMotion && !("IntersectionObserver" in window)) {
+        animateResultCount(total, label);
+      } else {
+        resultCount.innerHTML = '<strong aria-label="' + total + '">' + finalCountMarkup(total) + '</strong> ' + label;
+      }
+      return;
+    }
+    pendingArticleTotal = { total: total, label: label };
+    resultCount.innerHTML = '<strong class="cabit-count-up" aria-label="' + total + '">0</strong> ' + label;
+    if (!resultCountObserver) {
+      resultCountObserver = new IntersectionObserver(function (entries) {
+        if (!pendingArticleTotal || !entries.some(function (entry) { return entry.isIntersecting && entry.intersectionRatio >= 0.25; })) return;
+        animateResultCount(pendingArticleTotal.total, pendingArticleTotal.label);
+      }, { threshold: [0.25, 0.6] });
+      resultCountObserver.observe(resultCount);
+    }
   }
 
   function prepareArticle(article, index) {
