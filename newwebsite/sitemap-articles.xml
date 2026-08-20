@@ -1,651 +1,1379 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://cab-it.ro/blog/website-cabinete-si-firme-de-servicii-juridice-hunedoara/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/website-cabinete-si-firme-de-servicii-juridice-hunedoara.webp</image:loc>
+      <image:title>Website pentru cabinete și firme de servicii juridice în Hunedoara: cum generezi programări</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/blog/web-design-bacau-firme-de-securitate/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/web-design-bacau-firme-de-securitate.webp</image:loc>
+      <image:title>Web design în Bacău pentru firme de securitate: experiență care duce la cereri de ofertă</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/blog/seo-local-bistrita-ateliere-si-producatori-la-comanda/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/seo-local-bistrita-ateliere-si-producatori-la-comanda.webp</image:loc>
+      <image:title>SEO local în Bistrița pentru ateliere și producători la comandă: cum obții cereri de ofertă</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/blog/redesign-website-medias-clinici-medicale/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/redesign-website-medias-clinici-medicale.webp</image:loc>
+      <image:title>Redesign website în Mediaș pentru clinici medicale: conversii fără pierderi SEO</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/blog/promovare-online-pitesti-service-uri-de-electronice-si-it/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/promovare-online-pitesti-service-uri-de-electronice-si-it.webp</image:loc>
+      <image:title>Promovare online în Pitești pentru service-uri de electronice și IT: plan pentru apeluri calificate</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/blog/creare-website-oradea-cabinete-stomatologice/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/creare-website-oradea-cabinete-stomatologice.webp</image:loc>
+      <image:title>Creare website în Oradea pentru cabinete stomatologice: structură pentru programări</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/blog/cat-costa-site-prezentare-bucuresti-2026/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/cat-costa-site-prezentare-bucuresti-2026.webp</image:loc>
+      <image:title>Cât costă un site de prezentare în București în 2026? Bugetul explicat complet</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/blog/cat-costa-magazin-online-bucuresti-2026/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/cat-costa-magazin-online-bucuresti-2026.webp</image:loc>
+      <image:title>Cât costă un magazin online în București în 2026? Platformă, integrări și promovare</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/blog/buget-website-promovare-lugoj-agentii-imobiliare/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/buget-website-promovare-lugoj-agentii-imobiliare.webp</image:loc>
+      <image:title>Buget pentru website și promovare online în Lugoj: plan pentru agenții imobiliare</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://cab-it.ro/blog/agentie-web-design-arad-companii-de-energie-solara-si-instal/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-local-2026/agentie-web-design-arad-companii-de-energie-solara-si-instal.webp</image:loc>
+      <image:title>Agenție web design în Arad: cum alegi partenerul potrivit pentru companii de energie solară și instalații</image:title>
+    </image:image>
+  </url>
   <url>
     <loc>https://cab-it.ro/blog/constructor-de-site-cu-ai-sau-agentie-web/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/constructor-de-site-cu-ai-sau-agentie-web.webp</image:loc>
+      <image:title>Constructor de site cu AI sau agenție web? Ce economisești și ce riști în 2026</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/tiktok-smart-lead-generation/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/tiktok-smart-lead-generation.webp</image:loc>
+      <image:title>TikTok Smart+ Lead Generation: când automatizarea poate ajuta o firmă de servicii</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/chatbot-ai-pe-site/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/chatbot-ai-pe-site.webp</image:loc>
+      <image:title>Chatbot AI pe site: când aduce leaduri și când îi enervează pe vizitatori</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/meta-advantage-leads-afaceri-locale/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/meta-advantage-leads-afaceri-locale.webp</image:loc>
+      <image:title>Meta Advantage+ Leads pentru afaceri locale: automatizare cu control asupra calității</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/european-accessibility-act-website-romania/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/european-accessibility-act-website-romania.webp</image:loc>
+      <image:title>European Accessibility Act: ce website-uri și magazine online trebuie adaptate în 2026</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/shopify-sau-woocommerce-romania/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/shopify-sau-woocommerce-romania.webp</image:loc>
+      <image:title>Shopify sau WooCommerce în România: costuri, plăți, curieri și control asupra magazinului</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/search-console-pentru-social-media/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/search-console-pentru-social-media.webp</image:loc>
+      <image:title>Search Console pentru Instagram, TikTok, X și YouTube: cum vezi ce postări apar în Google</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/gomag-shopify-sau-woocommerce/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/gomag-shopify-sau-woocommerce.webp</image:loc>
+      <image:title>Gomag, Shopify sau WooCommerce: cum alegi platforma unui magazin online românesc</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/continut-non-commodity/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/continut-non-commodity.webp</image:loc>
+      <image:title>Conținut non-commodity: cum publici experiență pe care concurenții nu o pot copia</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cat-costa-un-magazin-online-in-romania/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/cat-costa-un-magazin-online-in-romania.webp</image:loc>
+      <image:title>Cât costă un magazin online în România în 2026: platformă, integrări și operare</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/integrare-crm-cu-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/integrare-crm-cu-website.webp</image:loc>
+      <image:title>Integrarea CRM cu website-ul: traseul complet de la formular la vânzare</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/google-ads-nu-are-afisari/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/google-ads-nu-are-afisari.webp</image:loc>
+      <image:title>Google Ads nu are afișări: diagnostic complet înainte să mărești bugetul</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/stripe-netopia-sau-euplatesc/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/stripe-netopia-sau-euplatesc.webp</image:loc>
+      <image:title>Plăți cu cardul pe magazinul online: Stripe, NETOPIA sau EuPlătesc?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/potrivire-exacta-expresie-sau-ampla-google-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/potrivire-exacta-expresie-sau-ampla-google-ads.webp</image:loc>
+      <image:title>Potrivire exactă, expresie sau amplă în Google Ads 2026: cum controlezi intenția reală</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/sincronizare-stoc-magazin-online-emag-erp/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/sincronizare-stoc-magazin-online-emag-erp.webp</image:loc>
+      <image:title>Sincronizare stoc între magazin online, eMAG și ERP: cum eviți supravânzarea</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/calculator-de-pret-pe-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/calculator-de-pret-pe-website.webp</image:loc>
+      <image:title>Calculator de preț pe website: cum transformi o estimare într-un lead calificat</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/demand-gen-sau-meta-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/demand-gen-sau-meta-ads.webp</image:loc>
+      <image:title>Demand Gen sau Meta Ads pentru servicii: unde construiești cerere și unde capturezi interesul?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/audit-wcag-2-2-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/audit-wcag-2-2-website.webp</image:loc>
+      <image:title>Audit WCAG 2.2 pentru website: ce se testează manual și ce ratează instrumentele automate</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/youtube-shorts-ads-pentru-servicii/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/youtube-shorts-ads-pentru-servicii.webp</image:loc>
+      <image:title>YouTube Shorts Ads pentru firme de servicii: scenarii de 15–30 de secunde care nu par reclame</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/rezervari-directe-site-pensiune/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/rezervari-directe-site-pensiune.webp</image:loc>
+      <image:title>Rezervări directe pe site-ul unei pensiuni: cum reduci dependența de Booking</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/vibe-coding-website-comercial/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/vibe-coding-website-comercial.webp</image:loc>
+      <image:title>Vibe coding pentru un website comercial: cât de sigur este să lansezi cod generat cu AI?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/veo-video-ai-google-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/veo-video-ai-google-ads.webp</image:loc>
+      <image:title>Veo și variațiile video generate cu AI în Google Ads: flux de lucru cu control de brand</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/magazin-online-propriu-sau-emag/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/magazin-online-propriu-sau-emag.webp</image:loc>
+      <image:title>Magazin online propriu sau vânzare doar pe eMAG? Cum reduci dependența de marketplace</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/tiktok-smart-search-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/tiktok-smart-search-ads.webp</image:loc>
+      <image:title>TikTok Smart+ Search Ads: cum pregătești conținutul pentru căutări din interiorul platformei</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/magazin-online-b2b-cu-preturi-pe-cont/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/magazin-online-b2b-cu-preturi-pe-cont.webp</image:loc>
+      <image:title>Magazin online B2B cu prețuri pe cont și cereri de ofertă: când ai nevoie de un portal dedicat</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/programari-online-pe-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/programari-online-pe-website.webp</image:loc>
+      <image:title>Programări online pe website: ce sistem alegi pentru salon, clinică sau service</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/meta-andromeda-diversificare-creativa/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/meta-andromeda-diversificare-creativa.webp</image:loc>
+      <image:title>Meta Andromeda și diversificarea creativă: de ce zece reclame aproape identice nu sunt suficiente</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/formular-inteligent-cerere-oferta/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/formular-inteligent-cerere-oferta.webp</image:loc>
+      <image:title>Formular inteligent de cerere ofertă: cum califici leadul înainte să îl suni</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/micro-conversii-vs-conversii-principale/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/micro-conversii-vs-conversii-principale.webp</image:loc>
+      <image:title>Micro-conversii sau conversii principale: ce optimizezi în reclame când ai puține leaduri</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/configurator-produse-sau-servicii/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/configurator-produse-sau-servicii.webp</image:loc>
+      <image:title>Configurator de produse sau servicii: când merită dezvoltarea unei experiențe interactive</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/platforma-consimtamant-cookies-cmp/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/platforma-consimtamant-cookies-cmp.webp</image:loc>
+      <image:title>Politica de cookies și platforma de consimțământ: cum alegi un CMP potrivit</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/speed-to-lead-automatizare/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/speed-to-lead-automatizare.webp</image:loc>
+      <image:title>Speed-to-lead: automatizarea răspunsului în primele minute fără mesaje robotice</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/integrare-curier-magazin-online/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/integrare-curier-magazin-online.webp</image:loc>
+      <image:title>Integrarea curierului și generarea AWB din magazinul online: fluxul care economisește ore</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/diferente-conversii-ga4-google-ads-meta-crm/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/diferente-conversii-ga4-google-ads-meta-crm.webp</image:loc>
+      <image:title>De ce GA4, Google Ads, Meta și CRM raportează numere diferite pentru aceeași campanie</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/plati-recurente-pe-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/plati-recurente-pe-website.webp</image:loc>
+      <image:title>Abonamente și plăți recurente pe website: modele, implementare și retenție</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/portal-pentru-clienti-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/portal-pentru-clienti-website.webp</image:loc>
+      <image:title>Portal pentru clienți pe website: documente, statusuri, plăți și suport într-un singur loc</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cpc-manual-sau-maximizarea-conversiilor/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/cpc-manual-sau-maximizarea-conversiilor.webp</image:loc>
+      <image:title>CPC manual, Maximizarea clicurilor sau Maximizarea conversiilor: ce alegi cu buget mic?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/semnatura-electronica-pe-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/semnatura-electronica-pe-website.webp</image:loc>
+      <image:title>Semnătură electronică și contracte generate din website: flux fără PDF-uri trimise manual</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/targetare-geografica-google-ads-prezenta-sau-interes/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/targetare-geografica-google-ads-prezenta-sau-interes.webp</image:loc>
+      <image:title>Targetare geografică în Google Ads: prezență sau interes pentru o locație?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/formular-anti-spam-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/formular-anti-spam-website.webp</image:loc>
+      <image:title>Formulare anti-spam fără să pierzi leaduri: CAPTCHA, honeypot și validare inteligentă</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/site-pentru-instalator-sau-electrician/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/site-pentru-instalator-sau-electrician.webp</image:loc>
+      <image:title>Cum transformi site-ul unui instalator sau electrician într-o sursă de apeluri urgente</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/creator-partnerships-demand-gen/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/creator-partnerships-demand-gen.webp</image:loc>
+      <image:title>Creator partnerships în Demand Gen: cum colaborează o firmă mică cu creatori fără bugete uriașe</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/site-compromis-ce-faci/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/site-compromis-ce-faci.webp</image:loc>
+      <image:title>Site compromis: ce faci în primele 24 de ore și cum îl readuci online în siguranță</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/creative-fatigue-meta-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/creative-fatigue-meta-ads.webp</image:loc>
+      <image:title>Creative fatigue în Meta Ads: cum o detectezi înainte să explodeze costul pe lead</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/site-agentie-imobiliara-functii/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/site-agentie-imobiliara-functii.webp</image:loc>
+      <image:title>Ce funcții trebuie să aibă site-ul unei agenții imobiliare ca să genereze leaduri</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/hostinger-ai-website-builder-sau-wordpress/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/hostinger-ai-website-builder-sau-wordpress.webp</image:loc>
+      <image:title>Hostinger AI Website Builder sau WordPress: soluție rapidă ori investiție pe termen lung?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/server-side-tracking-google-tag-manager/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/server-side-tracking-google-tag-manager.webp</image:loc>
+      <image:title>Server-side tracking cu Google Tag Manager: când merită pentru o firmă și ce nu repară</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/platforma-cursuri-sau-site-de-inscrieri/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/platforma-cursuri-sau-site-de-inscrieri.webp</image:loc>
+      <image:title>Platformă de cursuri sau site de înscrieri? Cum alegi pentru o școală privată</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/meta-conversions-api-deduplicare/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/meta-conversions-api-deduplicare.webp</image:loc>
+      <image:title>Meta Conversions API și deduplicarea evenimentelor: cum eviți conversiile raportate de două ori</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/buton-whatsapp-pe-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/buton-whatsapp-pe-website.webp</image:loc>
+      <image:title>Buton WhatsApp pe website: implementare, mesaje precompletate și măsurarea leadurilor</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/website-firma-constructii/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/website-firma-constructii.webp</image:loc>
+      <image:title>Website pentru o firmă de construcții: proiecte care conving și cereri de ofertă mai bune</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/tiktok-events-api/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/tiktok-events-api.webp</image:loc>
+      <image:title>TikTok Events API: cum trimiți conversii din website și CRM fără dublarea datelor</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/website-multilingv-seo/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/website-multilingv-seo.webp</image:loc>
+      <image:title>Website multilingv: traducere, URL-uri și SEO pentru fiecare piață</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/lead-scoring-in-crm/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/lead-scoring-in-crm.webp</image:loc>
+      <image:title>Lead scoring în CRM: cum prioritizezi cererile fără să ignori clienți valoroși</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/creare-site-firma-curatenie/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/creare-site-firma-curatenie.webp</image:loc>
+      <image:title>Crearea unui site pentru servicii de curățenie: estimări rapide, abonamente și zone acoperite</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/site-cu-plata-unica-sau-abonament/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/site-cu-plata-unica-sau-abonament.webp</image:loc>
+      <image:title>Site cu plată unică sau abonament lunar? Costul real pe 3 ani pentru o firmă</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/dashboard-looker-studio-leaduri/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/dashboard-looker-studio-leaduri.webp</image:loc>
+      <image:title>Dashboard Looker Studio pentru leaduri: cost, calitate și venit într-o singură vedere</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/site-pentru-avocat/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/site-pentru-avocat.webp</image:loc>
+      <image:title>Site pentru avocat: structură, credibilitate și limitele comunicării comerciale</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/google-discover-pentru-blog-firma/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/google-discover-pentru-blog-firma.webp</image:loc>
+      <image:title>Google Discover pentru blogul unei firme: cum creezi articole cu potențial de recomandare</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/website-portofoliu-fotograf/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/website-portofoliu-fotograf.webp</image:loc>
+      <image:title>Portofoliu online pentru fotograf: imagini premium fără un website lent</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/website-mvp-pentru-firma/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/website-mvp-pentru-firma.webp</image:loc>
+      <image:title>Website MVP pentru o firmă nouă: ce lansezi acum și ce amâni pentru etapa a doua</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/optimizare-imagini-pentru-google-lens/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/optimizare-imagini-pentru-google-lens.webp</image:loc>
+      <image:title>Optimizarea imaginilor pentru Google Lens: cum transformi fotografiile în puncte de intrare către site</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/wix-sau-wordpress/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/wix-sau-wordpress.webp</image:loc>
+      <image:title>Wix sau WordPress pentru o firmă mică: cost, libertate și administrare pe termen lung</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/seo-pagini-portofoliu/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/seo-pagini-portofoliu.webp</image:loc>
+      <image:title>Cum pot paginile de portofoliu să rankeze pentru căutări comerciale, nu doar pentru numele clientului</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/webflow-sau-wordpress/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/webflow-sau-wordpress.webp</image:loc>
+      <image:title>Webflow sau WordPress: ce platformă este mai potrivită pentru un website de marketing?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/checkout-o-pagina-sau-mai-multi-pasi/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/checkout-o-pagina-sau-mai-multi-pasi.webp</image:loc>
+      <image:title>Checkout într-o singură pagină sau în mai mulți pași: ce convertește mai bine?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cuvinte-negative-google-ads-servicii/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/cuvinte-negative-google-ads-servicii.webp</image:loc>
+      <image:title>Lista de cuvinte negative pentru servicii: cum elimini căutările fără intenție de cumpărare</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/framer-sau-webflow/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/framer-sau-webflow.webp</image:loc>
+      <image:title>Framer sau Webflow pentru un site de prezentare: diferențe care contează după lansare</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/faza-de-invatare-google-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/faza-de-invatare-google-ads.webp</image:loc>
+      <image:title>Faza de învățare în Google Ads: ce modificări o destabilizează și când trebuie să nu intervii</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/declaratie-de-accesibilitate-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/declaratie-de-accesibilitate-website.webp</image:loc>
+      <image:title>Declarația de accesibilitate a unui website: ce conține și cum o menții actualizată</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/website-firma-contabilitate/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/website-firma-contabilitate.webp</image:loc>
+      <image:title>Website pentru o firmă de contabilitate: cum vinzi încredere înainte de prima discuție</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/video-seo-pagini-servicii/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/video-seo-pagini-servicii.webp</image:loc>
+      <image:title>Video SEO pe paginile de servicii: cum folosești demonstrații scurte fără să încetinești site-ul</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/politica-de-confidentialitate-website/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/politica-de-confidentialitate-website.webp</image:loc>
+      <image:title>Politica de confidențialitate pentru website: cum o adaptezi la datele colectate în realitate</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/content-decay-seo/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/content-decay-seo.webp</image:loc>
+      <image:title>Content decay: când actualizezi, unești sau ștergi un articol care pierde trafic</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/website-organizator-evenimente/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/website-organizator-evenimente.webp</image:loc>
+      <image:title>Website pentru organizatori de evenimente: pachete, galerii și cereri bine calificate</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cine-detine-website-ul-dupa-creare/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/cine-detine-website-ul-dupa-creare.webp</image:loc>
+      <image:title>Cine deține domeniul, hostingul și codul website-ului după finalizarea proiectului?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/programare-anunturi-google-ads-apeluri/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/programare-anunturi-google-ads-apeluri.webp</image:loc>
+      <image:title>Programarea anunțurilor pentru apeluri și leaduri: cum alegi orele după date, nu după instinct</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/domeniu-si-hosting-gratuit/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/domeniu-si-hosting-gratuit.webp</image:loc>
+      <image:title>Domeniu și hosting „gratuite”: ce verifici înainte să accepți oferta unei agenții</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cross-domain-tracking-ga4/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/cross-domain-tracking-ga4.webp</image:loc>
+      <image:title>Cross-domain tracking în GA4: cum urmărești utilizatorul între site, rezervări și plată</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cms-usor-de-administrat/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/cms-usor-de-administrat.webp</image:loc>
+      <image:title>Cum alegi un CMS pe care echipa ta îl poate administra fără programator</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/pagini-obligatorii-magazin-online-romania/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/pagini-obligatorii-magazin-online-romania.webp</image:loc>
+      <image:title>Pagini și informații obligatorii într-un magazin online din România: checklist editorial</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cresterea-cautarilor-de-brand/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/cresterea-cautarilor-de-brand.webp</image:loc>
+      <image:title>Cum crești căutările de brand pentru o agenție: de la conținut util la cerere directă</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cms-headless-pentru-firme/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/cms-headless-pentru-firme.webp</image:loc>
+      <image:title>CMS headless pentru firme: avantaj real sau complexitate inutilă?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/digital-pr-pentru-afaceri-locale/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/digital-pr-pentru-afaceri-locale.webp</image:loc>
+      <image:title>Digital PR pentru afaceri locale: cum obții mențiuni și linkuri fără advertoriale în serie</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/catalog-online-fara-plata/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/catalog-online-fara-plata.webp</image:loc>
+      <image:title>Catalog online fără plată pe site: când este mai bun decât un magazin ecommerce complet</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/termeni-si-conditii-site-servicii-vs-magazin-online/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/termeni-si-conditii-site-servicii-vs-magazin-online.webp</image:loc>
+      <image:title>Termeni și condiții pentru site de servicii versus magazin online: de ce nu sunt același document</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/quality-score-google-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/quality-score-google-ads.webp</image:loc>
+      <image:title>Quality Score în Google Ads: ce influențează și ce nu trebuie optimizat obsesiv</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/email-profesional-pe-domeniu/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/email-profesional-pe-domeniu.webp</image:loc>
+      <image:title>Email profesional pe domeniul firmei: configurare, livrabilitate și încredere</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/ad-rank-google-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/ad-rank-google-ads.webp</image:loc>
+      <image:title>Ad Rank explicat pentru firme: de ce concurentul apare deasupra chiar dacă licitezi mai mult</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/website-fara-logo-final/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/website-fara-logo-final.webp</image:loc>
+      <image:title>Poți lansa un website înainte să ai logo-ul și identitatea vizuală finală?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/backup-website-frecventa/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/backup-website-frecventa.webp</image:loc>
+      <image:title>Backup pentru website: frecvență, locație și testul de restaurare pe care mulți îl uită</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/parteneri-de-cautare-google-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/parteneri-de-cautare-google-ads.webp</image:loc>
+      <image:title>Partenerii de căutare Google: îi păstrezi sau îi oprești într-o campanie de leaduri?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/domeniu-ro-sau-com/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/domeniu-ro-sau-com.webp</image:loc>
+      <image:title>Domeniu .ro sau .com: ce alegi pentru o afacere care vinde în România?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/boost-post-sau-ads-manager/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/boost-post-sau-ads-manager.webp</image:loc>
+      <image:title>Boost Post sau Ads Manager: ce pierzi când promovezi direct din pagina de Facebook</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cum-alegi-numele-de-domeniu/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/cum-alegi-numele-de-domeniu.webp</image:loc>
+      <image:title>Cum alegi un nume de domeniu memorabil fără să sacrifici brandul sau SEO-ul</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/https-si-certificat-ssl/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/https-si-certificat-ssl.webp</image:loc>
+      <image:title>HTTPS și certificatul SSL: ce protejează, ce nu protejează și de ce apar avertismentele</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/conventie-utm-campanii-marketing/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/conventie-utm-campanii-marketing.webp</image:loc>
+      <image:title>Convenție UTM pentru o firmă: cum denumești campaniile ca să poți compara datele</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/website-inainte-de-infiintarea-firmei/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/website-inainte-de-infiintarea-firmei.webp</image:loc>
+      <image:title>Website înainte de înființarea unui SRL sau PFA: ce poți pregăti și ce publici după autorizare</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/seo-pentru-pdf-uri/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/seo-pentru-pdf-uri.webp</image:loc>
+      <image:title>SEO pentru PDF-uri, cataloage și oferte descărcabile: când le indexezi și când le blochezi</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/domeniu-nou-sau-domeniu-vechi/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026-wave2/domeniu-nou-sau-domeniu-vechi.webp</image:loc>
+      <image:title>Domeniu nou sau domeniu vechi: când istoricul ajută și când devine un risc SEO</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cum-alegi-o-agentie-de-marketing-online-criterii-si-intrebari/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cum-alegi-o-agentie-de-marketing-online-criterii-si-intrebari.webp</image:loc>
+      <image:title>Cum alegi o agenție de marketing online: criterii și întrebări</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cum-alegi-o-agentie-de-web-design-in-bucuresti/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cum-alegi-o-agentie-de-web-design-in-bucuresti.webp</image:loc>
+      <image:title>Cum alegi o agenție de web design în București</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cum-alegi-o-agentie-seo-criterii-livrabile-si-semnale-de-alarma/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cum-alegi-o-agentie-seo-criterii-livrabile-si-semnale-de-alarma.webp</image:loc>
+      <image:title>Cum alegi o agenție SEO: criterii, livrabile și semnale de alarmă</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cum-alegi-o-agentie-google-ads-criterii-si-livrabile/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cum-alegi-o-agentie-google-ads-criterii-si-livrabile.webp</image:loc>
+      <image:title>Cum alegi o agenție Google Ads: criterii și livrabile</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/optimizare-pentru-ai-overviews-si-ai-mode-ghid-2026/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/optimizare-pentru-ai-overviews-si-ai-mode-ghid-2026.webp</image:loc>
+      <image:title>Optimizare pentru AI Overviews și AI Mode: ghid 2026</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/promovare-online-pentru-afaceri-locale-saloane-clinici-si-service-uri/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/promovare-online-pentru-afaceri-locale-saloane-clinici-si-service-uri.webp</image:loc>
+      <image:title>Promovare online pentru afaceri locale: saloane, clinici și service-uri</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cat-costa-promovarea-online-in-2026-bugete-si-rezultate/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cat-costa-promovarea-online-in-2026-bugete-si-rezultate.webp</image:loc>
+      <image:title>Cât costă promovarea online în 2026: bugete și rezultate</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/site-de-prezentare-vs-landing-page-ce-alegi/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/site-de-prezentare-vs-landing-page-ce-alegi.webp</image:loc>
+      <image:title>Site de prezentare vs landing page: ce alegi</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cat-costa-seo-in-romania-in-2026/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cat-costa-seo-in-romania-in-2026.webp</image:loc>
+      <image:title>Cât costă SEO în România în 2026</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cat-costa-google-ads-in-romania-in-2026/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cat-costa-google-ads-in-romania-in-2026.webp</image:loc>
+      <image:title>Cât costă Google Ads în România în 2026</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cum-apari-in-chatgpt-search-oai-searchbot-continut-si-masurare/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cum-apari-in-chatgpt-search-oai-searchbot-continut-si-masurare.webp</image:loc>
+      <image:title>Cum apari în ChatGPT Search: OAI-SearchBot, conținut și măsurare</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/promovare-online-pentru-restaurante-strategie-locala-care-aduce-rezervari/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/promovare-online-pentru-restaurante-strategie-locala-care-aduce-rezervari.webp</image:loc>
+      <image:title>Promovare online pentru restaurante: strategie locală care aduce rezervări</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/promovare-online-pentru-firme-mici-plan-practic-pe-90-de-zile/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/promovare-online-pentru-firme-mici-plan-practic-pe-90-de-zile.webp</image:loc>
+      <image:title>Promovare online pentru firme mici: plan practic pe 90 de zile</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/site-custom-vs-wordpress-in-2026-avantaje-si-riscuri/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/site-custom-vs-wordpress-in-2026-avantaje-si-riscuri.webp</image:loc>
+      <image:title>Site custom vs WordPress în 2026: avantaje și riscuri</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/audit-seo-complet-in-2026-checklist-tehnic-si-editorial/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/audit-seo-complet-in-2026-checklist-tehnic-si-editorial.webp</image:loc>
+      <image:title>Audit SEO complet în 2026: checklist tehnic și editorial</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/google-ads-pentru-firme-mici-structura-cu-buget-limitat/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/google-ads-pentru-firme-mici-structura-cu-buget-limitat.webp</image:loc>
+      <image:title>Google Ads pentru firme mici: structură cu buget limitat</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/geo-vs-aeo-vs-seo-ce-este-real-si-ce-este-marketing/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/geo-vs-aeo-vs-seo-ce-este-real-si-ce-este-marketing.webp</image:loc>
+      <image:title>GEO vs AEO vs SEO: ce este real și ce este marketing</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/audit-de-marketing-digital-ce-verifica-si-ce-trebuie-sa-primesti/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/audit-de-marketing-digital-ce-verifica-si-ce-trebuie-sa-primesti.webp</image:loc>
+      <image:title>Audit de marketing digital: ce verifică și ce trebuie să primești</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/brief-pentru-creare-website-model-complet-pentru-firme/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/brief-pentru-creare-website-model-complet-pentru-firme.webp</image:loc>
+      <image:title>Brief pentru creare website: model complet pentru firme</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/keyword-research-pentru-servicii-locale-metoda-pas-cu-pas/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/keyword-research-pentru-servicii-locale-metoda-pas-cu-pas.webp</image:loc>
+      <image:title>Keyword research pentru servicii locale: metodă pas cu pas</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/landing-page-pentru-google-ads-anatomia-unei-pagini-care-converteste/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/landing-page-pentru-google-ads-anatomia-unei-pagini-care-converteste.webp</image:loc>
+      <image:title>Landing page pentru Google Ads: anatomia unei pagini care convertește</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cum-creezi-continut-citabil-de-motoarele-ai/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cum-creezi-continut-citabil-de-motoarele-ai.webp</image:loc>
+      <image:title>Cum creezi conținut citabil de motoarele AI</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/roi-promovare-online-cum-il-masori-formule-si-exemple/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/roi-promovare-online-cum-il-masori-formule-si-exemple.webp</image:loc>
+      <image:title>ROI promovare online: cum îl măsori, formule și exemple</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/structura-ideala-a-unui-site-de-servicii-care-genereaza-leaduri/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/structura-ideala-a-unui-site-de-servicii-care-genereaza-leaduri.webp</image:loc>
+      <image:title>Structura ideală a unui site de servicii care generează leaduri</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/arhitectura-seo-pentru-un-site-de-servicii-hub-uri-si-pagini/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/arhitectura-seo-pentru-un-site-de-servicii-hub-uri-si-pagini.webp</image:loc>
+      <image:title>Arhitectură SEO pentru un site de servicii: hub-uri și pagini</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/ai-max-pentru-search-in-2026-cand-merita-si-cum-il-controlezi/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/ai-max-pentru-search-in-2026-cand-merita-si-cum-il-controlezi.webp</image:loc>
+      <image:title>AI Max pentru Search în 2026: când merită și cum îl controlezi</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/schema-markup-pentru-agentii-si-firme-locale-ghid-2026/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/schema-markup-pentru-agentii-si-firme-locale-ghid-2026.webp</image:loc>
+      <image:title>Schema markup pentru agenții și firme locale: ghid 2026</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/agentie-de-marketing-vs-freelancer-vs-echipa-interna/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/agentie-de-marketing-vs-freelancer-vs-echipa-interna.webp</image:loc>
+      <image:title>Agenție de marketing vs freelancer vs echipă internă</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/mentenanta-website-ce-include-si-cat-costa/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/mentenanta-website-ce-include-si-cat-costa.webp</image:loc>
+      <image:title>Mentenanță website: ce include și cât costă</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/canibalizare-seo-cum-o-identifici-si-o-repari/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/canibalizare-seo-cum-o-identifici-si-o-repari.webp</image:loc>
+      <image:title>Canibalizare SEO: cum o identifici și o repari</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/performance-max-vs-search-pentru-lead-generation-ce-alegi/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/performance-max-vs-search-pentru-lead-generation-ce-alegi.webp</image:loc>
+      <image:title>Performance Max vs Search pentru lead generation: ce alegi</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/llms-txt-ce-face-ce-nu-face-si-cum-il-folosesti/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/llms-txt-ce-face-ce-nu-face-si-cum-il-folosesti.webp</image:loc>
+      <image:title>llms.txt: ce face, ce nu face și cum îl folosești</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/strategie-de-marketing-digital-b2b-in-romania/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/strategie-de-marketing-digital-b2b-in-romania.webp</image:loc>
+      <image:title>Strategie de marketing digital B2B în România</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/migrare-website-fara-pierdere-seo-checklist-complet/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/migrare-website-fara-pierdere-seo-checklist-complet.webp</image:loc>
+      <image:title>Migrare website fără pierdere SEO: checklist complet</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/link-building-in-2026-metode-sigure-si-utile/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/link-building-in-2026-metode-sigure-si-utile.webp</image:loc>
+      <image:title>Link building în 2026: metode sigure și utile</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/tracking-conversii-in-google-ads-apeluri-whatsapp-si-formulare/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/tracking-conversii-in-google-ads-apeluri-whatsapp-si-formulare.webp</image:loc>
+      <image:title>Tracking conversii în Google Ads: apeluri, WhatsApp și formulare</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/zero-click-search-in-2026-cum-masori-vizibilitatea-fara-click/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/zero-click-search-in-2026-cum-masori-vizibilitatea-fara-click.webp</image:loc>
+      <image:title>Zero-click search în 2026: cum măsori vizibilitatea fără click</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/social-search-in-2026-tiktok-instagram-si-youtube/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/social-search-in-2026-tiktok-instagram-si-youtube.webp</image:loc>
+      <image:title>Social search în 2026: TikTok, Instagram și YouTube</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/web-design-vs-dezvoltare-web-diferente-si-roluri/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/web-design-vs-dezvoltare-web-diferente-si-roluri.webp</image:loc>
+      <image:title>Web design vs dezvoltare web: diferențe și roluri</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/seo-pentru-pagini-de-servicii-ghid-practic/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/seo-pentru-pagini-de-servicii-ghid-practic.webp</image:loc>
+      <image:title>SEO pentru pagini de servicii: ghid practic</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/consent-mode-v2-in-romania-ce-trebuie-sa-stie-firmele/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/consent-mode-v2-in-romania-ce-trebuie-sa-stie-firmele.webp</image:loc>
+      <image:title>Consent Mode v2 în România: ce trebuie să știe firmele</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cat-dureaza-realizarea-unui-website-profesional/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cat-dureaza-realizarea-unui-website-profesional.webp</image:loc>
+      <image:title>Cât durează realizarea unui website profesional</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/seo-pentru-firme-mici-prioritati-cu-buget-limitat/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/seo-pentru-firme-mici-prioritati-cu-buget-limitat.webp</image:loc>
+      <image:title>SEO pentru firme mici: priorități cu buget limitat</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/core-web-vitals-in-2026-lcp-inp-si-cls-explicate/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/core-web-vitals-in-2026-lcp-inp-si-cls-explicate.webp</image:loc>
+      <image:title>Core Web Vitals în 2026: LCP, INP și CLS explicate</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/web-design-responsive-si-mobile-first-ce-trebuie-testat/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/web-design-responsive-si-mobile-first-ce-trebuie-testat.webp</image:loc>
+      <image:title>Web design responsive și mobile-first: ce trebuie testat</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/seo-google-maps-cum-optimizezi-profilul-local-pas-cu-pas/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/seo-google-maps-cum-optimizezi-profilul-local-pas-cu-pas.webp</image:loc>
+      <image:title>SEO Google Maps: cum optimizezi profilul local pas cu pas</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cro-pentru-site-uri-de-servicii-cum-cresti-cererile-fara-mai-mult-trafic/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/cro-pentru-site-uri-de-servicii-cum-cresti-cererile-fara-mai-mult-trafic.webp</image:loc>
+      <image:title>CRO pentru site-uri de servicii: cum crești cererile fără mai mult trafic</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/pagini-locale-seo-fara-doorway-pages-ghid-pentru-bucuresti-si-ilfov/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/pagini-locale-seo-fara-doorway-pages-ghid-pentru-bucuresti-si-ilfov.webp</image:loc>
+      <image:title>Pagini locale SEO fără doorway pages: ghid pentru București și Ilfov</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/ga4-pentru-firme-de-servicii-evenimente-leaduri-si-rapoarte-utile/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/ga4-pentru-firme-de-servicii-evenimente-leaduri-si-rapoarte-utile.webp</image:loc>
+      <image:title>GA4 pentru firme de servicii: evenimente, leaduri și rapoarte utile</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/recenzii-google-si-seo-local-impact-proces-si-raspunsuri/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-2026/recenzii-google-si-seo-local-impact-proces-si-raspunsuri.webp</image:loc>
+      <image:title>Recenzii Google și SEO local: impact, proces și răspunsuri</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/automatizarea-proceselor-intr-o-firma/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/automatizarea-proceselor-intr-o-firma.webp</image:loc>
+      <image:title>Automatizarea proceselor într-o firmă: de unde începi și ce merită integrat</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/agenti-ai-pentru-firme/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/agenti-ai-pentru-firme.webp</image:loc>
+      <image:title>Agenți AI pentru firme: ce pot automatiza și cum alegi primul caz de utilizare</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/redesign-website-semne-pierde-clienti/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/redesign-website-semne-pierde-clienti.webp</image:loc>
+      <image:title>Redesign website: 10 semne că site-ul firmei tale pierde clienți</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/administrare-facebook-instagram-pentru-firme/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/administrare-facebook-instagram-pentru-firme.webp</image:loc>
+      <image:title>Administrare Facebook și Instagram pentru firme: ce trebuie să primești de la o agenție</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/promovare-online-romania-canale-potrivite/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/promovare-online-romania-canale-potrivite.webp</image:loc>
+      <image:title>Promovare online în România: cum alegi canalele potrivite fără să risipești bugetul</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/seo-sau-google-ads/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/seo-sau-google-ads.webp</image:loc>
+      <image:title>SEO sau Google Ads: ce alegi pentru afacerea ta și când merită să le combini</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/promovare-pe-google-campanii-care-aduc-clienti/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/promovare-pe-google-campanii-care-aduc-clienti.webp</image:loc>
+      <image:title>Promovare pe Google: cum construiești campanii care aduc solicitări, nu doar clickuri</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/seo-local-bucuresti/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/seo-local-bucuresti.webp</image:loc>
+      <image:title>SEO local în București: cum atragi clienți din zona în care lucrezi</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/optimizare-seo-pentru-site/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/optimizare-seo-pentru-site.webp</image:loc>
+      <image:title>Optimizare SEO pentru site: ce înseamnă, cum se face și când apar rezultatele</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/creare-magazin-online-functionalitati-cost/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/creare-magazin-online-functionalitati-cost.webp</image:loc>
+      <image:title>Creare magazin online: funcționalitățile care influențează vânzările și costul proiectului</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/creare-site-web-pentru-firme/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/creare-site-web-pentru-firme.webp</image:loc>
+      <image:title>Creare site web pentru firme: ce trebuie să conțină un website care aduce clienți</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://cab-it.ro/blog/cat-costa-un-site-web-profesional/</loc>
     <lastmod>2026-08-19</lastmod>
+    <image:image>
+      <image:loc>https://cab-it.ro/assets/img/blog/seo-conversii/cat-costa-un-site-web-profesional.webp</image:loc>
+      <image:title>Cât costă un site web profesional în 2026 și ce ar trebui să primești în acest preț?</image:title>
+    </image:image>
   </url>
 </urlset>
