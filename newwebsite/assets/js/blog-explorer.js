@@ -15,11 +15,14 @@
   var pagination = root.querySelector("[data-blog-pagination]");
   var indexUrl = root.getAttribute("data-index-url") || "../blog-search-index.json";
   var articles = [];
+  var articleSearchIndex = [];
   var filtered = [];
   var appliedQuery = "";
   var activeSuggestion = -1;
   var inputTimer = 0;
   var recentSearches = [];
+  var rankCache = Object.create(null);
+  var rankCacheKeys = [];
 
   var synonymGroups = [
     ["site", "website", "web", "pagina"],
@@ -33,6 +36,10 @@
     ["social", "facebook", "instagram", "tiktok", "meta"],
     ["masurare", "tracking", "analytics", "ga4", "raportare"]
   ];
+  var synonymMap = Object.create(null);
+  synonymGroups.forEach(function (group) {
+    group.forEach(function (token) { synonymMap[token] = group; });
+  });
 
   var mobileHead = document.createElement("div");
   mobileHead.className = "cabit-blog-search__mobile-head";
@@ -99,11 +106,43 @@
   }
 
   function expandToken(token) {
-    var expanded = [token];
-    synonymGroups.forEach(function (group) {
-      if (group.indexOf(token) !== -1) expanded = expanded.concat(group);
-    });
-    return expanded.filter(function (value, index, list) { return list.indexOf(value) === index; });
+    return synonymMap[token] || [token];
+  }
+
+  function prepareArticle(article, index) {
+    var title = normalize(article.title);
+    var keywords = normalize((article.keywords || []).join(" "));
+    var cluster = normalize(article.cluster);
+    var excerpt = normalize(article.excerpt);
+    var queries = normalize((article.queries || []).join(" "));
+    var entities = normalize((article.entities || []).join(" "));
+    var localContext = normalize([article.city, article.county, article.region, article.industry].join(" "));
+    var allWords = (title + " " + keywords + " " + cluster + " " + excerpt + " " + queries + " " + entities + " " + localContext)
+      .split(/\s+/)
+      .filter(function (word, wordIndex, words) { return word && words.indexOf(word) === wordIndex; });
+    return {
+      article: article,
+      index: index,
+      title: title,
+      titleWords: title.split(/\s+/),
+      keywords: keywords,
+      cluster: cluster,
+      excerpt: excerpt,
+      searchText: normalize(article.search_text),
+      queries: queries,
+      entities: entities,
+      semanticTerms: normalize((article.semantic_terms || []).join(" ")),
+      boostTerms: normalize((article.boost_terms || []).join(" ")),
+      localContext: localContext,
+      directAnswer: normalize(article.direct_answer),
+      allWords: allWords
+    };
+  }
+
+  function buildSearchIndex() {
+    articleSearchIndex = articles.map(prepareArticle);
+    rankCache = Object.create(null);
+    rankCacheKeys = [];
   }
 
   function editDistance(left, right) {
@@ -134,69 +173,55 @@
     return best <= threshold ? 28 - (best * 4) : 0;
   }
 
-  function articleScore(article, rawQuery) {
-    var query = normalize(rawQuery);
+  function articleScore(prepared, query, queryTokens) {
     if (!query) return 1;
-    var queryTokens = tokens(query);
-    var title = normalize(article.title);
-    var keywords = normalize((article.keywords || []).join(" "));
-    var cluster = normalize(article.cluster);
-    var excerpt = normalize(article.excerpt);
-    var searchText = normalize(article.search_text);
-    var queries = normalize((article.queries || []).join(" "));
-    var entities = normalize((article.entities || []).join(" "));
-    var semanticTerms = normalize((article.semantic_terms || []).join(" "));
-    var boostTerms = normalize((article.boost_terms || []).join(" "));
-    var localContext = normalize([article.city, article.county, article.region, article.industry].join(" "));
-    var directAnswer = normalize(article.direct_answer);
-    var allWords = (title + " " + keywords + " " + cluster + " " + excerpt + " " + queries + " " + entities + " " + localContext).split(/\s+/);
     var score = 0;
 
-    if (title === query) score += 260;
-    if (title.indexOf(query) === 0) score += 150;
-    else if (title.indexOf(query) !== -1) score += 110;
-    if (keywords.indexOf(query) !== -1) score += 80;
-    if (queries.indexOf(query) !== -1) score += 95;
-    if (boostTerms.indexOf(query) !== -1) score += 105;
-    if (localContext.indexOf(query) !== -1) score += 60;
-    if (entities.indexOf(query) !== -1) score += 42;
-    if (cluster.indexOf(query) !== -1) score += 35;
-    if (excerpt.indexOf(query) !== -1) score += 28;
+    if (prepared.title === query) score += 260;
+    if (prepared.title.indexOf(query) === 0) score += 150;
+    else if (prepared.title.indexOf(query) !== -1) score += 110;
+    if (prepared.keywords.indexOf(query) !== -1) score += 80;
+    if (prepared.queries.indexOf(query) !== -1) score += 95;
+    if (prepared.boostTerms.indexOf(query) !== -1) score += 105;
+    if (prepared.localContext.indexOf(query) !== -1) score += 60;
+    if (prepared.entities.indexOf(query) !== -1) score += 42;
+    if (prepared.cluster.indexOf(query) !== -1) score += 35;
+    if (prepared.excerpt.indexOf(query) !== -1) score += 28;
 
     queryTokens.forEach(function (token) {
       var variants = expandToken(token);
       var matched = false;
       variants.forEach(function (variant) {
-        if (title.split(" ").some(function (word) { return word === variant || word.indexOf(variant) === 0; })) {
+        if (prepared.titleWords.some(function (word) { return word === variant || word.indexOf(variant) === 0; })) {
           score += variant === token ? 34 : 18;
           matched = true;
-        } else if (keywords.indexOf(variant) !== -1) {
+        } else if (prepared.keywords.indexOf(variant) !== -1) {
           score += variant === token ? 24 : 13;
           matched = true;
-        } else if (queries.indexOf(variant) !== -1 || boostTerms.indexOf(variant) !== -1) {
+        } else if (prepared.queries.indexOf(variant) !== -1 || prepared.boostTerms.indexOf(variant) !== -1) {
           score += variant === token ? 27 : 16;
           matched = true;
-        } else if (localContext.indexOf(variant) !== -1) {
+        } else if (prepared.localContext.indexOf(variant) !== -1) {
           score += 20;
           matched = true;
-        } else if (entities.indexOf(variant) !== -1 || semanticTerms.indexOf(variant) !== -1) {
+        } else if (prepared.entities.indexOf(variant) !== -1 || prepared.semanticTerms.indexOf(variant) !== -1) {
           score += 14;
           matched = true;
-        } else if (cluster.indexOf(variant) !== -1) {
+        } else if (prepared.cluster.indexOf(variant) !== -1) {
           score += 15;
           matched = true;
-        } else if (excerpt.indexOf(variant) !== -1) {
+        } else if (prepared.excerpt.indexOf(variant) !== -1) {
           score += 10;
           matched = true;
-        } else if (searchText.indexOf(variant) !== -1) {
+        } else if (prepared.searchText.indexOf(variant) !== -1) {
           score += 5;
           matched = true;
-        } else if (directAnswer.indexOf(variant) !== -1) {
+        } else if (prepared.directAnswer.indexOf(variant) !== -1) {
           score += 7;
           matched = true;
         }
       });
-      if (!matched) score += fuzzyTokenScore(token, allWords);
+      if (!matched) score += fuzzyTokenScore(token, prepared.allWords);
     });
 
     var minimum = queryTokens.length <= 1 ? 12 : 45 + Math.max(0, queryTokens.length - 2) * 13;
@@ -204,14 +229,21 @@
   }
 
   function ranked(query) {
-    if (!normalize(query)) return articles.slice();
-    return articles.map(function (article, index) {
-      return { article: article, score: articleScore(article, query), index: index };
+    var normalizedQuery = normalize(query);
+    if (!normalizedQuery) return articles.slice();
+    if (rankCache[normalizedQuery]) return rankCache[normalizedQuery];
+    var queryTokens = normalizedQuery.split(/\s+/).filter(function (token) { return token.length > 1; });
+    var rankedArticles = articleSearchIndex.map(function (prepared) {
+      return { article: prepared.article, score: articleScore(prepared, normalizedQuery, queryTokens), index: prepared.index };
     }).filter(function (item) {
       return item.score > 0;
     }).sort(function (left, right) {
       return right.score - left.score || String(right.article.date).localeCompare(String(left.article.date)) || left.index - right.index;
     }).map(function (item) { return item.article; });
+    rankCache[normalizedQuery] = rankedArticles;
+    rankCacheKeys.push(normalizedQuery);
+    if (rankCacheKeys.length > 40) delete rankCache[rankCacheKeys.shift()];
+    return rankedArticles;
   }
 
   function cardHtml(article) {
@@ -386,7 +418,7 @@
     inputTimer = window.setTimeout(function () {
       if (normalize(input.value).length >= 2) renderSuggestions();
       else renderRecentSearches();
-    }, 120);
+    }, 35);
   });
 
   input.addEventListener("focus", function () {
@@ -496,13 +528,14 @@
 
   loadRecentSearches();
 
-  fetch(indexUrl, { credentials: "same-origin" })
+  fetch(indexUrl, { credentials: "same-origin", cache: "force-cache" })
     .then(function (response) {
       if (!response.ok) throw new Error("Indexul articolelor nu este disponibil.");
       return response.json();
     })
     .then(function (payload) {
       articles = Array.isArray(payload.articles) ? payload.articles : [];
+      buildSearchIndex();
       var parameters = new URLSearchParams(window.location.search);
       appliedQuery = parameters.get("q") || "";
       input.value = appliedQuery;
