@@ -683,12 +683,21 @@
     }
     var remove = event.target.closest("[data-remove-recent]");
     if (remove) {
-      recentSearches.splice(Number(remove.getAttribute("data-remove-recent")), 1);
+      event.preventDefault();
+      event.stopPropagation();
+      var removedIndex = Number(remove.getAttribute("data-remove-recent"));
+      recentSearches.splice(removedIndex, 1);
       try { window.localStorage.setItem("cabit-blog-recent-searches", JSON.stringify(recentSearches)); } catch (error) {}
       renderRecentSearches();
+      var remainingRemoveButtons = suggestions.querySelectorAll("[data-remove-recent]");
+      if (remainingRemoveButtons.length) {
+        remainingRemoveButtons[Math.min(removedIndex, remainingRemoveButtons.length - 1)].focus({ preventScroll: true });
+      }
       return;
     }
     if (event.target.closest("[data-clear-recents]")) {
+      event.preventDefault();
+      event.stopPropagation();
       recentSearches = [];
       try { window.localStorage.removeItem("cabit-blog-recent-searches"); } catch (error) {}
       renderRecentSearches();
@@ -724,7 +733,8 @@
   });
 
   document.addEventListener("click", function (event) {
-    if (!form.contains(event.target)) closeSuggestions();
+    var eventPath = typeof event.composedPath === "function" ? event.composedPath() : [];
+    if (eventPath.indexOf(form) === -1 && !form.contains(event.target)) closeSuggestions();
   });
   window.addEventListener("popstate", function () {
     appliedQuery = new URLSearchParams(window.location.search).get("q") || "";
