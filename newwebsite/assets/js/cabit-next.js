@@ -66,6 +66,56 @@
   ensureShell();
   localizeRootPaths(doc);
 
+  function mountCabiButton() {
+    if (doc.querySelector("[data-cabi-smart-button]")) return;
+
+    var icon = '<svg class="cabi-smart-button__icon" viewBox="0 0 64 64" aria-hidden="true">' +
+      '<path class="cabi-smart-button__bubble" d="M12 13.5h40a6.5 6.5 0 0 1 6.5 6.5v22a6.5 6.5 0 0 1-6.5 6.5H30.5L18 56l2.8-7.5H12A6.5 6.5 0 0 1 5.5 42V20a6.5 6.5 0 0 1 6.5-6.5Z"/>' +
+      '<rect class="cabi-smart-button__bot" x="17.5" y="24" width="29" height="18.5" rx="7.5"/>' +
+      '<path class="cabi-smart-button__antenna" d="M32 24v-5"/>' +
+      '<circle class="cabi-smart-button__antenna-node" cx="32" cy="17" r="2.8"/>' +
+      '<circle class="cabi-smart-button__eye" cx="26" cy="32.5" r="2.4"/>' +
+      '<circle class="cabi-smart-button__eye" cx="38" cy="32.5" r="2.4"/>' +
+      '<path class="cabi-smart-button__smile" d="M27 37.5c2.8 2.1 7.2 2.1 10 0"/>' +
+    '</svg>';
+    var tooltip = '<span class="mobile-contact__tooltip" role="tooltip"><span class="mobile-contact__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hai să discutăm</span></span>';
+    var common = 'type="button" aria-label="Asistent inteligent pentru navigarea pe site — în curând" aria-disabled="true" data-cabi-smart-button';
+
+    body.insertAdjacentHTML("beforeend", '<button class="cabi-smart-button cabi-smart-button--desktop" ' + common + '>' + icon + tooltip + '</button>');
+
+    var toggle = doc.querySelector(".next-menu-toggle");
+    if (toggle) {
+      toggle.insertAdjacentHTML("beforebegin", '<button class="cabi-smart-button cabi-smart-button--mobile" ' + common + '>' + icon + '<span class="cabi-smart-button__status" aria-hidden="true"></span></button>');
+    }
+
+    if (!doc.getElementById("cabi-smart-button-styles")) {
+      var styles = doc.createElement("style");
+      styles.id = "cabi-smart-button-styles";
+      styles.textContent =
+        '.cabi-smart-button{appearance:none;-webkit-appearance:none;display:grid;place-items:center;border:1px solid rgba(255,255,255,.72);color:#fff;background:linear-gradient(145deg,#063c43 0%,#007f79 50%,#06b8ab 100%);box-shadow:0 16px 34px rgba(0,93,88,.28),inset 0 1px 0 rgba(255,255,255,.25);cursor:pointer;isolation:isolate;transition:transform .22s ease,box-shadow .22s ease,filter .22s ease}' +
+        '.cabi-smart-button::before{position:absolute;z-index:-1;content:"";inset:3px;border:1px solid rgba(255,255,255,.18);border-radius:inherit}' +
+        '.cabi-smart-button:hover,.cabi-smart-button:focus-visible{outline:0;filter:saturate(1.08);transform:translateY(-2px);box-shadow:0 20px 40px rgba(0,93,88,.34),0 0 0 4px rgba(7,177,164,.13),inset 0 1px 0 rgba(255,255,255,.25)}' +
+        '.cabi-smart-button__icon{width:38px;height:38px;overflow:visible}' +
+        '.cabi-smart-button__bubble,.cabi-smart-button__bot,.cabi-smart-button__antenna,.cabi-smart-button__smile{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}' +
+        '.cabi-smart-button__bubble{stroke-width:3.6}' +
+        '.cabi-smart-button__bot{fill:rgba(186,255,246,.13);stroke:#bafff6;stroke-width:2.2}' +
+        '.cabi-smart-button__antenna,.cabi-smart-button__smile{stroke:#bafff6;stroke-width:2.2}' +
+        '.cabi-smart-button__antenna-node,.cabi-smart-button__eye{fill:#fff;stroke:#a8fff3;stroke-width:1.2}' +
+        '.cabi-smart-button--desktop{position:fixed;z-index:901;right:18px;bottom:max(88px,calc(env(safe-area-inset-bottom) + 88px));width:58px;height:58px;padding:0;border-radius:19px}' +
+        '.cabi-smart-button--desktop .mobile-contact__tooltip{animation:none}' +
+        '.cabi-smart-button--desktop:hover .mobile-contact__tooltip,.cabi-smart-button--desktop:focus-visible .mobile-contact__tooltip{opacity:1;visibility:visible;transform:translate(0,-50%)}' +
+        '.cabi-smart-button--mobile{position:relative;width:45px;height:45px;display:none;flex:0 0 45px;padding:0;border-radius:13px}' +
+        '.cabi-smart-button--mobile .cabi-smart-button__icon{width:30px;height:30px}' +
+        '.cabi-smart-button__status{position:absolute;right:4px;top:4px;width:7px;height:7px;border:2px solid #fff;border-radius:50%;background:#8df5e8;box-shadow:0 0 0 2px rgba(141,245,232,.16)}' +
+        '@media(max-width:1020px){.next-nav-wrap{gap:0}.cabi-smart-button--desktop{display:none}.cabi-smart-button--mobile{display:grid;margin-left:auto;margin-right:8px}.cabi-smart-button--mobile+.next-menu-toggle{margin-left:0}}' +
+        '@media(prefers-reduced-motion:reduce){.cabi-smart-button{transition:none}}' +
+        '@media print{.cabi-smart-button{display:none!important}}';
+      doc.head.appendChild(styles);
+    }
+  }
+
+  mountCabiButton();
+
   if ("serviceWorker" in navigator && /^https?:$/.test(window.location.protocol)) {
     window.addEventListener("load", function () {
       var workerUrl = new URL("service-worker.js", siteRootUrl).pathname;
