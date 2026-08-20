@@ -138,7 +138,7 @@
               '<a href="/contact/"><span>' + routeIcons.contact + '</span><div><strong>Vreau să vă contactez</strong><small>Discută direct cu un specialist CAB-IT</small></div><b>→</b></a>' +
             '</div></div>' +
           '</div>' +
-          '<footer class="cabi-ai-composer"><div class="cabi-ai-composer__box"><input type="text" readonly aria-label="Mesaj demonstrativ" placeholder="Scrie întrebarea ta..."><button type="button" aria-disabled="true" aria-label="Trimiterea va fi disponibilă în curând">↑</button></div><p>Momentan lucrăm doar la design. Funcția AI va fi conectată în etapa următoare.</p></footer>' +
+          '<footer class="cabi-ai-composer"><div class="cabi-ai-composer__box"><input type="text" aria-label="Mesaj către asistent" placeholder="Scrie întrebarea ta..."><button type="button" aria-disabled="true" aria-label="Trimiterea va fi disponibilă în curând">↑</button></div><p>Momentan lucrăm doar la design. Funcția AI va fi conectată în etapa următoare.</p></footer>' +
         '</section>' +
       '</div>' +
     '</div>';
