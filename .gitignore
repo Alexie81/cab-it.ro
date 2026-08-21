@@ -1,0 +1,29 @@
+# Runtime-only assistant data. Conversation text and server secrets must never be committed.
+/newwebsite/storage/assistant-conversations/
+/newwebsite/storage/assistant-secrets/
+/newwebsite/storage/assistant-rate-limits/
+/newwebsite/storage/ai/.chat-secret
+/newwebsite/storage/ai/assistant-runtime.sqlite*
+
+# Generated canonical indexes stay local/on the production server. The compact
+# JSON rules and the generators are the reproducible source kept in Git.
+/newwebsite/storage/ai/*.sqlite3
+/newwebsite/storage/ai/*.jsonl
+/newwebsite/storage/cabit-cms.sqlite-shm
+/newwebsite/storage/cabit-cms.sqlite-wal
+
+# Local imports, performance reports and deployment archives.
+/newwebsite/tmp/
+/tmp/
+/*.report.html
+/*.zip
+/newwebsite/*.zip
+/x
+
+# Temporary model download fragments.
+/newwebsite/ai/models/**/*.part
+
+# Self-hosted ONNX weights are deployed directly to the server; individual files
+# exceed GitHub's regular file limit. Their checksums stay in the tracked manifest.
+/newwebsite/ai/models/qwen3.5-0.8b/
+/newwebsite/ai/models/multilingual-e5-small/

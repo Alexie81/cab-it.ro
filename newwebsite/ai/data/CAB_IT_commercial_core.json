@@ -1,0 +1,109 @@
+{
+  "priority": 100,
+  "verified_date": "2026-08-21",
+  "facts": [
+    {
+      "key": "website_price_from",
+      "value": "Website de prezentare de la 999 lei, fără TVA.",
+      "source_url": "https://cab-it.ro/preturi/",
+      "priority": 100
+    },
+    {
+      "key": "website_scope",
+      "value": "Până la 5 pagini, responsive, SEO de bază, formular și administrare în pachetul public de pornire.",
+      "source_url": "https://cab-it.ro/preturi/",
+      "priority": 100
+    },
+    {
+      "key": "website_timeline",
+      "value": "Website de prezentare chiar în 24h dacă materialele și accesul sunt disponibile.",
+      "source_url": "https://cab-it.ro/servicii/creare-site-web/",
+      "priority": 100
+    },
+    {
+      "key": "ecommerce_price_from",
+      "value": "Magazin online de la 1.799 lei, fără TVA.",
+      "source_url": "https://cab-it.ro/preturi/",
+      "priority": 100
+    },
+    {
+      "key": "ecommerce_scope_base",
+      "value": "Pachetul de pornire de 1.799 lei, fără TVA, este pentru un catalog cu mai puțin de 100 de produse.",
+      "source_url": "https://cab-it.ro/preturi/",
+      "priority": 100
+    },
+    {
+      "key": "ecommerce_price_100_500",
+      "value": "Pentru un catalog între 100 și 500 de produse, prețul pornește de la 2.399 lei, fără TVA.",
+      "source_url": "https://cab-it.ro/preturi/",
+      "priority": 100
+    },
+    {
+      "key": "ecommerce_price_over_500",
+      "value": "Pentru un catalog cu peste 500 de produse, prețul pornește de la 3.199 lei, fără TVA.",
+      "source_url": "https://cab-it.ro/preturi/",
+      "priority": 100
+    },
+    {
+      "key": "ecommerce_timeline",
+      "value": "Magazin online standard 3–7 zile, dependent de complexitate.",
+      "source_url": "https://cab-it.ro/preturi/",
+      "priority": 100
+    },
+    {
+      "key": "ads_price_from",
+      "value": "Google / Meta / TikTok Ads de la 649 lei/lună, fără TVA.",
+      "source_url": "https://cab-it.ro/preturi/",
+      "priority": 100
+    },
+    {
+      "key": "ads_budget_rule",
+      "value": "Bugetele media și serviciile terțe sunt separate.",
+      "source_url": "https://cab-it.ro/preturi/",
+      "priority": 100
+    },
+    {
+      "key": "audit_free",
+      "value": "Audit complet gratuit publicat ca livrat în maximum 30 de minute.",
+      "source_url": "https://cab-it.ro/",
+      "priority": 100
+    },
+    {
+      "key": "phone",
+      "value": "+40 771 532 949",
+      "source_url": "https://cab-it.ro/",
+      "priority": 100
+    },
+    {
+      "key": "email",
+      "value": "contact@cab-it.ro",
+      "source_url": "https://cab-it.ro/",
+      "priority": 100
+    },
+    {
+      "key": "address",
+      "value": "Intrarea Humulești 6A, București",
+      "source_url": "https://cab-it.ro/termeni-si-conditii/",
+      "priority": 100
+    },
+    {
+      "key": "stack",
+      "value": "HTML semantic, CSS custom, JavaScript vanilla, React.js și PHP/Apache; React Native sau C++ pentru ML unde proiectul le cere.",
+      "source_url": "https://cab-it.ro/servicii/",
+      "priority": 98
+    },
+    {
+      "key": "platform_flexibility",
+      "value": "CAB-IT poate realiza proiectul pe platforma dorită de client, dar recomandă dezvoltarea custom atunci când sunt importante controlul, performanța și funcționalitățile personalizate.",
+      "source_url": "https://cab-it.ro/servicii/creare-site-web/",
+      "priority": 98
+    },
+    {
+      "key": "google_tools",
+      "value": "Search Console, GA4, GTM, PageSpeed/Core Web Vitals, Google Business Profile, Google Ads conversion tracking în funcție de proiect.",
+      "source_url": "https://cab-it.ro/servicii/",
+      "priority": 98
+    }
+  ],
+  "system_prompt": "Ești Asistentul AI CAB-IT Expert. Răspunzi în română ca un consultant. Întrebările tehnice sau strategice pot primi răspunsuri ample. Prioritate surse: Commercial Core CAB-IT > articole CAB-IT > documentație oficială > fallback aprobat. Nu inventa prețuri, termene, garanții, rezultate sau date de contact. Pentru prețuri și contact răspunde direct în chat. Pentru SEO și Ads nu garanta poziții, trafic, lead-uri sau venituri. Nu pretinde audit URL până când scannerul nu returnează date. Nu pretinde că ai văzut un screenshot până când imaginea nu a fost furnizată. Pipeline: detectare intenție și context -> răspuns canonic -> Commercial Core -> căutare în pagini și articole CAB-IT -> răspuns contextual verificat."
+}

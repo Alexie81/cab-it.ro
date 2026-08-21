@@ -1,0 +1,902 @@
+[
+  {
+    "id": "dental_lab",
+    "name": "Laborator de tehnică dentară",
+    "clients": "clinici și laboratoare care caută calitate, compatibilitate și trasabilitate",
+    "conversion": "RFQ, comandă B2B sau discuție tehnică",
+    "trust": "certificări, procese, trasabilitate și echipă",
+    "local": "scăzut",
+    "compliance": "specificațiile și informațiile medicale trebuie validate; fără afirmații clinice nesusținute"
+  },
+  {
+    "id": "home_care",
+    "name": "Îngrijire la domiciliu",
+    "clients": "familii care caută siguranță, echipă, servicii și costuri",
+    "conversion": "consultație, vizită, apel sau solicitare",
+    "trust": "personal calificat, proceduri, transparență și recenzii",
+    "local": "foarte ridicat",
+    "compliance": "nu promite rezultate medicale și tratează datele personale cu atenție"
+  },
+  {
+    "id": "senior_care",
+    "name": "Centru rezidențial pentru seniori",
+    "clients": "familii care caută siguranță, echipă, servicii și costuri",
+    "conversion": "consultație, vizită, apel sau solicitare",
+    "trust": "personal calificat, proceduri, transparență și recenzii",
+    "local": "foarte ridicat",
+    "compliance": "nu promite rezultate medicale și tratează datele personale cu atenție"
+  },
+  {
+    "id": "psychology_center",
+    "name": "Cabinet psihologie / psihoterapie",
+    "clients": "pacienți care caută specialist, servicii, programare și informații de încredere",
+    "conversion": "programare, apel sau consultație",
+    "trust": "specialiști, calificări, acreditări și transparență",
+    "local": "foarte ridicat",
+    "compliance": "chatbotul nu oferă diagnostic, tratament sau recomandări medicale personalizate"
+  },
+  {
+    "id": "nutrition_center",
+    "name": "Centru nutriție",
+    "clients": "pacienți care caută specialist, servicii, programare și informații de încredere",
+    "conversion": "programare, apel sau consultație",
+    "trust": "specialiști, calificări, acreditări și transparență",
+    "local": "foarte ridicat",
+    "compliance": "chatbotul nu oferă diagnostic, tratament sau recomandări medicale personalizate"
+  },
+  {
+    "id": "dermatology_clinic",
+    "name": "Clinică dermatologie",
+    "clients": "pacienți care caută specialist, servicii, programare și informații de încredere",
+    "conversion": "programare, apel sau consultație",
+    "trust": "specialiști, calificări, acreditări și transparență",
+    "local": "foarte ridicat",
+    "compliance": "chatbotul nu oferă diagnostic, tratament sau recomandări medicale personalizate"
+  },
+  {
+    "id": "ophthalmology_clinic",
+    "name": "Clinică oftalmologie",
+    "clients": "pacienți care caută specialist, servicii, programare și informații de încredere",
+    "conversion": "programare, apel sau consultație",
+    "trust": "specialiști, calificări, acreditări și transparență",
+    "local": "foarte ridicat",
+    "compliance": "chatbotul nu oferă diagnostic, tratament sau recomandări medicale personalizate"
+  },
+  {
+    "id": "radiology_center",
+    "name": "Centru imagistică medicală",
+    "clients": "pacienți care caută specialist, servicii, programare și informații de încredere",
+    "conversion": "programare, apel sau consultație",
+    "trust": "specialiști, calificări, acreditări și transparență",
+    "local": "foarte ridicat",
+    "compliance": "chatbotul nu oferă diagnostic, tratament sau recomandări medicale personalizate"
+  },
+  {
+    "id": "fertility_clinic",
+    "name": "Clinică fertilitate",
+    "clients": "pacienți care caută specialist, servicii, programare și informații de încredere",
+    "conversion": "programare, apel sau consultație",
+    "trust": "specialiști, calificări, acreditări și transparență",
+    "local": "foarte ridicat",
+    "compliance": "chatbotul nu oferă diagnostic, tratament sau recomandări medicale personalizate"
+  },
+  {
+    "id": "medical_equipment",
+    "name": "Furnizor echipamente medicale",
+    "clients": "companii care caută capabilități, conformitate, documentație și ofertă",
+    "conversion": "RFQ, audit, contract sau discuție tehnică",
+    "trust": "acreditări, certificări, proceduri și trasabilitate",
+    "local": "scăzut",
+    "compliance": "cerințele legale, certificările și specificațiile trebuie confirmate din surse actuale"
+  },
+  {
+    "id": "car_dealer",
+    "name": "Dealer auto",
+    "clients": "cumpărători care compară modele, configurații, preț și disponibilitate",
+    "conversion": "test drive, ofertă, rezervare sau lead",
+    "trust": "stoc real, specificații, fotografii și condiții transparente",
+    "local": "ridicat",
+    "compliance": "prețurile, stocul și specificațiile trebuie sincronizate"
+  },
+  {
+    "id": "truck_service",
+    "name": "Service camioane",
+    "clients": "clienți care caută diagnostic, reparație, disponibilitate și locație",
+    "conversion": "programare, apel sau cerere diagnostic",
+    "trust": "experiență, echipamente, recenzii și transparență",
+    "local": "foarte ridicat",
+    "compliance": "nu promite reparația, recuperarea sau prețul final înainte de diagnostic"
+  },
+  {
+    "id": "towing",
+    "name": "Tractări auto",
+    "clients": "persoane cu nevoie imediată care caută disponibilitate, zonă și contact rapid",
+    "conversion": "apel, WhatsApp sau intervenție",
+    "trust": "program, zone deservite, recenzii și identitate clară",
+    "local": "foarte ridicat",
+    "compliance": "nu promite timp de intervenție sau rezultat înainte de confirmare"
+  },
+  {
+    "id": "auto_parts",
+    "name": "Magazin piese auto",
+    "clients": "cumpărători care caută produse, specificații, stoc, preț și livrare",
+    "conversion": "comandă, rezervare produs sau vizită",
+    "trust": "stoc actualizat, fotografii reale, specificații și recenzii",
+    "local": "mediu",
+    "compliance": "stocul, specificațiile și prețurile trebuie sincronizate"
+  },
+  {
+    "id": "scooter_service",
+    "name": "Service trotinete electrice",
+    "clients": "clienți care caută diagnostic, reparație, disponibilitate și locație",
+    "conversion": "programare, apel sau cerere diagnostic",
+    "trust": "experiență, echipamente, recenzii și transparență",
+    "local": "foarte ridicat",
+    "compliance": "nu promite reparația, recuperarea sau prețul final înainte de diagnostic"
+  },
+  {
+    "id": "boat_rental",
+    "name": "Închirieri ambarcațiuni",
+    "clients": "clienți care compară opțiuni, disponibilitate, tarif și condiții",
+    "conversion": "rezervare, cerere ofertă sau apel",
+    "trust": "disponibilitate, fotografii reale, condiții și recenzii",
+    "local": "ridicat",
+    "compliance": "disponibilitatea, tarifele și condițiile trebuie confirmate înainte de rezervare"
+  },
+  {
+    "id": "marina_service",
+    "name": "Service ambarcațiuni / marină",
+    "clients": "clienți și firme care caută capabilități, mentenanță și ofertă",
+    "conversion": "cerere service, audit, ofertă sau contract",
+    "trust": "echipă, echipamente, procese, SLA și referințe",
+    "local": "mediu",
+    "compliance": "nu promite SLA, timp de remediere sau performanțe neconfirmate"
+  },
+  {
+    "id": "ev_charging",
+    "name": "Stații încărcare EV / instalare",
+    "clients": "clienți și firme care caută proiectare, echipamente, instalare și ofertă",
+    "conversion": "audit, ofertă sau vizită tehnică",
+    "trust": "specificații, proiecte, certificări, garanții și echipă",
+    "local": "ridicat",
+    "compliance": "nu inventa economii, performanțe, certificări sau garanții"
+  },
+  {
+    "id": "heat_pumps",
+    "name": "Pompe de căldură",
+    "clients": "clienți și firme care caută proiectare, echipamente, instalare și ofertă",
+    "conversion": "audit, ofertă sau vizită tehnică",
+    "trust": "specificații, proiecte, certificări, garanții și echipă",
+    "local": "ridicat",
+    "compliance": "nu inventa economii, performanțe, certificări sau garanții"
+  },
+  {
+    "id": "insulation",
+    "name": "Termoizolații",
+    "clients": "clienți care caută proiecte, materiale, proces, termen și ofertă",
+    "conversion": "măsurători, vizită, proiect sau ofertă",
+    "trust": "proiecte reale, materiale, proces și testimoniale",
+    "local": "ridicat",
+    "compliance": "costul și termenul depind de măsurători, materiale și complexitate"
+  },
+  {
+    "id": "flooring",
+    "name": "Pardoseli / parchet",
+    "clients": "clienți care caută proiecte, materiale, proces, termen și ofertă",
+    "conversion": "măsurători, vizită, proiect sau ofertă",
+    "trust": "proiecte reale, materiale, proces și testimoniale",
+    "local": "ridicat",
+    "compliance": "costul și termenul depind de măsurători, materiale și complexitate"
+  },
+  {
+    "id": "painting_contractor",
+    "name": "Zugrăveli / finisaje",
+    "clients": "clienți care caută proiecte, materiale, proces, termen și ofertă",
+    "conversion": "măsurători, vizită, proiect sau ofertă",
+    "trust": "proiecte reale, materiale, proces și testimoniale",
+    "local": "ridicat",
+    "compliance": "costul și termenul depind de măsurători, materiale și complexitate"
+  },
+  {
+    "id": "demolition",
+    "name": "Demolări controlate",
+    "clients": "companii și proprietari care caută execuție, conformitate și siguranță",
+    "conversion": "audit, ofertă, programare sau contract",
+    "trust": "autorizații, proceduri, echipamente și documentație",
+    "local": "mediu",
+    "compliance": "siguranța, autorizațiile și procedurile trebuie prezentate exact"
+  },
+  {
+    "id": "excavation",
+    "name": "Excavații / terasamente",
+    "clients": "clienți și firme care caută capabilități, mentenanță și ofertă",
+    "conversion": "cerere service, audit, ofertă sau contract",
+    "trust": "echipă, echipamente, procese, SLA și referințe",
+    "local": "mediu",
+    "compliance": "nu promite SLA, timp de remediere sau performanțe neconfirmate"
+  },
+  {
+    "id": "steel_fabrication",
+    "name": "Confecții metalice",
+    "clients": "companii care caută capabilități, toleranțe, materiale și capacitate",
+    "conversion": "RFQ, probă, discuție tehnică sau contract",
+    "trust": "echipamente, certificări, specificații și capacitate",
+    "local": "scăzut",
+    "compliance": "specificațiile, toleranțele, capacitatea și termenele trebuie confirmate"
+  },
+  {
+    "id": "welding",
+    "name": "Sudură / structuri metalice",
+    "clients": "companii care caută capabilități, toleranțe, materiale și capacitate",
+    "conversion": "RFQ, probă, discuție tehnică sau contract",
+    "trust": "echipamente, certificări, specificații și capacitate",
+    "local": "scăzut",
+    "compliance": "specificațiile, toleranțele, capacitatea și termenele trebuie confirmate"
+  },
+  {
+    "id": "cnc_machining",
+    "name": "Prelucrări CNC",
+    "clients": "companii care caută capabilități, toleranțe, materiale și capacitate",
+    "conversion": "RFQ, probă, discuție tehnică sau contract",
+    "trust": "echipamente, certificări, specificații și capacitate",
+    "local": "scăzut",
+    "compliance": "specificațiile, toleranțele, capacitatea și termenele trebuie confirmate"
+  },
+  {
+    "id": "injection_molding",
+    "name": "Injecție mase plastice",
+    "clients": "companii care caută capabilități, toleranțe, materiale și capacitate",
+    "conversion": "RFQ, probă, discuție tehnică sau contract",
+    "trust": "echipamente, certificări, specificații și capacitate",
+    "local": "scăzut",
+    "compliance": "specificațiile, toleranțele, capacitatea și termenele trebuie confirmate"
+  },
+  {
+    "id": "textile_manufacturer",
+    "name": "Producător textile",
+    "clients": "companii care caută capabilități, toleranțe, materiale și capacitate",
+    "conversion": "RFQ, probă, discuție tehnică sau contract",
+    "trust": "echipamente, certificări, specificații și capacitate",
+    "local": "scăzut",
+    "compliance": "specificațiile, toleranțele, capacitatea și termenele trebuie confirmate"
+  },
+  {
+    "id": "cosmetics_manufacturer",
+    "name": "Producător cosmetice",
+    "clients": "companii care caută capabilități, conformitate, documentație și ofertă",
+    "conversion": "RFQ, audit, contract sau discuție tehnică",
+    "trust": "acreditări, certificări, proceduri și trasabilitate",
+    "local": "scăzut",
+    "compliance": "cerințele legale, certificările și specificațiile trebuie confirmate din surse actuale"
+  },
+  {
+    "id": "food_manufacturer",
+    "name": "Producător alimentar",
+    "clients": "companii care caută capabilități, conformitate, documentație și ofertă",
+    "conversion": "RFQ, audit, contract sau discuție tehnică",
+    "trust": "acreditări, certificări, proceduri și trasabilitate",
+    "local": "scăzut",
+    "compliance": "cerințele legale, certificările și specificațiile trebuie confirmate din surse actuale"
+  },
+  {
+    "id": "coffee_roaster",
+    "name": "Prăjitorie cafea",
+    "clients": "clienți sau distribuitori care caută origine, produse și disponibilitate",
+    "conversion": "comandă, cerere B2B sau vizită",
+    "trust": "origine, proces, fotografii reale și certificări",
+    "local": "mediu",
+    "compliance": "originea, certificările și disponibilitatea trebuie prezentate corect"
+  },
+  {
+    "id": "water_bottling",
+    "name": "Îmbuteliere apă / băuturi",
+    "clients": "companii care caută capabilități, conformitate, documentație și ofertă",
+    "conversion": "RFQ, audit, contract sau discuție tehnică",
+    "trust": "acreditări, certificări, proceduri și trasabilitate",
+    "local": "scăzut",
+    "compliance": "cerințele legale, certificările și specificațiile trebuie confirmate din surse actuale"
+  },
+  {
+    "id": "label_printing",
+    "name": "Etichete și ambalaje tipărite",
+    "clients": "companii care caută personalizare, cantități, specificații și ofertă",
+    "conversion": "RFQ, upload fișier, mostre sau comandă",
+    "trust": "specificații, mostre, capacitate și proiecte",
+    "local": "scăzut",
+    "compliance": "tirajele, specificațiile, prețurile și termenele trebuie confirmate"
+  },
+  {
+    "id": "packaging_design",
+    "name": "Design ambalaje",
+    "clients": "branduri și producători care caută strategie, concept, portofoliu și execuție",
+    "conversion": "brief, consultație sau ofertă",
+    "trust": "portofoliu real, proces, echipă și studii de caz",
+    "local": "scăzut",
+    "compliance": "nu prezenta concepte sau proiecte ale altora drept portofoliu propriu"
+  },
+  {
+    "id": "third_party_logistics",
+    "name": "3PL / fulfillment",
+    "clients": "companii care caută capacitate, integrare, SLA și vizibilitate operațională",
+    "conversion": "RFQ, integrare sau contract",
+    "trust": "procese, capacitate, tracking, SLA și referințe",
+    "local": "scăzut",
+    "compliance": "costurile, capacitatea și timpii trebuie confirmați operațional"
+  },
+  {
+    "id": "customs_broker",
+    "name": "Comisionar vamal",
+    "clients": "companii care caută capabilități, conformitate, documentație și ofertă",
+    "conversion": "RFQ, audit, contract sau discuție tehnică",
+    "trust": "acreditări, certificări, proceduri și trasabilitate",
+    "local": "scăzut",
+    "compliance": "cerințele legale, certificările și specificațiile trebuie confirmate din surse actuale"
+  },
+  {
+    "id": "freight_forwarding",
+    "name": "Casă de expediții / freight forwarding",
+    "clients": "companii care caută capacitate, integrare, SLA și vizibilitate operațională",
+    "conversion": "RFQ, integrare sau contract",
+    "trust": "procese, capacitate, tracking, SLA și referințe",
+    "local": "scăzut",
+    "compliance": "costurile, capacitatea și timpii trebuie confirmați operațional"
+  },
+  {
+    "id": "airport_transfer",
+    "name": "Transfer aeroport",
+    "clients": "persoane și firme care caută rută, disponibilitate, tarif și siguranță",
+    "conversion": "rezervare, ofertă sau apel",
+    "trust": "flotă, șoferi, recenzii și condiții",
+    "local": "ridicat",
+    "compliance": "tarifele și timpii sunt estimări când depind de trafic sau program"
+  },
+  {
+    "id": "passenger_transport",
+    "name": "Transport persoane",
+    "clients": "persoane și firme care caută rută, disponibilitate, tarif și siguranță",
+    "conversion": "rezervare, ofertă sau apel",
+    "trust": "flotă, șoferi, recenzii și condiții",
+    "local": "ridicat",
+    "compliance": "tarifele și timpii sunt estimări când depind de trafic sau program"
+  },
+  {
+    "id": "fleet_management",
+    "name": "Management flotă",
+    "clients": "companii care caută funcții, integrare, securitate, suport și demo",
+    "conversion": "demo, trial, audit sau lead calificat",
+    "trust": "documentație, studii de caz, securitate și funcții confirmate",
+    "local": "scăzut",
+    "compliance": "nu inventa funcții, uptime, integrări sau certificări"
+  },
+  {
+    "id": "vehicle_leasing",
+    "name": "Leasing operațional auto",
+    "clients": "companii care caută cost total, condiții, flexibilitate și ofertă",
+    "conversion": "cerere ofertă sau consultare",
+    "trust": "condiții transparente, parteneri, procese și documentație",
+    "local": "scăzut",
+    "compliance": "nu oferi recomandări financiare personalizate și nu promite condiții neconfirmate"
+  },
+  {
+    "id": "real_estate_developer",
+    "name": "Dezvoltator imobiliar",
+    "clients": "cumpărători și investitori care caută proiect, locație, disponibilitate și preț",
+    "conversion": "lead, vizionare sau rezervare",
+    "trust": "planuri, autorizații, progres și condiții",
+    "local": "ridicat",
+    "compliance": "disponibilitatea, prețurile și stadiul proiectului trebuie actualizate"
+  },
+  {
+    "id": "property_appraisal",
+    "name": "Evaluator imobiliar",
+    "clients": "persoane și firme care caută expertiză, documentație, termen și contact",
+    "conversion": "consultație, ofertă sau programare",
+    "trust": "calificări, autorizări, experiență și explicații clare",
+    "local": "ridicat",
+    "compliance": "nu oferi concluzii profesionale definitive fără datele necesare"
+  },
+  {
+    "id": "facility_management",
+    "name": "Facility management",
+    "clients": "companii care caută servicii recurente, proces, raportare și responsabilități",
+    "conversion": "consultație, ofertă sau contract",
+    "trust": "procese, raportare, SLA și referințe",
+    "local": "mediu",
+    "compliance": "nu promite rezultate sau economii fără analiză și termeni contractuali"
+  },
+  {
+    "id": "hoa_management",
+    "name": "Administrare asociații de proprietari",
+    "clients": "asociații și proprietari care caută servicii, transparență și raportare",
+    "conversion": "consultație, ofertă sau contract",
+    "trust": "raportare, procese, echipă și transparență",
+    "local": "foarte ridicat",
+    "compliance": "datele financiare și personale trebuie tratate confidențial"
+  },
+  {
+    "id": "patent_attorney",
+    "name": "Consilier proprietate industrială",
+    "clients": "persoane și companii care caută expertiză, proces, calificări și consultanță",
+    "conversion": "consultație, cerere sau programare",
+    "trust": "calificări, experiență, metodologie și confidențialitate",
+    "local": "mediu",
+    "compliance": "nu oferi consultanță juridică sau profesională personalizată fără context adecvat"
+  },
+  {
+    "id": "immigration_law",
+    "name": "Avocatură imigrare",
+    "clients": "persoane și companii care caută expertiză, proces, calificări și consultanță",
+    "conversion": "consultație, cerere sau programare",
+    "trust": "calificări, experiență, metodologie și confidențialitate",
+    "local": "mediu",
+    "compliance": "nu oferi consultanță juridică sau profesională personalizată fără context adecvat"
+  },
+  {
+    "id": "debt_collection",
+    "name": "Recuperare creanțe B2B",
+    "clients": "companii care caută capabilități, conformitate, documentație și ofertă",
+    "conversion": "RFQ, audit, contract sau discuție tehnică",
+    "trust": "acreditări, certificări, proceduri și trasabilitate",
+    "local": "scăzut",
+    "compliance": "cerințele legale, certificările și specificațiile trebuie confirmate din surse actuale"
+  },
+  {
+    "id": "payroll_services",
+    "name": "Servicii salarizare / payroll",
+    "clients": "companii care caută expertiză, procese, conformitate și servicii recurente",
+    "conversion": "consultație, audit sau contract",
+    "trust": "certificări, metodologie, experiență și referințe",
+    "local": "scăzut",
+    "compliance": "nu promite conformitate sau rezultate fără analiză și implementare"
+  },
+  {
+    "id": "occupational_safety",
+    "name": "SSM / securitate în muncă",
+    "clients": "companii care caută capabilități, conformitate, documentație și ofertă",
+    "conversion": "RFQ, audit, contract sau discuție tehnică",
+    "trust": "acreditări, certificări, proceduri și trasabilitate",
+    "local": "scăzut",
+    "compliance": "cerințele legale, certificările și specificațiile trebuie confirmate din surse actuale"
+  },
+  {
+    "id": "iso_consulting",
+    "name": "Consultanță ISO",
+    "clients": "companii care caută expertiză, procese, conformitate și servicii recurente",
+    "conversion": "consultație, audit sau contract",
+    "trust": "certificări, metodologie, experiență și referințe",
+    "local": "scăzut",
+    "compliance": "nu promite conformitate sau rezultate fără analiză și implementare"
+  },
+  {
+    "id": "cybersecurity_consulting",
+    "name": "Consultanță cybersecurity",
+    "clients": "companii care caută arhitectură, securitate, suport, integrare și SLA",
+    "conversion": "audit, demo, RFQ sau contract",
+    "trust": "competențe, documentație, securitate și studii de caz",
+    "local": "scăzut",
+    "compliance": "nu expune detalii sensibile și nu inventa certificări sau SLA"
+  },
+  {
+    "id": "managed_it",
+    "name": "Managed IT Services / MSP",
+    "clients": "companii care caută arhitectură, securitate, suport, integrare și SLA",
+    "conversion": "audit, demo, RFQ sau contract",
+    "trust": "competențe, documentație, securitate și studii de caz",
+    "local": "scăzut",
+    "compliance": "nu expune detalii sensibile și nu inventa certificări sau SLA"
+  },
+  {
+    "id": "cloud_consulting",
+    "name": "Consultanță cloud",
+    "clients": "companii care caută arhitectură, securitate, suport, integrare și SLA",
+    "conversion": "audit, demo, RFQ sau contract",
+    "trust": "competențe, documentație, securitate și studii de caz",
+    "local": "scăzut",
+    "compliance": "nu expune detalii sensibile și nu inventa certificări sau SLA"
+  },
+  {
+    "id": "software_house",
+    "name": "Dezvoltare software custom",
+    "clients": "companii care caută funcții, integrare, securitate, suport și demo",
+    "conversion": "demo, trial, audit sau lead calificat",
+    "trust": "documentație, studii de caz, securitate și funcții confirmate",
+    "local": "scăzut",
+    "compliance": "nu inventa funcții, uptime, integrări sau certificări"
+  },
+  {
+    "id": "web_hosting",
+    "name": "Găzduire web / hosting",
+    "clients": "clienți și firme care caută capabilități, mentenanță și ofertă",
+    "conversion": "cerere service, audit, ofertă sau contract",
+    "trust": "echipă, echipamente, procese, SLA și referințe",
+    "local": "mediu",
+    "compliance": "nu promite SLA, timp de remediere sau performanțe neconfirmate"
+  },
+  {
+    "id": "data_recovery",
+    "name": "Recuperare date",
+    "clients": "clienți care caută diagnostic, reparație, disponibilitate și locație",
+    "conversion": "programare, apel sau cerere diagnostic",
+    "trust": "experiență, echipamente, recenzii și transparență",
+    "local": "foarte ridicat",
+    "compliance": "nu promite reparația, recuperarea sau prețul final înainte de diagnostic"
+  },
+  {
+    "id": "printer_service",
+    "name": "Service imprimante",
+    "clients": "clienți care caută diagnostic, reparație, disponibilitate și locație",
+    "conversion": "programare, apel sau cerere diagnostic",
+    "trust": "experiență, echipamente, recenzii și transparență",
+    "local": "foarte ridicat",
+    "compliance": "nu promite reparația, recuperarea sau prețul final înainte de diagnostic"
+  },
+  {
+    "id": "telecom_installer",
+    "name": "Instalații telecom / fibră",
+    "clients": "clienți și firme care caută proiectare, echipamente, instalare și ofertă",
+    "conversion": "audit, ofertă sau vizită tehnică",
+    "trust": "specificații, proiecte, certificări, garanții și echipă",
+    "local": "ridicat",
+    "compliance": "nu inventa economii, performanțe, certificări sau garanții"
+  },
+  {
+    "id": "av_integration",
+    "name": "Audio-video / smart building",
+    "clients": "clienți și firme care caută proiectare, echipamente, instalare și ofertă",
+    "conversion": "audit, ofertă sau vizită tehnică",
+    "trust": "specificații, proiecte, certificări, garanții și echipă",
+    "local": "ridicat",
+    "compliance": "nu inventa economii, performanțe, certificări sau garanții"
+  },
+  {
+    "id": "event_venue",
+    "name": "Locație evenimente",
+    "clients": "clienți care compară opțiuni, disponibilitate, tarif și condiții",
+    "conversion": "rezervare, cerere ofertă sau apel",
+    "trust": "disponibilitate, fotografii reale, condiții și recenzii",
+    "local": "ridicat",
+    "compliance": "disponibilitatea, tarifele și condițiile trebuie confirmate înainte de rezervare"
+  },
+  {
+    "id": "wedding_venue",
+    "name": "Salon nunți / locație nuntă",
+    "clients": "clienți care compară opțiuni, disponibilitate, tarif și condiții",
+    "conversion": "rezervare, cerere ofertă sau apel",
+    "trust": "disponibilitate, fotografii reale, condiții și recenzii",
+    "local": "ridicat",
+    "compliance": "disponibilitatea, tarifele și condițiile trebuie confirmate înainte de rezervare"
+  },
+  {
+    "id": "catering",
+    "name": "Catering",
+    "clients": "clienți și firme care caută meniu, capacitate, logistică și ofertă",
+    "conversion": "cerere ofertă, degustare sau comandă",
+    "trust": "fotografii reale, meniu, procese și recenzii",
+    "local": "ridicat",
+    "compliance": "alergenii, disponibilitatea și capacitatea trebuie confirmate"
+  },
+  {
+    "id": "restaurant_supply",
+    "name": "Furnizor HoReCa",
+    "clients": "companii care caută catalog, stoc, condiții comerciale și logistică",
+    "conversion": "cont B2B, ofertă sau comandă",
+    "trust": "branduri, stoc, condiții, logistică și suport",
+    "local": "scăzut",
+    "compliance": "stocul, prețurile și condițiile trebuie sincronizate"
+  },
+  {
+    "id": "sports_club",
+    "name": "Club sportiv",
+    "clients": "persoane care caută program, antrenori, nivel și abonamente",
+    "conversion": "trial, înscriere sau abonament",
+    "trust": "antrenori, program, facilități și recenzii",
+    "local": "ridicat",
+    "compliance": "nu promite rezultate fizice sau performanțe garantate"
+  },
+  {
+    "id": "martial_arts",
+    "name": "Școală arte marțiale",
+    "clients": "cursanți și părinți care caută program, instructori, nivel și înscriere",
+    "conversion": "lecție de probă, înscriere sau programare",
+    "trust": "instructori, calificări, curriculum și recenzii",
+    "local": "ridicat",
+    "compliance": "nu garanta rezultate la examene sau performanțe"
+  },
+  {
+    "id": "yoga_studio",
+    "name": "Studio yoga",
+    "clients": "persoane care caută program, antrenori, nivel și abonamente",
+    "conversion": "trial, înscriere sau abonament",
+    "trust": "antrenori, program, facilități și recenzii",
+    "local": "ridicat",
+    "compliance": "nu promite rezultate fizice sau performanțe garantate"
+  },
+  {
+    "id": "pilates_studio",
+    "name": "Studio Pilates",
+    "clients": "persoane care caută program, antrenori, nivel și abonamente",
+    "conversion": "trial, înscriere sau abonament",
+    "trust": "antrenori, program, facilități și recenzii",
+    "local": "ridicat",
+    "compliance": "nu promite rezultate fizice sau performanțe garantate"
+  },
+  {
+    "id": "swimming_school",
+    "name": "Școală de înot",
+    "clients": "cursanți și părinți care caută program, instructori, nivel și înscriere",
+    "conversion": "lecție de probă, înscriere sau programare",
+    "trust": "instructori, calificări, curriculum și recenzii",
+    "local": "ridicat",
+    "compliance": "nu garanta rezultate la examene sau performanțe"
+  },
+  {
+    "id": "ski_school",
+    "name": "Școală de schi",
+    "clients": "clienți care caută sezon, nivel, instructor și disponibilitate",
+    "conversion": "rezervare, lecție sau apel",
+    "trust": "instructori, condiții, program, siguranță și recenzii",
+    "local": "ridicat",
+    "compliance": "disponibilitatea și condițiile depind de sezon și vreme"
+  },
+  {
+    "id": "museum_private",
+    "name": "Muzeu / atracție privată",
+    "clients": "vizitatori care caută program, bilete, activități și locație",
+    "conversion": "bilet, rezervare, vizită sau abonament",
+    "trust": "program, fotografii, recenzii și accesibilitate",
+    "local": "ridicat",
+    "compliance": "programul, biletele și accesul trebuie actualizate"
+  },
+  {
+    "id": "escape_room",
+    "name": "Escape room",
+    "clients": "grupuri care caută scenarii, dificultate, disponibilitate și rezervare",
+    "conversion": "rezervare sau voucher",
+    "trust": "recenzii, fotografii, reguli și disponibilitate",
+    "local": "ridicat",
+    "compliance": "nu dezvălui soluții sau spoilere care distrug experiența"
+  },
+  {
+    "id": "kids_playground",
+    "name": "Loc de joacă copii",
+    "clients": "părinți care caută activități, siguranță, program și rezervare",
+    "conversion": "rezervare, aniversare sau vizită",
+    "trust": "siguranță, reguli, fotografii reale și recenzii",
+    "local": "foarte ridicat",
+    "compliance": "datele și imaginile minorilor trebuie tratate cu atenție"
+  },
+  {
+    "id": "toy_store",
+    "name": "Magazin jucării",
+    "clients": "cumpărători care caută produse, specificații, stoc, preț și livrare",
+    "conversion": "comandă, rezervare produs sau vizită",
+    "trust": "stoc actualizat, fotografii reale, specificații și recenzii",
+    "local": "mediu",
+    "compliance": "stocul, specificațiile și prețurile trebuie sincronizate"
+  },
+  {
+    "id": "bookstore",
+    "name": "Librărie",
+    "clients": "cumpărători care caută produse, specificații, stoc, preț și livrare",
+    "conversion": "comandă, rezervare produs sau vizită",
+    "trust": "stoc actualizat, fotografii reale, specificații și recenzii",
+    "local": "mediu",
+    "compliance": "stocul, specificațiile și prețurile trebuie sincronizate"
+  },
+  {
+    "id": "stationery_store",
+    "name": "Papetărie",
+    "clients": "cumpărători care caută produse, specificații, stoc, preț și livrare",
+    "conversion": "comandă, rezervare produs sau vizită",
+    "trust": "stoc actualizat, fotografii reale, specificații și recenzii",
+    "local": "mediu",
+    "compliance": "stocul, specificațiile și prețurile trebuie sincronizate"
+  },
+  {
+    "id": "home_decor",
+    "name": "Magazin decorațiuni interioare",
+    "clients": "cumpărători care caută produse, specificații, stoc, preț și livrare",
+    "conversion": "comandă, rezervare produs sau vizită",
+    "trust": "stoc actualizat, fotografii reale, specificații și recenzii",
+    "local": "mediu",
+    "compliance": "stocul, specificațiile și prețurile trebuie sincronizate"
+  },
+  {
+    "id": "lighting_showroom",
+    "name": "Showroom corpuri de iluminat",
+    "clients": "clienți care compară produse, design, dimensiuni, materiale și experiență fizică",
+    "conversion": "vizită showroom, ofertă sau comandă",
+    "trust": "produse reale, materiale, specificații și garanție",
+    "local": "ridicat",
+    "compliance": "prețurile, disponibilitatea și specificațiile trebuie actualizate"
+  },
+  {
+    "id": "kitchen_showroom",
+    "name": "Showroom bucătării",
+    "clients": "clienți care compară produse, design, dimensiuni, materiale și experiență fizică",
+    "conversion": "vizită showroom, ofertă sau comandă",
+    "trust": "produse reale, materiale, specificații și garanție",
+    "local": "ridicat",
+    "compliance": "prețurile, disponibilitatea și specificațiile trebuie actualizate"
+  },
+  {
+    "id": "mattress_store",
+    "name": "Magazin saltele",
+    "clients": "clienți care compară produse, design, dimensiuni, materiale și experiență fizică",
+    "conversion": "vizită showroom, ofertă sau comandă",
+    "trust": "produse reale, materiale, specificații și garanție",
+    "local": "ridicat",
+    "compliance": "prețurile, disponibilitatea și specificațiile trebuie actualizate"
+  },
+  {
+    "id": "garden_center",
+    "name": "Garden center",
+    "clients": "cumpărători care caută produse, specificații, stoc, preț și livrare",
+    "conversion": "comandă, rezervare produs sau vizită",
+    "trust": "stoc actualizat, fotografii reale, specificații și recenzii",
+    "local": "mediu",
+    "compliance": "stocul, specificațiile și prețurile trebuie sincronizate"
+  },
+  {
+    "id": "plant_nursery",
+    "name": "Pepinieră plante",
+    "clients": "clienți sau distribuitori care caută origine, produse și disponibilitate",
+    "conversion": "comandă, cerere B2B sau vizită",
+    "trust": "origine, proces, fotografii reale și certificări",
+    "local": "mediu",
+    "compliance": "originea, certificările și disponibilitatea trebuie prezentate corect"
+  },
+  {
+    "id": "flower_wholesale",
+    "name": "Distribuție flori en-gros",
+    "clients": "companii care caută catalog, stoc, condiții comerciale și logistică",
+    "conversion": "cont B2B, ofertă sau comandă",
+    "trust": "branduri, stoc, condiții, logistică și suport",
+    "local": "scăzut",
+    "compliance": "stocul, prețurile și condițiile trebuie sincronizate"
+  },
+  {
+    "id": "pet_store",
+    "name": "Pet shop",
+    "clients": "cumpărători care caută produse, specificații, stoc, preț și livrare",
+    "conversion": "comandă, rezervare produs sau vizită",
+    "trust": "stoc actualizat, fotografii reale, specificații și recenzii",
+    "local": "mediu",
+    "compliance": "stocul, specificațiile și prețurile trebuie sincronizate"
+  },
+  {
+    "id": "aquarium_store",
+    "name": "Magazin acvaristică",
+    "clients": "cumpărători care caută produse, specificații, stoc, preț și livrare",
+    "conversion": "comandă, rezervare produs sau vizită",
+    "trust": "stoc actualizat, fotografii reale, specificații și recenzii",
+    "local": "mediu",
+    "compliance": "stocul, specificațiile și prețurile trebuie sincronizate"
+  },
+  {
+    "id": "furniture_restoration",
+    "name": "Restaurare mobilier",
+    "clients": "clienți care aleg furnizorul după portofoliu, proces, materiale și calitate",
+    "conversion": "evaluare, ofertă sau programare",
+    "trust": "proiecte reale, proces, materiale și testimoniale",
+    "local": "mediu",
+    "compliance": "nu prezenta lucrări sau rezultate care nu aparțin afacerii"
+  },
+  {
+    "id": "antiques",
+    "name": "Magazin antichități",
+    "clients": "colecționari și clienți care caută autenticitate, proveniență și selecție",
+    "conversion": "vizită, cerere informații sau achiziție",
+    "trust": "proveniență, expertiză, documentație și fotografii reale",
+    "local": "mediu",
+    "compliance": "autenticitatea, proveniența și prețurile trebuie prezentate responsabil"
+  },
+  {
+    "id": "art_gallery",
+    "name": "Galerie de artă",
+    "clients": "colecționari și clienți care caută autenticitate, proveniență și selecție",
+    "conversion": "vizită, cerere informații sau achiziție",
+    "trust": "proveniență, expertiză, documentație și fotografii reale",
+    "local": "mediu",
+    "compliance": "autenticitatea, proveniența și prețurile trebuie prezentate responsabil"
+  },
+  {
+    "id": "music_store",
+    "name": "Magazin instrumente muzicale",
+    "clients": "cumpărători care caută produse, specificații, stoc, preț și livrare",
+    "conversion": "comandă, rezervare produs sau vizită",
+    "trust": "stoc actualizat, fotografii reale, specificații și recenzii",
+    "local": "mediu",
+    "compliance": "stocul, specificațiile și prețurile trebuie sincronizate"
+  },
+  {
+    "id": "solar_maintenance",
+    "name": "Mentenanță sisteme fotovoltaice",
+    "clients": "clienți și firme care caută capabilități, mentenanță și ofertă",
+    "conversion": "cerere service, audit, ofertă sau contract",
+    "trust": "echipă, echipamente, procese, SLA și referințe",
+    "local": "mediu",
+    "compliance": "nu promite SLA, timp de remediere sau performanțe neconfirmate"
+  },
+  {
+    "id": "battery_storage",
+    "name": "Sisteme de stocare energie",
+    "clients": "clienți și firme care caută proiectare, echipamente, instalare și ofertă",
+    "conversion": "audit, ofertă sau vizită tehnică",
+    "trust": "specificații, proiecte, certificări, garanții și echipă",
+    "local": "ridicat",
+    "compliance": "nu inventa economii, performanțe, certificări sau garanții"
+  },
+  {
+    "id": "water_treatment",
+    "name": "Tratare / filtrare apă",
+    "clients": "clienți și firme care caută proiectare, echipamente, instalare și ofertă",
+    "conversion": "audit, ofertă sau vizită tehnică",
+    "trust": "specificații, proiecte, certificări, garanții și echipă",
+    "local": "ridicat",
+    "compliance": "nu inventa economii, performanțe, certificări sau garanții"
+  },
+  {
+    "id": "industrial_cleaning",
+    "name": "Curățenie industrială",
+    "clients": "companii care caută arhitectură, securitate, suport, integrare și SLA",
+    "conversion": "audit, demo, RFQ sau contract",
+    "trust": "competențe, documentație, securitate și studii de caz",
+    "local": "scăzut",
+    "compliance": "nu expune detalii sensibile și nu inventa certificări sau SLA"
+  },
+  {
+    "id": "commercial_kitchen_service",
+    "name": "Service echipamente HoReCa",
+    "clients": "clienți care caută diagnostic, reparație, disponibilitate și locație",
+    "conversion": "programare, apel sau cerere diagnostic",
+    "trust": "experiență, echipamente, recenzii și transparență",
+    "local": "foarte ridicat",
+    "compliance": "nu promite reparația, recuperarea sau prețul final înainte de diagnostic"
+  },
+  {
+    "id": "elevator_service",
+    "name": "Service ascensoare",
+    "clients": "companii și proprietari care caută execuție, conformitate și siguranță",
+    "conversion": "audit, ofertă, programare sau contract",
+    "trust": "autorizații, proceduri, echipamente și documentație",
+    "local": "mediu",
+    "compliance": "siguranța, autorizațiile și procedurile trebuie prezentate exact"
+  },
+  {
+    "id": "generator_service",
+    "name": "Generatoare / UPS service",
+    "clients": "clienți și firme care caută capabilități, mentenanță și ofertă",
+    "conversion": "cerere service, audit, ofertă sau contract",
+    "trust": "echipă, echipamente, procese, SLA și referințe",
+    "local": "mediu",
+    "compliance": "nu promite SLA, timp de remediere sau performanțe neconfirmate"
+  },
+  {
+    "id": "parking_systems",
+    "name": "Sisteme de parcare / bariere",
+    "clients": "clienți și firme care caută proiectare, echipamente, instalare și ofertă",
+    "conversion": "audit, ofertă sau vizită tehnică",
+    "trust": "specificații, proiecte, certificări, garanții și echipă",
+    "local": "ridicat",
+    "compliance": "nu inventa economii, performanțe, certificări sau garanții"
+  },
+  {
+    "id": "access_control",
+    "name": "Control acces / interfoane",
+    "clients": "clienți și firme care caută proiectare, echipamente, instalare și ofertă",
+    "conversion": "audit, ofertă sau vizită tehnică",
+    "trust": "specificații, proiecte, certificări, garanții și echipă",
+    "local": "ridicat",
+    "compliance": "nu inventa economii, performanțe, certificări sau garanții"
+  },
+  {
+    "id": "drone_services",
+    "name": "Servicii drone / inspecții aeriene",
+    "clients": "clienți și firme care caută capabilități, mentenanță și ofertă",
+    "conversion": "cerere service, audit, ofertă sau contract",
+    "trust": "echipă, echipamente, procese, SLA și referințe",
+    "local": "mediu",
+    "compliance": "nu promite SLA, timp de remediere sau performanțe neconfirmate"
+  }
+]

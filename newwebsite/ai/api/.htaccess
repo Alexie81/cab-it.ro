@@ -1,0 +1,16 @@
+Options -Indexes
+
+<Files "_common.php">
+    Require all denied
+</Files>
+
+<FilesMatch "\.(?:json|sqlite|sqlite3|db|log|lock|bak|tmp)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "no-referrer"
+    Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+</IfModule>

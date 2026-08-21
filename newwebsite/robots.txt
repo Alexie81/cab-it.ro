@@ -6,6 +6,9 @@ Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
+Disallow: /ai/api/
+Disallow: /ai/models/
+Disallow: /ai/data/
 
 # Google Search, imagini, video și servicii AI Google
 User-agent: Googlebot
@@ -19,6 +22,9 @@ Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
+Disallow: /ai/api/
+Disallow: /ai/models/
+Disallow: /ai/data/
 
 # Microsoft Bing și servicii care folosesc indexul Bing
 User-agent: Bingbot
@@ -28,6 +34,9 @@ Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
+Disallow: /ai/api/
+Disallow: /ai/models/
+Disallow: /ai/data/
 
 # DuckDuckGo, Apple, Brave și alte motoare de căutare
 User-agent: DuckDuckBot
@@ -41,6 +50,9 @@ Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
+Disallow: /ai/api/
+Disallow: /ai/models/
+Disallow: /ai/data/
 
 # OpenAI: ChatGPT Search, citare la cererea utilizatorului și modele
 User-agent: OAI-SearchBot
@@ -52,6 +64,9 @@ Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
+Disallow: /ai/api/
+Disallow: /ai/models/
+Disallow: /ai/data/
 
 # Anthropic, Perplexity și alte servicii de căutare/răspuns AI
 User-agent: ClaudeBot
@@ -71,5 +86,8 @@ Disallow: /adminpanelcabitro/
 Disallow: /cabit-cms/
 Disallow: /storage/
 Disallow: /PHPMailer/
+Disallow: /ai/api/
+Disallow: /ai/models/
+Disallow: /ai/data/
 
 Sitemap: https://cab-it.ro/sitemap-index.xml
